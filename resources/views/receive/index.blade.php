@@ -41,7 +41,7 @@
                                 style="color:red">({{ $receive->urgency }})</span> @endif</td>
                         <td class="text-center">
                             <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                                <a href="{{ route('receive.show', $receive->id) }}"
+                                <a href="{{ route('receive.download', $receive->id) }}"
                                     class="btn btn-primary btn-sm @if (empty($receive->file)) btn-secondary disabled @endif"
                                     target="_blank"><i class="bi bi-download"></i></a>
                                 <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm"><i

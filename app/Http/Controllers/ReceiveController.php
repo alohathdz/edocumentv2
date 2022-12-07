@@ -83,7 +83,9 @@ class ReceiveController extends Controller
                 line("\nหนังสือรับ\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
             }
         } catch (\ErrorException $th) {
-            line("ไม่สามารถส่งแจ้งเตือนไปยัง " . $receive->department->name . " ได้", env("LINE_TOKEN"));
+            if (env("LINE_TOKEN") != null) {
+                line("ไม่สามารถส่งแจ้งเตือนไปยัง " . $receive->department->name . " ได้", env("LINE_TOKEN"));
+            }
         }
 
         return redirect()->route('receive.saraban')->with([
@@ -218,7 +220,9 @@ class ReceiveController extends Controller
                 line("\nหนังสือรับ\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
             }
         } catch (\ErrorException $th) {
-            line("ไม่สามารถส่งแจ้งเตือนไปยัง " . $receive->department->name . " ได้", env("LINE_TOKEN"));
+            if (env("LINE_TOKEN") != null) {
+                line("ไม่สามารถส่งแจ้งเตือนไปยัง " . $receive->department->name . " ได้", env("LINE_TOKEN"));
+            }
         }
         //บันทึกลงฐานข้อมูล
         $receive->save();
@@ -284,6 +288,67 @@ class ReceiveController extends Controller
             return view('receive.index', ['receives' => $receives]);
         } else {
             return redirect()->route('receive.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
+        }
+    }
+
+    public function download($id)
+    {
+        //ดึงข้อมูล
+        $receive = Receive::findOrFail($id);
+        if ($receive->file) {
+            //ตรวจสอบคนดูไฟล์แนบ
+            $checkview = ReceiveUser::where('receive_id', '=', $receive->id)->where('user_id', '=', auth()->user()->id);
+            if (!$checkview->first()) {
+                ReceiveUser::create([
+                    'receive_id' => $id,
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+        }
+        //เปิดไฟล์แนบ
+        try {
+            if ($receive->file) {
+                //กำหนดข้อความ stamp
+                $file = Storage::path($receive->file);
+                $text1 = "ม.พัน.28 พล.ม.1";
+                $text2 = "เลขที่รับ " . $receive->number;
+                $text3 = "วันที่ " . datethaitext($receive->created_at);
+                $text4 = "เวลา " . date('H:i', strtotime($receive->created_at));
+                //สร้าง object pdf และตั้งค่า หน้าแรก
+                $pdf = new Fpdi();
+                $pagecount = $pdf->setSourceFile($file);
+                $pdf->addPage();
+                $tpl = $pdf->importPage(1);
+                $pdf->useTemplate($tpl, 0, 0, null, null, true);
+                $pdf->AddFont('THSarabunNew', '', 'THSarabunNew.php');
+                $pdf->SetFont('THSarabunNew', '', 16);
+                $pdf->SetFillColor(255, 255, 255);
+                $pdf->SetTextColor(0, 0, 255);
+                $pdf->SetDrawColor(0, 0, 255);
+                $pdf->SetXY(160, 5);
+                $pdf->MultiCell(45, 5, iconv("UTF-8", "cp874", $text1 . "\n" . $text2 . "\n" . $text3 . "\n" . $text4), 1, "C", true);
+                //วน loop เรียก pdf ทุกหน้า
+                for ($i = 2; $i <= $pagecount; $i++) {
+                    $tpl = $pdf->importPage($i);
+                    $pdf->addPage();
+                    $pdf->useTemplate($tpl, 0, 0, null, null, true);
+                }
+
+                return $pdf->Output('I', basename($file), true);
+            } elseif (!$receive->file) {
+                //Null
+                return "ไม่ได้แนบไฟล์";
+            }
+        } catch (\Exception $e) {
+            try {
+                //Pdf < v1.3
+                return response()->file(Storage::path($receive->file));
+            } catch (\Throwable $th) {
+                //File not found.
+                //$receive->update(['file' => null]);
+
+                return abort(403, 'File not found.');
+            }
         }
     }
 }

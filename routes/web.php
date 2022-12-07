@@ -47,11 +47,13 @@ Route::middleware(['saraban'])->group(function () {
 //เจ้าหน้าที่ฝ่ายอำนวยการขึ้นไป
 Route::middleware(['employee'])->group(function () {
     //หนังสือรับ
+    Route::get('receive/{id}/download', [ReceiveController::class, 'download'])->name('receive.download');
     Route::get('search/receive', [ReceiveController::class, 'homeSearch'])->name('receive.search.home');
     Route::post('search/receive', [ReceiveController::class, 'search'])->name('receive.search');
     //หนังสือส่ง
     Route::resource('send', SendController::class);
     Route::get('send/{id}/upload', [SendController::class, 'upload'])->name('send.upload');
+    #Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
     Route::get('search/send', [SendController::class, 'homeSearch'])->name('send.search.home');
     Route::post('search/send', [SendController::class, 'search'])->name('send.search');
     //หนังสือนำเรียน
