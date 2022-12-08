@@ -9,7 +9,7 @@
             </div>
             <!-- ปุ่มย้อนกลับ -->
             <div class="ms-auto">
-                <a href="{{ route('receive.index') }}" class="btn btn-secondary btn-sm">Back</a>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="history.back()">Back</button>
             </div>
         </div>
         <!-- Card -->

@@ -9,15 +9,17 @@
             </div>
             <div class="ms-auto">
                 <!-- ปุ่ม Home -->
-                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i> หน้าแรก</a>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
+                    หน้าแรก</a>
                 <!-- ปุ่ม saraban -->
-                <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm"><i
-                        class="bi bi-file-text"></i> ตรวจสอบหนังสือที่ลงทะเบียนรับ</a>
+                <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm"><i class="bi bi-file-text"></i>
+                    ตรวจสอบหนังสือที่ลงทะเบียนรับ</a>
                 <!-- ปุ่มค้นหา -->
                 <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm"><i
                         class="bi bi-search"></i> ค้นหา</a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> รับหนังสือ</a>
+                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i>
+                    รับหนังสือ</a>
             </div>
         </div>
         <div class="table-responsive mt-1">
@@ -41,14 +43,13 @@
                                 style="color:red">({{ $receive->urgency }})</span> @endif</td>
                         <td class="text-center">
                             <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                                <a href="{{ route('receive.download', $receive->id) }}"
-                                    class="btn btn-primary btn-sm @if (empty($receive->file)) btn-secondary disabled @endif"
-                                    target="_blank"><i class="bi bi-download"></i></a>
-                                <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm"><i
-                                        class="bi bi-pencil-square"></i></a>
+                                <!-- ดูข้อมูลหนังสือ -->
+                                <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-primary btn-sm"><i
+                                        class="bi bi-eye"></i></a>
 
                                 @csrf
                                 @method('DELETE')
+                                <!-- ปุ่มลบ -->
                                 <button class="btn btn-danger btn-sm" type="submit"
                                     onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
                             </form>
@@ -57,6 +58,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $receives->links() }}
         </div>
     </div>
 </div>

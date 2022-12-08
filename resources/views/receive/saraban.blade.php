@@ -43,18 +43,9 @@
                         <td class="text-center">{{ $receive->department->initial }}</td>
                         <td class="text-center">
                             <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                                <!-- ปุ่มดูไฟล์แนบ -->
-                                @if ($receive->file)
-                                <a href="{{ route('receive.show', $receive->id) }}"
-                                    class="btn btn-primary btn-sm @if (empty($receive->file)) btn-secondary disabled @endif"
-                                    target="_blank"><i class="bi bi-download"></i></a>
-                                <!-- ปุ่มตรวจคนดูไฟล์แนบ -->
-                                <a href="{{ route('receive.view', $receive->id) }}" class="btn btn-success btn-sm"><i
-                                        class="bi bi-eye"></i></a>
-                                @endif
-                                <!-- ปุ่มแก้ไข -->
-                                <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm"><i
-                                        class="bi bi-pencil-square"></i></a>
+                                <!-- ดูข้อมูลหนังสือ -->
+                                <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-primary btn-sm"><i
+                                    class="bi bi-eye"></i></a>
 
                                 @csrf
                                 @method('DELETE')
@@ -67,6 +58,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $receives->links() }}
         </div>
     </div>
 </div>

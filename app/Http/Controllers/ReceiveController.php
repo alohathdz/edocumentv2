@@ -18,7 +18,7 @@ class ReceiveController extends Controller
      */
     public function index()
     {
-        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
 
         return view('receive.index', ['receives' => $receives]);
     }
@@ -104,63 +104,11 @@ class ReceiveController extends Controller
      */
     public function show($id)
     {
-        //ดึงข้อมูล
         $receive = Receive::findOrFail($id);
-        if ($receive->file) {
-            //ตรวจสอบคนดูไฟล์แนบ
-            $checkview = ReceiveUser::where('receive_id', '=', $receive->id)->where('user_id', '=', auth()->user()->id);
-            if (!$checkview->first()) {
-                ReceiveUser::create([
-                    'receive_id' => $id,
-                    'user_id' => auth()->user()->id,
-                ]);
-            }
-        }
-        //เปิดไฟล์แนบ
-        try {
-            if ($receive->file) {
-                //กำหนดข้อความ stamp
-                $file = Storage::path($receive->file);
-                $text1 = "ม.พัน.28 พล.ม.1";
-                $text2 = "เลขที่รับ " . $receive->number;
-                $text3 = "วันที่ " . datethaitext($receive->created_at);
-                $text4 = "เวลา " . date('H:i', strtotime($receive->created_at));
-                //สร้าง object pdf และตั้งค่า หน้าแรก
-                $pdf = new Fpdi();
-                $pagecount = $pdf->setSourceFile($file);
-                $pdf->addPage();
-                $tpl = $pdf->importPage(1);
-                $pdf->useTemplate($tpl, 0, 0, null, null, true);
-                $pdf->AddFont('THSarabunNew', '', 'THSarabunNew.php');
-                $pdf->SetFont('THSarabunNew', '', 16);
-                $pdf->SetFillColor(255, 255, 255);
-                $pdf->SetTextColor(0, 0, 255);
-                $pdf->SetDrawColor(0, 0, 255);
-                $pdf->SetXY(160, 5);
-                $pdf->MultiCell(45, 5, iconv("UTF-8", "cp874", $text1 . "\n" . $text2 . "\n" . $text3 . "\n" . $text4), 1, "C", true);
-                //วน loop เรียก pdf ทุกหน้า
-                for ($i = 2; $i <= $pagecount; $i++) {
-                    $tpl = $pdf->importPage($i);
-                    $pdf->addPage();
-                    $pdf->useTemplate($tpl, 0, 0, null, null, true);
-                }
+        $views = ReceiveUser::select('name', 'receive_user.created_at')->join('users', 'receive_user.user_id', '=', 'users.id')->where('receive_id', $id)->get();
+        $i = 0;
 
-                return $pdf->Output('I', basename($file), true);
-            } elseif (!$receive->file) {
-                //Null
-                return "ไม่ได้แนบไฟล์";
-            }
-        } catch (\Exception $e) {
-            try {
-                //Pdf < v1.3
-                return response()->file(Storage::path($receive->file));
-            } catch (\Throwable $th) {
-                //File not found.
-                //$receive->update(['file' => null]);
-
-                return abort(403, 'File not found.');
-            }
-        }
+        return view('receive.show', ['receive' => $receive, 'views' => $views, 'i' => $i]);
     }
 
     /**
@@ -249,7 +197,7 @@ class ReceiveController extends Controller
 
     public function saraban()
     {
-        $receives = Receive::where('user_id', '=', auth()->user()->id)->orderBy('number', 'desc')->get();
+        $receives = Receive::where('user_id', '=', auth()->user()->id)->orderBy('number', 'desc')->paginate(20);
 
         return view('receive.saraban', ['receives' => $receives]);
     }
