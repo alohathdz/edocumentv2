@@ -175,7 +175,7 @@ class ReceiveController extends Controller
         //บันทึกลงฐานข้อมูล
         $receive->save();
 
-        return redirect()->route('receive.edit', $receive->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+        return redirect()->route('receive.show', $receive->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
     /**
@@ -197,7 +197,7 @@ class ReceiveController extends Controller
 
     public function saraban()
     {
-        $receives = Receive::where('user_id', '=', auth()->user()->id)->orderBy('number', 'desc')->paginate(20);
+        $receives = Receive::where('user_id', '=', auth()->user()->id)->where('department_id', '!=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(3);
 
         return view('receive.saraban', ['receives' => $receives]);
     }

@@ -170,9 +170,19 @@
                                 <i class="bi bi-trash"></i> ลบ
                             </button>
                             <!-- ปุ่มย้อนกลับ -->
+                            @if (session('success') && $receive->department_id != Auth::user()->department_id)
+                            <a href="{{ route('receive.saraban') }}" class="btn btn-secondary btn-sm">
+                                <i class="bi bi-backspace"></i> ย้อนกลับ
+                            </a>
+                            @elseif (session('success') && $receive->department_id == Auth::user()->department_id)
+                            <a href="{{ route('receive.index') }}" class="btn btn-secondary btn-sm">
+                                <i class="bi bi-backspace"></i> ย้อนกลับ
+                            </a>
+                            @else
                             <button type="button" class="btn btn-secondary btn-sm" onclick="history.back()">
                                 <i class="bi bi-backspace"></i> ย้อนกลับ
                             </button>
+                            @endif
                         </form>
                     </div>
                 </div>

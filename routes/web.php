@@ -9,6 +9,7 @@ use App\Http\Controllers\PresentController;
 use App\Http\Controllers\ReceiveController;
 use App\Http\Controllers\SendController;
 use App\Http\Controllers\UserController;
+use App\Models\Receive;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,7 +77,6 @@ Route::middleware(['employee'])->group(function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
-    $th = date_create_from_format("d/m/Y" ,"30/09/2565");
-    $en = date("Y/m/d", $th);
-    return $en;
+    $test = Receive::paginate(5);
+    return $test->currentPage();
 });

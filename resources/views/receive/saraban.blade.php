@@ -12,7 +12,7 @@
                 <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i> หน้าแรก</a>
                 <!-- ปุ่ม index -->
                 <a href="{{ route('receive.index') }}" class="btn btn-warning btn-sm"><i
-                        class="bi bi-file-text"></i> หนังสือรับในฝ่ายอำนวยการ</a>
+                        class="bi bi-file-text"></i> หนังสือรับ {{ auth()->user()->department->initial }}</a>
                 <!-- ปุ่มค้นหา -->
                 <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm"><i
                         class="bi bi-search"></i> ค้นหา</a>

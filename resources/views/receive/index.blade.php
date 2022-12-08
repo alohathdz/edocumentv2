@@ -13,7 +13,7 @@
                     หน้าแรก</a>
                 <!-- ปุ่ม saraban -->
                 <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm"><i class="bi bi-file-text"></i>
-                    ตรวจสอบหนังสือที่ลงทะเบียนรับ</a>
+                    หนังสือรับฝ่ายอื่น ๆ</a>
                 <!-- ปุ่มค้นหา -->
                 <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm"><i
                         class="bi bi-search"></i> ค้นหา</a>
