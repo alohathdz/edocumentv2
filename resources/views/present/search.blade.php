@@ -66,8 +66,6 @@
     Swal.fire({
     icon: "error",
     title: "{{ Session::get('fail') }}",
-    showConfirmButton: false,
-    timer: 1500
 });
 </script>
 @endif

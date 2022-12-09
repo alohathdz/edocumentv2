@@ -38,6 +38,7 @@
                     <a href="{{ route('present.index') }}" class="btn btn-danger btn-sm"><i class="bi bi-file-earmark-text"></i> หนังสือนำเรียน</a>
                     <a href="{{ route('command.index') }}" class="btn btn-warning btn-sm"><i class="bi bi-file-earmark-text"></i> คำสั่ง</a>
                     <a href="{{ route('certificate.index') }}" class="btn btn-info btn-sm"><i class="bi bi-file-earmark-text"></i> หนังสือรับรอง</a>
+                    
                 </div>
             </div>
         </div>

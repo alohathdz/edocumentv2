@@ -30,7 +30,7 @@
                         <th style="width: 10%">วันที่รับ</th>
                         <th>จาก</th>
                         <th>เรื่อง</th>
-                        <th style="width: 15%">Action</th>
+                        <th style="width: 7%">Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -84,9 +84,7 @@
 <script>
     Swal.fire({
         icon: "success",
-        title: "{{ Session::get('success') }}",
-        showConfirmButton: false,
-        timer: 1500
+        title: "{{ Session::get('success') }}"
     });
 </script>
 @elseif (session('register'))

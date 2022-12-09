@@ -29,7 +29,7 @@
                         <th>จาก</th>
                         <th>เรื่อง</th>
                         <th style="width: 7%">ฝ่าย</th>
-                        <th style="width: 15%">Action</th>
+                        <th style="width: 7%">Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -85,8 +85,6 @@
     Swal.fire({
         icon: "success",
         title: "{{ Session::get('success') }}",
-        showConfirmButton: false,
-        timer: 1500
     });
 </script>
 @elseif (session('register'))
