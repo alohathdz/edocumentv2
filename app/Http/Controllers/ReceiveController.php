@@ -227,7 +227,7 @@ class ReceiveController extends Controller
                 ->where('from', 'LIKE', '%' . $request->from . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(20);
 
             if ($receives->count() == 0) {
                 return redirect()->route('receive.search.home')->with('fail', 'ไม่พบข้อมูล');

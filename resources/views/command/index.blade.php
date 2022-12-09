@@ -21,7 +21,7 @@
             <table class="table table-bordered table-primary table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <th style="width: 8%">เลขทะเบียน</th>
+                        <th style="width: 4%">ที่</th>
                         <th style="width: 10%">ลงวันที่</th>
                         <th>เรื่อง</th>
                         <th style="width: 10%">Action</th>
@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $command->number }}</td>
                         <td>{{ datethaitext($command->date) }}</td>
-                        <td>{{ Str::limit($command->topic, 100) }}</td>
+                        <td class="text-start">{{ Str::limit($command->topic, 100) }}</td>
                         <td>
                             <form action="{{ route('command.destroy', $command->id) }}" method="post">
                                 <a href="{{ route('command.show', $command->id) }}"
@@ -51,6 +51,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $commands->links() }}
         </div>
     </div>
 </div>

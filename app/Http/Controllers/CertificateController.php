@@ -16,7 +16,7 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        $cerfificates = Certificate::orderBy('number', 'desc')->get();
+        $cerfificates = Certificate::orderBy('number', 'desc')->paginate(20);
 
         return view('certificate.index', ['certificates' => $cerfificates]);
     }
@@ -182,7 +182,7 @@ class CertificateController extends Controller
                 ->where('certificate_type_id', 'LIKE', '%' . $request->ctype . '%')
                 ->where('name', 'LIKE', '%' . $request->name . '%')
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(20);
 
             if ($certificates->count() == 0) {
                 return redirect()->route('certificate.search.home')->with('fail', 'ไม่พบข้อมูล');

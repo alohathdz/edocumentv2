@@ -15,7 +15,7 @@ class SendController extends Controller
      */
     public function index()
     {
-        $sends = Send::orderBy('number', 'desc')->get();
+        $sends = Send::orderBy('number', 'desc')->paginate(20);
 
         return view('send.index', ['sends' => $sends]);
     }
@@ -90,15 +90,7 @@ class SendController extends Controller
     {
         $send = Send::findOrFail($id);
 
-        if ($send->file) {
-            try {
-                return response()->file(Storage::path($send->file));
-            } catch (\Throwable $e) {
-                return 'ไม่พบไฟล์ หรือไฟล์อาจถูกลบ';
-            }
-        } elseif (!$send->file) {
-            return "ไม่ได้แนบไฟล์";
-        }
+        return view('send.show', ['send' => $send]);
     }
 
     /**
@@ -188,7 +180,7 @@ class SendController extends Controller
             ->where('to', 'LIKE', '%' . $request->from . '%')
             ->where('topic', 'LIKE', '%' . $request->topic . '%')
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(20);
 
             if ($sends->count() == 0) {
                 return redirect()->route('send.search.home')->with('fail', 'ไม่พบข้อมูล');
@@ -197,6 +189,21 @@ class SendController extends Controller
             return view('send.index', ['sends' => $sends]);
         } else {
             return redirect()->route('send.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
+        }
+    }
+
+    public function download($id)
+    {
+        $send = Send::findOrFail($id);
+
+        if ($send->file) {
+            try {
+                return response()->file(Storage::path($send->file));
+            } catch (\Throwable $e) {
+                return 'ไม่พบไฟล์ หรือไฟล์อาจถูกลบ';
+            }
+        } elseif (!$send->file) {
+            return "ไม่ได้แนบไฟล์";
         }
     }
 }

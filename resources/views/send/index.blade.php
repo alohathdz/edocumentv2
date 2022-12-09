@@ -21,7 +21,7 @@
             <table class="table table-bordered table-primary table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <th style="width: 8%">เลขทะเบียน</th>
+                        <th style="width: 4%">ที่</th>
                         <th style="width: 10%">ลงวันที่</th>
                         <th>จาก</th>
                         <th>เรื่อง</th>
@@ -33,16 +33,12 @@
                     <tr>
                         <td>{{ $send->number }}</td>
                         <td>{{ datethaitext($send->date) }}</td>
-                        <td>{{ $send->to }}</td>
-                        <td>{{ Str::limit($send->topic, 100) }} @if ($send->urgency != "ไม่มี") <span
+                        <td class="text-start">{{ $send->to }}</td>
+                        <td class="text-start">{{ Str::limit($send->topic, 100) }} @if ($send->urgency != "ไม่มี") <span
                                 style="color:red">({{ $send->urgency }})</span> @endif</td>
                         <td>
                             <form action="{{ route('send.destroy', $send->id) }}" method="post">
-                                <a href="{{ route('send.show', $send->id) }}"
-                                    class="btn btn-primary btn-sm @if (empty($send->file)) btn-secondary disabled @endif"
-                                    target="_blank"><i class="bi bi-download"></i></a>
-                                <a href="{{ route('send.edit', $send->id) }}" class="btn btn-warning btn-sm"><i
-                                        class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('send.show', $send->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
 
                                 @csrf
                                 @method('DELETE')
@@ -54,6 +50,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $sends->links() }}
         </div>
     </div>
 </div>

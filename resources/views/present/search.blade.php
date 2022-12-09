@@ -7,10 +7,6 @@
             <div class="me-auto">
                 <h5>ค้นหาหนังสือนำเรียน</h5>
             </div>
-            <!-- ปุ่มย้อนกลับ -->
-            <div class="ms-auto">
-                <a href="{{ route('present.index') }}" class="btn btn-secondary btn-sm">Back</a>
-            </div>
         </div>
         <!-- Form -->
         <form action="{{ route('present.search') }}" method="post">
@@ -36,6 +32,7 @@
                         <!-- ปุ่มบันทึก -->
                         <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-primary btn-sm">ค้นหา</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
                         </div>
                     </div>
                 </div>

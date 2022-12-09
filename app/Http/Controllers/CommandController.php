@@ -15,7 +15,7 @@ class CommandController extends Controller
      */
     public function index()
     {
-        $commands = Command::orderBy('number', 'desc')->get();
+        $commands = Command::orderBy('number', 'desc')->paginate(20);
 
         return view('command.index', ['commands' => $commands]);
     }
@@ -173,7 +173,7 @@ class CommandController extends Controller
             ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
             ->where('topic', 'LIKE', '%' . $request->topic . '%')
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(20);
 
             if ($commands->count() == 0) {
                 return redirect()->route('command.search.home')->with('fail', 'ไม่พบข้อมูล');

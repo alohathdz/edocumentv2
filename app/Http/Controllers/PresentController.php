@@ -18,7 +18,7 @@ class PresentController extends Controller
      */
     public function index()
     {
-        $presents = Present::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $presents = Present::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
 
         return view('present.index', ['presents' => $presents]);
     }

@@ -54,7 +54,7 @@ Route::middleware(['employee'])->group(function () {
     //หนังสือส่ง
     Route::resource('send', SendController::class);
     Route::get('send/{id}/upload', [SendController::class, 'upload'])->name('send.upload');
-    #Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
+    Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
     Route::get('search/send', [SendController::class, 'homeSearch'])->name('send.search.home');
     Route::post('search/send', [SendController::class, 'search'])->name('send.search');
     //หนังสือนำเรียน
