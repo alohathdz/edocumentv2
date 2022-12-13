@@ -59,7 +59,7 @@
                     <!-- ปุ่มบันทึก -->
                     <div class="row mt-2">
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
                         </div>
                     </div>
                 </div>

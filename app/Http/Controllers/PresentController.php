@@ -191,7 +191,7 @@ class PresentController extends Controller
             DepartmentPresent::where("present_id",  $id)->delete();
         }
 
-        return redirect()->route('present.edit', $present->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+        return redirect()->route('present.show', $present->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
     /**

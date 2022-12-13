@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Command;
+use App\Models\CommandDepartment;
 use App\Models\CommandUser;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -65,6 +67,25 @@ class CommandController extends Controller
                 $path = Storage::putFileAs(yearthai() . '/command', $request->file, $filename);
                 $command->file = $path;
                 $command->save();
+
+                # สำเนาหนังสือ
+                if (!empty($request->copy)) {
+                    foreach ($request->copy as $key => $val) {
+                        $copy = new CommandDepartment();
+                        $copy->command_id = $request->id;
+                        $copy->department_id = $val;
+                        $copy->save();
+
+                        $department = Department::select("name", "line_token")->where("id", "=", $val)->first();
+                        if ($department->line_token != null) {
+                            try {
+                                line("\nสำเนาคำสั่ง\nที่ : " . $command->no . "\nเรื่อง : " . $command->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/command/$command->id", $department->line_token);
+                            } catch (\ErrorException $e) {
+                                line("ไม่สามารถส่งแจ้งเตือนไปยัง $department->name ได้", env("LINE_TOKEN"));
+                            }
+                        }
+                    }
+                }
             }
 
             return redirect()->route('command.index')->with('register', $command->number);
@@ -95,8 +116,19 @@ class CommandController extends Controller
     public function edit($id)
     {
         $command = Command::findOrFail($id);
+        $DeptList = Department::all();
+        $DeptListData = array();
+        foreach ($DeptList as $key => $val) {
+            $DeptListData[$key] = $val;
+            $DeptDocCheck = CommandDepartment::where('command_id', $id)->where('department_id', $val['id'])->first();
+            if (!empty($DeptDocCheck)) {
+                $DeptListData[$key]->checked = 'checked';
+            } else {
+                $DeptListData[$key]->checked = '';
+            }
+        }
 
-        return view('command.edit', ['command' => $command]);
+        return view('command.edit', ['command' => $command, 'DeptList' => $DeptList]);
     }
 
     /**
@@ -129,7 +161,31 @@ class CommandController extends Controller
         //บันทึกลงฐานข้อมูล
         $command->save();
 
-        return redirect()->route('command.edit', $command->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+        # สำเนาหนังสือ
+        if (!empty($request->copy)) {
+            CommandDepartment::where("command_id", $id)->delete();
+            foreach ($request->copy as $key => $val) {
+                $copy = new CommandDepartment();
+                $copy->command_id = $command->id;
+                $copy->department_id = $val;
+                $copy->save();
+
+                $department = Department::select("name", "line_token")->where("id", "=", $val)->first();
+                if ($department->line_token != null) {
+                    if ($command->file != null) {
+                        try {
+                            line("\nสำเนาคำสั่ง\nที่ : " . $command->no . "\nเรื่อง : " . $command->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/command/$command->id", $department->line_token);
+                        } catch (\ErrorException $e) {
+                            line("ไม่สามารถส่งแจ้งเตือนไปยัง $department->name ได้", env("LINE_TOKEN"));
+                        }
+                    }
+                }
+            }
+        } else {
+            CommandDepartment::where("command_id",  $id)->delete();
+        }
+
+        return redirect()->route('command.show', $command->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
     /**
@@ -152,8 +208,9 @@ class CommandController extends Controller
     public function upload($id)
     {
         $command = Command::findOrFail($id);
+        $departments = Department::all();
 
-        return view('command.upload', ['command' => $command]);
+        return view('command.upload', ['command' => $command, 'departments' => $departments]);
     }
 
     public function homeSearch()
@@ -165,10 +222,10 @@ class CommandController extends Controller
     {
         if (isset($request->no) || isset($request->date) || isset($request->topic)) {
             $commands = Command::where('no', 'LIKE', '%' . $request->no . '%')
-            ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
-            ->where('topic', 'LIKE', '%' . $request->topic . '%')
-            ->orderBy('id', 'desc')
-            ->paginate(20);
+                ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
+                ->where('topic', 'LIKE', '%' . $request->topic . '%')
+                ->orderBy('id', 'desc')
+                ->paginate(20);
 
             if ($commands->count() == 0) {
                 return redirect()->route('command.search.home')->with('fail', 'ไม่พบข้อมูล');

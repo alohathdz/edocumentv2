@@ -12,10 +12,6 @@
             <div class="me-auto">
                 <h5>แก้ไขข้อมูลส่วนตัว</h5>
             </div>
-            <!-- ปุ่มย้อนกลับ -->
-            <div class="ms-auto">
-                <a href="{{ route('home') }}" class="btn btn-secondary btn-sm">Back</a>
-            </div>
         </div>
         <!-- Card -->
         <div class="card text-center mt-1">
@@ -74,7 +70,8 @@
                         </div>
                     </div>
                     <!-- ปุ่มบันทึก -->
-                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                    <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
                 </form>
             </div>
         </div>

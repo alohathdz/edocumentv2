@@ -7,10 +7,6 @@
             <div class="me-auto">
                 <h5>เพิ่มข้อมูลเจ้าหน้าที่</h5>
             </div>
-            <!-- ปุ่มย้อนกลับ -->
-            <div class="ms-auto">
-                <a href="{{ route('user.index') }}" class="btn btn-secondary btn-sm">Back</a>
-            </div>
         </div>
         <!-- Form -->
         <form action="{{ route('user.store') }}" method="post">
@@ -95,7 +91,8 @@
                     <div class="row">
                         <!-- ปุ่มบันทึก -->
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
                         </div>
                     </div>
                 </div>
