@@ -23,10 +23,10 @@
             <table class="table table-bordered table-primary table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <th style="width: 4%">ที่</th>
-                        <th style="width: 10%">ลงวันที่</th>
+                        <th>ที่</th>
+                        <th>ลงวันที่</th>
                         <th>เรื่อง</th>
-                        <th style="width: 12%">Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">

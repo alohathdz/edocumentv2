@@ -22,11 +22,11 @@
             <table class="table table-bordered table-primary table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <th style="width: 8%">เลขทะเบียน</th>
-                        <th style="width: 10%">ลงวันที่</th>
+                        <th>เลขทะเบียน</th>
+                        <th>ลงวันที่</th>
                         <th>ประเภท</th>
                         <th>ผู้ขอรับรอง</th>
-                        <th style="width: 10%">Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">

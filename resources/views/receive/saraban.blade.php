@@ -24,12 +24,12 @@
             <table class="table table-bordered table-primary table-hover align-middle">
                 <thead class="text-center">
                     <tr>
-                        <th style="width: 4%">ที่</th>
-                        <th style="width: 10%">วันที่รับ</th>
+                        <th>ที่</th>
+                        <th>วันที่รับ</th>
                         <th>จาก</th>
                         <th>เรื่อง</th>
-                        <th style="width: 7%">ฝ่าย</th>
-                        <th style="width: 7%">Action</th>
+                        <th>ฝ่าย</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
