@@ -105,24 +105,10 @@ class PresentController extends Controller
     public function show($id)
     {
         $present = Present::findOrFail($id);
+        $views = PresentUser::select('name', 'present_user.created_at')->join('users', 'present_user.user_id', '=', 'users.id')->where('present_id', $id)->get();
+        $i = 0;
 
-        if ($present->file) {
-            //ตรวจสอบคนดูไฟล์แนบ
-            $checkview = PresentUser::where('present_id', '=', $present->id)->where('user_id', '=', auth()->user()->id);
-            if (!$checkview->first()) {
-                PresentUser::create([
-                    'present_id' => $id,
-                    'user_id' => auth()->user()->id,
-                ]);
-            }
-            try {
-                return response()->file(Storage::path($present->file));
-            } catch (\Throwable $e) {
-                return "ไม่พบไฟล์ หรือไฟล์อาจถูกลบ";
-            }
-        } elseif (!$present->file) {
-            return "ไม่ได้แนบไฟล์";
-        }
+        return view('present.show', ['present' => $present, 'views' => $views, 'i' => $i]);
     }
 
     /**
@@ -254,6 +240,29 @@ class PresentController extends Controller
             return view('present.index', ['presents' => $presents]);
         } else {
             return redirect()->route('present.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
+        }
+    }
+
+    public function download($id)
+    {
+        $present = Present::findOrFail($id);
+
+        if ($present->file) {
+            //ตรวจสอบคนดูไฟล์แนบ
+            $checkview = PresentUser::where('present_id', '=', $present->id)->where('user_id', '=', auth()->user()->id);
+            if (!$checkview->first()) {
+                PresentUser::create([
+                    'present_id' => $id,
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+            try {
+                return response()->file(Storage::path($present->file));
+            } catch (\Throwable $e) {
+                return "ไม่พบไฟล์ หรือไฟล์อาจถูกลบ";
+            }
+        } elseif (!$present->file) {
+            return "ไม่ได้แนบไฟล์";
         }
     }
 }

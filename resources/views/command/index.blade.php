@@ -35,11 +35,8 @@
                         <td class="text-start">{{ Str::limit($command->topic, 100) }}</td>
                         <td>
                             <form action="{{ route('command.destroy', $command->id) }}" method="post">
-                                <a href="{{ route('command.show', $command->id) }}"
-                                    class="btn btn-primary btn-sm @if (empty($command->file)) btn-secondary disabled @endif"
-                                    target="_blank"><i class="bi bi-download"></i></a>
-                                <a href="{{ route('command.edit', $command->id) }}" class="btn btn-warning btn-sm"><i
-                                        class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('command.show', $command->id) }}" class="btn btn-primary btn-sm"><i
+                                        class="bi bi-eye"></i></a>
 
                                 @csrf
                                 @method('DELETE')

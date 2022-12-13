@@ -60,16 +60,19 @@ Route::middleware(['employee'])->group(function () {
     //หนังสือนำเรียน
     Route::resource('present', PresentController::class);
     Route::get('present/{id}/upload', [PresentController::class, 'upload'])->name('present.upload');
+    Route::get('present/{id}/download', [PresentController::class, 'download'])->name('present.download');
     Route::get('search/present', [PresentController::class, 'homeSearch'])->name('present.search.home');
     Route::post('search/present', [PresentController::class, 'search'])->name('present.search');
     //คำสั่ง
     Route::resource('command', CommandController::class);
     Route::get('command/{id}/upload', [CommandController::class, 'upload'])->name('command.upload');
+    Route::get('command/{id}/download', [CommandController::class, 'download'])->name('command.download');
     Route::get('search/command', [CommandController::class, 'homeSearch'])->name('command.search.home');
     Route::post('search/command', [CommandController::class, 'search'])->name('command.search');
     //หนังสือรับรอง
     Route::resource('certificate', CertificateController::class);
     Route::get('certificate/{id}/upload', [CertificateController::class, 'upload'])->name('certificate.upload');
+    Route::get('certificate/{id}/download', [CertificateController::class, 'download'])->name('certificate.download');
     Route::get('search/certificate', [CertificateController::class, 'homeSearch'])->name('certificate.search.home');
     Route::post('search/certificate', [CertificateController::class, 'search'])->name('certificate.search');
 });

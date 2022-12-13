@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="d-flex gap-2">
             <div class="me-auto">
-                <h5>ข้อมูลหนังสือรับ</h5>
+                <h5>ข้อมูลหนังสือนำเรียน</h5>
             </div>
         </div>
         <!-- Form -->
@@ -13,72 +13,51 @@
             <div class="card-body">
                 <!-- เลขทะเบียน -->
                 <div class="row">
-                    <strong class="col-md-3 text-md-end">เลขทะบียน</strong>
+                    <strong class="col-md-3 text-md-end">เลขทะเบียน</strong>
                     <div class="col-md-9">
-                        <p class="text-danger">{{ $receive->number }}</p>
+                        <p class="text-danger">{{ $present->number }}</p>
                     </div>
                 </div>
                 <!-- วันที่รับ -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">วันที่</strong>
                     <div class="col-md-9">
-                        <p class="text-danger">{{ timestampthaitext($receive->created_at) }}</p>
+                        <p class="text-danger">{{ timestampthaitext($present->created_at) }}</p>
                     </div>
                 </div>
                 <!-- ผู้ลงทะเบียนรับ -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">ผู้ลงทะเบียน</strong>
                     <div class="col-md-9">
-                        <p class="text-danger">{{ $receive->user->name }}</p>
+                        <p class="text-danger">{{ $present->user->name }}</p>
                     </div>
                 </div>
                 <!-- หนังสือ -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">ที่</strong>
                     <div class="col-md-9">
-                        <p class="text-primary">{{ $receive->no }}</p>
+                        <p class="text-primary">{{ $present->no }}</p>
                     </div>
                 </div>
                 <!-- วันที่หนังสือ -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">ลง</strong>
                     <div class="col-md-9">
-                        <p class="text-primary">{{ datethaitext($receive->date) }}</p>
-                    </div>
-                </div>
-                <!-- จาก -->
-                <div class="row">
-                    <strong class="col-md-3 text-md-end">จาก</strong>
-                    <div class="col-md-9">
-                        <p class="text-primary">{{ $receive->from }}</p>
+                        <p class="text-primary">{{ datethaitext($present->date) }}</p>
                     </div>
                 </div>
                 <!-- เรื่อง -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">เรื่อง</strong>
                     <div class="col-md-9">
-                        <p class="text-primary">{{ $receive->topic }}</p>
+                        <p class="text-primary">{{ $present->topic }}</p>
                     </div>
                 </div>
                 <!-- ความเร่งด่วน -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">ความเร่งด่วน</strong>
                     <div class="col-md-9">
-                        <p class="text-primary">{{ $receive->urgency }}</p>
-                    </div>
-                </div>
-                <!-- ฝ่ายอำนวยการ -->
-                <div class="row">
-                    <strong class="col-md-3 text-md-end">ฝอ. รับผิดชอบ</strong>
-                    <div class="col-md-9">
-                        <p class="text-danger">{{ $receive->department->name }}</p>
-                    </div>
-                </div>
-                <!-- เจ้าหน้าที่ -->
-                <div class="row">
-                    <strong class="col-md-3 text-md-end">เจ้าหน้าที่รับผิดชอบ</strong>
-                    <div class="col-md-9">
-                        <p class="text-danger">{{ $receive->department->name }}</p>
+                        <p class="text-primary">{{ $present->urgency }}</p>
                     </div>
                 </div>
                 <!-- แนบไฟล์ -->
@@ -86,10 +65,10 @@
                     <strong class="col-md-3 text-md-end">ไฟล์</strong>
                     <div class="col-md-9">
                         <p class="text-success">
-                            @if ($receive->file)
-                            <a href="{{ route('receive.download', $receive->id) }}"
-                                class="btn btn-dark btn-sm @if (empty($receive->file)) btn-secondary disabled @endif"
-                                target="_blank"><i class="bi bi-download"></i></a> {{ substr($receive->file, 13) }}
+                            @if ($present->file)
+                            <a href="{{ route('present.download', $present->id) }}"
+                                class="btn btn-dark btn-sm @if (empty($present->file)) btn-secondary disabled @endif"
+                                target="_blank"><i class="bi bi-download"></i></a> {{ substr($present->file, 13) }}
                             @else
                             ไม่มีไฟล์แนบ
                             @endif
@@ -97,12 +76,13 @@
                     </div>
                 </div>
                 <!-- จำนวนคนดาวน์โหลด -->
-                @if ($receive->file)
+                @if ($present->file)
                 <div class="row">
                     <strong class="col-md-3 text-md-end">คนดาวน์โหลด</strong>
                     <div class="col-md-9">
                         <p class="text-success">
-                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#viewModal">
+                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#viewModal">
                                 <i class="bi bi-eye"></i>
                             </button> จำนวน {{ $views->count() }} คน
                         </p>
@@ -153,29 +133,22 @@
                 <!-- ปุ่ม -->
                 <div class="row mt-2">
                     <div class="col-md-12 text-center">
-                        <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                            <!-- ปุ่มจัดเก็บ -->
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <i class="bi bi-archive"></i> จัดเก็บ
-                            </button>
+                        <form action="{{ route('present.destroy', $present->id) }}" method="post">
                             <!-- ปุ่มแก้ไข -->
-                            <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
+                            <a href="{{ route('present.edit', $present->id) }}" class="btn btn-warning btn-sm">
                                 <i class="bi bi-pencil-square"></i> แก้ไข
                             </a>
 
                             @csrf
                             @method('DELETE')
                             <!-- ปุ่มลบ -->
-                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('ยืนยันการลบข้อมูล!')">
+                            <button class="btn btn-danger btn-sm" type="submit"
+                                onclick="return confirm('ยืนยันการลบข้อมูล!')">
                                 <i class="bi bi-trash"></i> ลบ
                             </button>
                             <!-- ปุ่มย้อนกลับ -->
-                            @if (session('success') && $receive->department_id != Auth::user()->department_id)
-                            <a href="{{ route('receive.saraban') }}" class="btn btn-secondary btn-sm">
-                                <i class="bi bi-backspace"></i> ย้อนกลับ
-                            </a>
-                            @elseif (session('success') && $receive->department_id == Auth::user()->department_id)
-                            <a href="{{ route('receive.index') }}" class="btn btn-secondary btn-sm">
+                            @if (session('success'))
+                            <a href="{{ route('present.index') }}" class="btn btn-secondary btn-sm">
                                 <i class="bi bi-backspace"></i> ย้อนกลับ
                             </a>
                             @else

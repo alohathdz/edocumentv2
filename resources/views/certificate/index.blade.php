@@ -9,13 +9,14 @@
             </div>
             <div class="ms-auto">
                 <!-- ปุ่ม Home -->
-                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i> หน้าแรก</a>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
+                    หน้าแรก</a>
                 <!-- ปุ่มค้นหา -->
                 <a href="{{ route('certificate.search.home') }}" class="btn btn-secondary btn-sm"><i
                         class="bi bi-search"></i> ค้นหา</a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('certificate.create') }}" class="btn btn-primary btn-sm"><i
-                        class="bi bi-plus-lg"></i> ออกที่หนังสือรับรอง</a>
+                <a href="{{ route('certificate.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i>
+                    ออกที่หนังสือรับรอง</a>
             </div>
         </div>
         <div class="table-responsive mt-1">
@@ -39,10 +40,7 @@
                         <td>
                             <form action="{{ route('certificate.destroy', $certificate->id) }}" method="post">
                                 <a href="{{ route('certificate.show', $certificate->id) }}"
-                                    class="btn btn-primary btn-sm @if (empty($certificate->file)) btn-secondary disabled @endif"
-                                    target="_blank"><i class="bi bi-download"></i></a>
-                                <a href="{{ route('certificate.edit', $certificate->id) }}"
-                                    class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
 
                                 @csrf
                                 @method('DELETE')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Command;
+use App\Models\CommandUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -79,16 +80,10 @@ class CommandController extends Controller
     public function show($id)
     {
         $command = Command::findOrFail($id);
+        $views = CommandUser::select('name', 'command_user.created_at')->join('users', 'command_user.user_id', '=', 'users.id')->where('command_id', $id)->get();
+        $i = 0;
 
-        if ($command->file) {
-            try {
-                return response()->file(Storage::path($command->file));
-            } catch (\Throwable $e) {
-                return 'ไม่พบไฟล์ หรือไฟล์อาจถูกลบ';
-            }
-        } elseif (!$command->file) {
-            return "ไม่ได้แนบไฟล์";
-        }
+        return view('command.show', ['command' => $command, 'views' => $views, 'i' => $i]);
     }
 
     /**
@@ -182,6 +177,29 @@ class CommandController extends Controller
             return view('command.index', ['commands' => $commands]);
         } else {
             return redirect()->route('command.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
+        }
+    }
+
+    public function download($id)
+    {
+        $command = Command::findOrFail($id);
+
+        if ($command->file) {
+            //ตรวจสอบคนดูไฟล์แนบ
+            $checkview = CommandUser::where('command_id', '=', $command->id)->where('user_id', '=', auth()->user()->id);
+            if (!$checkview->first()) {
+                CommandUser::create([
+                    'command_id' => $id,
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+            try {
+                return response()->file(Storage::path($command->file));
+            } catch (\Throwable $e) {
+                return "ไม่พบไฟล์ หรือไฟล์อาจถูกลบ";
+            }
+        } elseif (!$command->file) {
+            return "ไม่ได้แนบไฟล์";
         }
     }
 }

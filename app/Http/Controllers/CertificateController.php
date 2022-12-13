@@ -84,15 +84,7 @@ class CertificateController extends Controller
     {
         $cert = Certificate::findOrFail($id);
 
-        if ($cert->file) {
-            try {
-                return response()->file(Storage::path($cert->file));
-            } catch (\Throwable $e) {
-                return 'ไม่พบไฟล์ หรือไฟล์อาจถูกลบ';
-            }
-        } elseif (!$cert->file) {
-            return "ไม่ได้แนบไฟล์";
-        }
+        return view('certificate.show', ['cert' => $cert]);
     }
 
     /**
@@ -191,6 +183,21 @@ class CertificateController extends Controller
             return view('certificate.index', ['certificates' => $certificates]);
         } else {
             return redirect()->route('certificate.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
+        }
+    }
+
+    public function download($id)
+    {
+        $cert = Certificate::findOrFail($id);
+
+        if ($cert->file) {
+            try {
+                return response()->file(Storage::path($cert->file));
+            } catch (\Throwable $e) {
+                return 'ไม่พบไฟล์ หรือไฟล์อาจถูกลบ';
+            }
+        } elseif (!$cert->file) {
+            return "ไม่ได้แนบไฟล์";
         }
     }
 }

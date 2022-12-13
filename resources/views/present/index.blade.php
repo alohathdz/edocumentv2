@@ -34,63 +34,12 @@
                     <tr>
                         <td>{{ $present->number }}</td>
                         <td>{{ datethaitext($present->date) }}</td>
-                        <td class="text-start">{{ Str::limit($present->topic, 100) }} @if ($present->urgency != "ไม่มี") <span
-                                style="color:red">({{ $present->urgency }})</span> @endif</td>
+                        <td class="text-start">{{ Str::limit($present->topic, 100) }} @if ($present->urgency != "ไม่มี")
+                            <span style="color:red">({{ $present->urgency }})</span> @endif</td>
                         <td>
                             <form action="{{ route('present.destroy', $present->id) }}" method="post">
-                                <!-- ดาวน์โหลด -->
-                                <a href="{{ route('present.show', $present->id) }}" class="btn btn-primary btn-sm @if (empty($present->file)) btn-secondary disabled @endif" target="_blank">
-                                    <i class="bi bi-download"></i>
-                                </a>
-                                <!-- ดูคนดาวน์โหลด -->
-                                <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#viewModal{{ $present->id }}">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                                <div class="modal fade" id="viewModal{{ $present->id }}" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                @php
-                                                    $i = 0;
-                                                    $views = ('App\Models\PresentUser')::select('name', 'present_user.created_at')->join('users', 'present_user.user_id', '=', 'users.id')->where('present_id', $present->id)->get();
-                                                @endphp
-                                                @if (!$views->first())
-                                                ยังไม่มีผู้ดาวน์โหลด
-                                                @else
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th>ลำดับ</th>
-                                                            <th>ชื่อผู้ดาวน์โหลด</th>
-                                                            <th>เวลาดาวน์โหลด</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($views as $user)
-                                                        <tr class="text-center">
-                                                            <td>{{ ++$i }}</td>
-                                                            <td>{{ $user->name }}</td>
-                                                            <td>{{ timestampthaitext($user->created_at) }}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มปิด -->
-                                                <button type="button" class="btn btn-secondary btn-sm"
-                                                    data-bs-dismiss="modal">ปิด</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="{{ route('present.edit', $present->id) }}" class="btn btn-warning btn-sm"><i
-                                        class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('present.show', $present->id) }}" class="btn btn-primary btn-sm"><i
+                                        class="bi bi-eye"></i></a>
 
                                 @csrf
                                 @method('DELETE')
