@@ -44,9 +44,15 @@
                         <td class="text-center">
                             <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
                                 <!-- ดูข้อมูลหนังสือ -->
-                                <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-primary btn-sm"><i
+                                @if (('App\Models\ReceiveUser')::where('receive_id', $receive->id)->where('user_id',
+                                Auth::user()->id)->first())
+                                <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-success btn-sm"><i
                                         class="bi bi-eye"></i></a>
-
+                                @else
+                                <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-primary btn-sm" onclick="classList.add('btn-success')">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                @endif
                                 @csrf
                                 @method('DELETE')
                                 <!-- ปุ่มลบ -->

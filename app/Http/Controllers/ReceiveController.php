@@ -88,12 +88,21 @@ class ReceiveController extends Controller
             }
         }
 
-        return redirect()->route('receive.saraban')->with([
-            'register' => 'รับหนังสือสำเร็จ',
-            'number' => $number,
-            'date' => datethaitext($receive->created_at),
-            'time' => date("H:i", strtotime($receive->created_at)),
-        ]);
+        if ($receive->dapartment_id == auth()->department->id) {
+            return redirect()->route('receive.index')->with([
+                'register' => 'รับหนังสือสำเร็จ',
+                'number' => $number,
+                'date' => datethaitext($receive->created_at),
+                'time' => date("H:i", strtotime($receive->created_at)),
+            ]);
+        } else {
+            return redirect()->route('receive.saraban')->with([
+                'register' => 'รับหนังสือสำเร็จ',
+                'number' => $number,
+                'date' => datethaitext($receive->created_at),
+                'time' => date("H:i", strtotime($receive->created_at)),
+            ]);
+        }
     }
 
     /**
