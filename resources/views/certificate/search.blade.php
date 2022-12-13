@@ -42,7 +42,7 @@
                         <!-- ปุ่มบันทึก -->
                         <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-primary btn-sm">ค้นหา</button>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
+                            <a href="{{ route('certificate.index') }}" class="btn btn-danger btn-sm">ยกเลิก</a>
                         </div>
                     </div>
                 </div>
