@@ -20,6 +20,7 @@
                 <div class="card-body">
                     <a href="{{ route('department.index') }}" class="btn btn-primary btn-sm mb-1"><i class="bi bi-building"></i> ฝ่ายอำนวยการ</a><br>
                     <a href="{{ route('user.index') }}" class="btn btn-success btn-sm mb-1"><i class="bi bi-person"></i> เจ้าหน้าที่</a><br>
+                    <a href="{{ route('folder.index') }}" class="btn btn-warning btn-sm mb-1"><i class="bi bi-tags"></i> แฟ้มเอกสาร</a><br>
                     <a href="{{ route('certificateType.index') }}" class="btn btn-danger btn-sm mb-1"><i class="bi bi-card-checklist"></i> ประเภทการรับรอง</a>
                 </div>
             </div>

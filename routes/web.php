@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CertificateTypeController;
 use App\Http\Controllers\CommandController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FolderController;
 use App\Http\Controllers\PresentController;
 use App\Http\Controllers\ReceiveController;
 use App\Http\Controllers\SendController;
@@ -75,6 +77,8 @@ Route::middleware(['employee'])->group(function () {
     Route::get('certificate/{id}/download', [CertificateController::class, 'download'])->name('certificate.download');
     Route::get('search/certificate', [CertificateController::class, 'homeSearch'])->name('certificate.search.home');
     Route::post('search/certificate', [CertificateController::class, 'search'])->name('certificate.search');
+    #Folder
+    Route::resource('folder', FolderController::class);
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
