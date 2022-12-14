@@ -81,5 +81,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
     $test = Receive::paginate(5);
-    return $test->currentPage();
+    return auth()->user()->department->id;
 });

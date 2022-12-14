@@ -88,7 +88,7 @@ class ReceiveController extends Controller
             }
         }
 
-        if ($receive->dapartment_id == auth()->department->id) {
+        if ($receive->department_id == auth()->user()->department_id) {
             return redirect()->route('receive.index')->with([
                 'register' => 'รับหนังสือสำเร็จ',
                 'number' => $number,
@@ -183,7 +183,6 @@ class ReceiveController extends Controller
         }
         //บันทึกลงฐานข้อมูล
         $receive->save();
-
         return redirect()->route('receive.show', $receive->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
@@ -199,9 +198,14 @@ class ReceiveController extends Controller
         if (!empty($delete->file)) {
             Storage::delete($delete->file);
         }
+        $dept = $delete->department_id;
         $delete->delete();
 
-        return redirect()->route('receive.index')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
+        if ($dept == auth()->user()->department_id) {
+            return redirect()->route('receive.index')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
+        } else {
+            return redirect()->route('receive.saraban')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
+        }
     }
 
     public function saraban()

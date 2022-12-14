@@ -190,7 +190,7 @@ class PresentController extends Controller
         } else {
             DepartmentPresent::where("present_id",  $id)->delete();
         }
-
+        
         return redirect()->route('present.show', $present->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
@@ -257,6 +257,12 @@ class PresentController extends Controller
                 ]);
             }
             try {
+                /*if (isMobile()) {
+                    $url = "/pcru_edoc/storage/app/$present->file";
+                    return redirect()->away('https://www.cavalry28.com' . $url);
+                } else {
+                    return response()->file(Storage::path($present->file));
+                }*/
                 return response()->file(Storage::path($present->file));
             } catch (\Throwable $e) {
                 return "ไม่พบไฟล์ หรือไฟล์อาจถูกลบ";
