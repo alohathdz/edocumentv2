@@ -40,7 +40,7 @@
 
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></a>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>

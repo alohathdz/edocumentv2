@@ -161,7 +161,7 @@
                             <!-- ปุ่มจัดเก็บ -->
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#folderModal">
-                                <i class="bi bi-archive"></i> จัดเก็บ
+                                <i class="bi bi-folder"></i> จัดเก็บ
                             </button>
                             <!-- ปุ่มแก้ไข -->
                             <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
