@@ -78,7 +78,7 @@
                 <div class="row">
                     <strong class="col-md-3 text-md-end">เจ้าหน้าที่รับผิดชอบ</strong>
                     <div class="col-md-9">
-                        <p class="text-danger">{{ $receive->department->name }}</p>
+                        <p class="text-danger">{{ isset($employee) ? $employee->user->name : "ยังไม่มีผู้รับผิดชอบ" }}</p>
                     </div>
                 </div>
                 <!-- แนบไฟล์ -->
@@ -102,7 +102,8 @@
                     <strong class="col-md-3 text-md-end">คนดาวน์โหลด</strong>
                     <div class="col-md-9">
                         <p class="text-success">
-                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#viewModal">
+                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#viewModal">
                                 <i class="bi bi-eye"></i>
                             </button> จำนวน {{ $views->count() }} คน
                         </p>
@@ -155,7 +156,8 @@
                     <div class="col-md-12 text-center">
                         <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
                             <!-- ปุ่มจัดเก็บ -->
-                            <button type="button" class="btn btn-primary btn-sm">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#folderModal">
                                 <i class="bi bi-archive"></i> จัดเก็บ
                             </button>
                             <!-- ปุ่มแก้ไข -->
@@ -166,7 +168,8 @@
                             @csrf
                             @method('DELETE')
                             <!-- ปุ่มลบ -->
-                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('ยืนยันการลบข้อมูล!')">
+                            <button class="btn btn-danger btn-sm" type="submit"
+                                onclick="return confirm('ยืนยันการลบข้อมูล!')">
                                 <i class="bi bi-trash"></i> ลบ
                             </button>
                             <!-- ปุ่มย้อนกลับ -->
@@ -190,6 +193,35 @@
         </div>
     </div>
 </div>
+<!-- แฟ้ม -->
+<form action="{{ route('receive.folder') }}" method="post">
+    <div class="modal fade" id="folderModal" tabindex="-1" aria-labelledby="folderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class=" modal-title" id="folderModalLabel">แฟ้มเอกสาร</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="receive" value="{{ $receive->id }}">
+                    <select class="form-select" name="folder" required>
+                        <option value="" selected disabled hidden>เลือกแฟ้ม</option>
+                        @foreach ($folders as $folder)
+                        <option value="{{ $folder->id }}" {{ ($receive->folder_id == $folder->id) ? 'selected' : '' }}>{{ $folder->name }}</option>
+                        @endforeach
+                        <option value="">นำออกจากแฟ้ม</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 
 @endsection
 @section('script')

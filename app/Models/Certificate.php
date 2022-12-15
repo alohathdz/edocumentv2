@@ -16,7 +16,8 @@ class Certificate extends Model
         'number',
         'file',
         'certificate_type_id',
-        'user_id'
+        'user_id',
+        'folder_id'
     ];
 
     public function user()

@@ -18,6 +18,7 @@ class Send extends Model
         'number',
         'file',
         'user_id',
+        'folder_id'
     ];
 
     public function user()

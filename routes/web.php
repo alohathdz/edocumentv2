@@ -79,6 +79,7 @@ Route::middleware(['employee'])->group(function () {
     Route::post('search/certificate', [CertificateController::class, 'search'])->name('certificate.search');
     #Folder
     Route::resource('folder', FolderController::class);
+    Route::post('folder/receive', [ReceiveController::class, 'folder'])->name('receive.folder');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

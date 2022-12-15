@@ -17,6 +17,7 @@ class Present extends Model
         'number',
         'file',
         'user_id',
+        'folder_id',
         'department_id',
     ];
 

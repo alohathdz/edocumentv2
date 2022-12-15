@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Receive::class);
     }
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class);
+    }
 }

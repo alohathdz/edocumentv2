@@ -14,7 +14,7 @@ class FolderController extends Controller
      */
     public function index()
     {
-        $folders = Folder::all();
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('folder.index', compact('folders'));
     }
@@ -40,7 +40,10 @@ class FolderController extends Controller
         $request->validate([
             'name' => 'required|string|max:50'
         ]);
-        Folder::create($request->all());
+        Folder::create([
+            'name' => $request->name,
+            'user_id' => auth()->user()->id,
+        ]);
         return redirect()->route('folder.index')->with('success', 'เพิ่มข้อมูลเรียบร้อย');
     }
 

@@ -19,6 +19,7 @@ class Receive extends Model
         'file',
         'department_id',
         'user_id',
+        'folder_id'
     ];
 
     public function department()

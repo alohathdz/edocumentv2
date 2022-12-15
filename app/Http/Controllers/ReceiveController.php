@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Folder;
 use App\Models\Receive;
 use App\Models\ReceiveUser;
 use Illuminate\Http\Request;
@@ -114,10 +115,23 @@ class ReceiveController extends Controller
     public function show($id)
     {
         $receive = Receive::findOrFail($id);
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
         $views = ReceiveUser::select('name', 'receive_user.created_at')->join('users', 'receive_user.user_id', '=', 'users.id')->where('receive_id', $id)->get();
         $i = 0;
 
-        return view('receive.show', ['receive' => $receive, 'views' => $views, 'i' => $i]);
+        if (!empty($receive->folder_id)) {
+            $employee = Folder::findOrFail($receive->folder_id);
+
+            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'i' => $i, 'employee' => $employee]);
+        } else {
+            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'i' => $i]);
+        }
+
+
+        /*if (empty($receive->folder_id) || Folder::where('id', $receive->folder_id)->where('user_id', auth()->user()->id)->first()) {
+            $check = true;
+            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'i' => $i, 'check' => $check]);
+        }*/
     }
 
     /**
@@ -311,5 +325,12 @@ class ReceiveController extends Controller
                 return abort(403, 'File not found.');
             }
         }
+    }
+
+    public function folder(Request $request)
+    {
+        Receive::findOrFail($request->receive)->update(['folder_id' => $request->folder]);
+
+        return redirect()->route('receive.show', $request->receive)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }
