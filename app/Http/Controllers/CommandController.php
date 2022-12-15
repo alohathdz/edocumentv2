@@ -6,6 +6,7 @@ use App\Models\Command;
 use App\Models\CommandDepartment;
 use App\Models\CommandUser;
 use App\Models\Department;
+use App\Models\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -101,10 +102,10 @@ class CommandController extends Controller
     public function show($id)
     {
         $command = Command::findOrFail($id);
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
         $views = CommandUser::select('name', 'command_user.created_at')->join('users', 'command_user.user_id', '=', 'users.id')->where('command_id', $id)->get();
-        $i = 0;
 
-        return view('command.show', ['command' => $command, 'views' => $views, 'i' => $i]);
+        return view('command.show', compact('command', 'folders', 'views'));
     }
 
     /**
@@ -258,5 +259,12 @@ class CommandController extends Controller
         } elseif (!$command->file) {
             return "ไม่ได้แนบไฟล์";
         }
+    }
+
+    public function folder(Request $request)
+    {
+        Command::findOrFail($request->command)->update(['folder_id' => $request->folder]);
+
+        return redirect()->route('command.show', $request->command)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }

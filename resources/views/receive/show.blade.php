@@ -133,6 +133,9 @@
                                     <tbody>
                                         @foreach ($views as $user)
                                         <tr class="text-center">
+                                            @php
+                                                $i = 0;
+                                            @endphp
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ timestampthaitext($user->created_at) }}</td>

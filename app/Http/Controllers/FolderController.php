@@ -55,7 +55,7 @@ class FolderController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

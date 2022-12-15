@@ -80,6 +80,10 @@ Route::middleware(['employee'])->group(function () {
     #Folder
     Route::resource('folder', FolderController::class);
     Route::post('folder/receive', [ReceiveController::class, 'folder'])->name('receive.folder');
+    Route::post('folder/send', [SendController::class, 'folder'])->name('send.folder');
+    Route::post('folder/present', [PresentController::class, 'folder'])->name('present.folder');
+    Route::post('folder/command', [CommandController::class, 'folder'])->name('command.folder');
+    Route::post('folder/certificate', [CertificateController::class, 'folder'])->name('certificate.folder');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

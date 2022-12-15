@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificate;
 use App\Models\CertificateType;
+use App\Models\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -83,8 +84,9 @@ class CertificateController extends Controller
     public function show($id)
     {
         $cert = Certificate::findOrFail($id);
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
-        return view('certificate.show', ['cert' => $cert]);
+        return view('certificate.show', compact('cert', 'folders'));
     }
 
     /**
@@ -199,5 +201,12 @@ class CertificateController extends Controller
         } elseif (!$cert->file) {
             return "ไม่ได้แนบไฟล์";
         }
+    }
+
+    public function folder(Request $request)
+    {
+        Certificate::findOrFail($request->certificate)->update(['folder_id' => $request->folder]);
+
+        return redirect()->route('certificate.show', $request->certificate)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }

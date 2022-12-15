@@ -86,6 +86,11 @@
                 <div class="row mt-2">
                     <div class="col-md-12 text-center">
                         <form action="{{ route('send.destroy', $send->id) }}" method="post">
+                            <!-- ปุ่มจัดเก็บ -->
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#folderModal">
+                                <i class="bi bi-archive"></i> จัดเก็บ
+                            </button>
                             <!-- ปุ่มแก้ไข -->
                             <a href="{{ route('send.edit', $send->id) }}" class="btn btn-warning btn-sm">
                                 <i class="bi bi-pencil-square"></i> แก้ไข
@@ -94,7 +99,8 @@
                             @csrf
                             @method('DELETE')
                             <!-- ปุ่มลบ -->
-                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('ยืนยันการลบข้อมูล!')">
+                            <button class="btn btn-danger btn-sm" type="submit"
+                                onclick="return confirm('ยืนยันการลบข้อมูล!')">
                                 <i class="bi bi-trash"></i> ลบ
                             </button>
                             <!-- ปุ่มย้อนกลับ -->
@@ -114,6 +120,34 @@
         </div>
     </div>
 </div>
+<!-- แฟ้ม -->
+<form action="{{ route('send.folder') }}" method="post">
+    <div class="modal fade" id="folderModal" tabindex="-1" aria-labelledby="folderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class=" modal-title" id="folderModalLabel">แฟ้มเอกสาร</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="send" value="{{ $send->id }}">
+                    <select class="form-select" name="folder" required>
+                        <option value="" selected disabled hidden>เลือกแฟ้ม</option>
+                        @foreach ($folders as $folder)
+                        <option value="{{ $folder->id }}" {{ ($send->folder_id == $folder->id) ? 'selected' : '' }}>{{ $folder->name }}</option>
+                        @endforeach
+                        <option value="">นำออกจากแฟ้ม</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 @endsection
 @section('script')

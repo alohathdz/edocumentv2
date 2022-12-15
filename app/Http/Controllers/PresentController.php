@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\DepartmentPresent;
+use App\Models\Folder;
 use App\Models\Present;
 use App\Models\PresentUser;
 use Illuminate\Http\Request;
@@ -105,10 +106,10 @@ class PresentController extends Controller
     public function show($id)
     {
         $present = Present::findOrFail($id);
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
         $views = PresentUser::select('name', 'present_user.created_at')->join('users', 'present_user.user_id', '=', 'users.id')->where('present_id', $id)->get();
-        $i = 0;
-
-        return view('present.show', ['present' => $present, 'views' => $views, 'i' => $i]);
+        
+        return view('present.show', compact('present', 'folders', 'views'));
     }
 
     /**
@@ -270,5 +271,12 @@ class PresentController extends Controller
         } elseif (!$present->file) {
             return "ไม่ได้แนบไฟล์";
         }
+    }
+
+    public function folder(Request $request)
+    {
+        Present::findOrFail($request->present)->update(['folder_id' => $request->folder]);
+
+        return redirect()->route('present.show', $request->present)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }

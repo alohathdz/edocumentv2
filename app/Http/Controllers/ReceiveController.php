@@ -117,16 +117,14 @@ class ReceiveController extends Controller
         $receive = Receive::findOrFail($id);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
         $views = ReceiveUser::select('name', 'receive_user.created_at')->join('users', 'receive_user.user_id', '=', 'users.id')->where('receive_id', $id)->get();
-        $i = 0;
 
         if (!empty($receive->folder_id)) {
             $employee = Folder::findOrFail($receive->folder_id);
 
-            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'i' => $i, 'employee' => $employee]);
+            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'employee' => $employee]);
         } else {
-            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'i' => $i]);
+            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views]);
         }
-
 
         /*if (empty($receive->folder_id) || Folder::where('id', $receive->folder_id)->where('user_id', auth()->user()->id)->first()) {
             $check = true;

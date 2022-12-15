@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Folder;
 use App\Models\Send;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -89,8 +90,9 @@ class SendController extends Controller
     public function show($id)
     {
         $send = Send::findOrFail($id);
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
-        return view('send.show', ['send' => $send]);
+        return view('send.show', compact('send', 'folders'));
     }
 
     /**
@@ -205,5 +207,12 @@ class SendController extends Controller
         } elseif (!$send->file) {
             return "ไม่ได้แนบไฟล์";
         }
+    }
+
+    public function folder(Request $request)
+    {
+        Send::findOrFail($request->send)->update(['folder_id' => $request->folder]);
+
+        return redirect()->route('send.show', $request->send)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }
