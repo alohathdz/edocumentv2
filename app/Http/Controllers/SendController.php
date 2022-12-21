@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Folder;
 use App\Models\Send;
 use Illuminate\Http\Request;
@@ -9,6 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class SendController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -62,6 +68,7 @@ class SendController extends Controller
             $send->urgency = $request->urgency;
             $send->number = $number;
             $send->user_id = auth()->user()->id;
+            $send->department_id = auth()->user()->department_id;
             $send->save();
 
             return redirect()->route('send.upload', $send->id);
@@ -105,7 +112,7 @@ class SendController extends Controller
     {
         $send = Send::findOrFail($id);
 
-        return view('send.edit', ['send' => $send]);
+        return view('send.edit', compact('send'));
     }
 
     /**
@@ -122,7 +129,7 @@ class SendController extends Controller
             'date' => ['required'],
             'to' => ['required', 'string', 'max:100'],
             'topic' => ['required', 'string', 'max:255'],
-            'urgency' => ['required']
+            'urgency' => ['required'],
         ]);
         //แก้ไขข้อมูล
         $send = Send::findOrFail($id);

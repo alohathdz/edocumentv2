@@ -67,6 +67,13 @@
                         <p class="text-primary">{{ $send->urgency }}</p>
                     </div>
                 </div>
+                <!-- ฝ่ายอำนวยการ -->
+                <div class="row">
+                    <strong class="col-md-3 text-md-end">ฝ่ายอำนวยการ</strong>
+                    <div class="col-md-9">
+                        <p class="text-primary">{{ $send->department->name }}</p>
+                    </div>
+                </div>
                 <!-- แนบไฟล์ -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">ไฟล์</strong>
@@ -135,7 +142,8 @@
                     <select class="form-select" name="folder" required>
                         <option value="" selected disabled hidden>เลือกแฟ้ม</option>
                         @foreach ($folders as $folder)
-                        <option value="{{ $folder->id }}" {{ ($send->folder_id == $folder->id) ? 'selected' : '' }}>{{ $folder->name }}</option>
+                        <option value="{{ $folder->id }}" {{ ($send->folder_id == $folder->id) ? 'selected' : '' }}>{{
+                            $folder->name }}</option>
                         @endforeach
                         <option value="">นำออกจากแฟ้ม</option>
                     </select>

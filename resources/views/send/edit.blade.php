@@ -11,7 +11,8 @@
         <!-- Card -->
         <div class="card mt-1">
             <div class="card-body">
-                <form action="{{ route('send.update', $send->id) }}" method="post" class="row g-2" enctype="multipart/form-data">
+                <form action="{{ route('send.update', $send->id) }}" method="post" class="row g-2"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <!-- วันที่หนังสือ -->
@@ -29,8 +30,8 @@
                     <!-- จาก -->
                     <div class="col-md-6">
                         <label for="to" class="col-form-label"><strong>ถึง</strong></label>
-                        <input type="text" class="form-control @error('to') is-invalid @enderror" id="to"
-                            name="to" value="{{ $send->to }}" required autocomplete="to" autofocus>
+                        <input type="text" class="form-control @error('to') is-invalid @enderror" id="to" name="to"
+                            value="{{ $send->to }}" required autocomplete="to" autofocus>
 
                         @error('to')
                         <span class="invalid-feedback" role="alert">

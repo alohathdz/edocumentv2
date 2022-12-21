@@ -29,8 +29,8 @@
                         <!-- จาก -->
                         <div class="col-md-6">
                             <label for="to" class="col-form-label"><strong>ถึง</strong></label>
-                            <input type="text" class="form-control @error('to') is-invalid @enderror" id="to"
-                                name="to" value="{{ old('to') }}" required autocomplete="to" autofocus>
+                            <input type="text" class="form-control @error('to') is-invalid @enderror" id="to" name="to"
+                                value="{{ old('to') }}" required autocomplete="to" autofocus>
 
                             @error('to')
                             <span class="invalid-feedback" role="alert">

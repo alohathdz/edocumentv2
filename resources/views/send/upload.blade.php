@@ -49,6 +49,13 @@
                             <p class="text-primary">{{ $send->urgency }}</p>
                         </div>
                     </div>
+                    <!-- ฝ่ายอำนวยการ -->
+                    <div class="row">
+                        <strong class="col-md-3 text-md-end">ฝ่ายอำนวยการ</strong>
+                        <div class="col-md-9">
+                            <p class="text-primary">{{ $send->department->name }}</p>
+                        </div>
+                    </div>
                     <!-- แนบไฟล์ -->
                     <div class="row">
                         <label for="file" class="col-md-3 col-form-label text-md-end"><strong>แนบไฟล์</strong></label>

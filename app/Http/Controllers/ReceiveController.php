@@ -12,6 +12,11 @@ use setasign\Fpdi\Fpdi;
 
 class ReceiveController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *

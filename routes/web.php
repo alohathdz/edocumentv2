@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CertificateTypeController;
 use App\Http\Controllers\CommandController;
+use App\Http\Controllers\CopyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FolderController;
@@ -84,6 +85,8 @@ Route::middleware(['employee'])->group(function () {
     Route::post('folder/present', [PresentController::class, 'folder'])->name('present.folder');
     Route::post('folder/command', [CommandController::class, 'folder'])->name('command.folder');
     Route::post('folder/certificate', [CertificateController::class, 'folder'])->name('certificate.folder');
+    #Copy
+    Route::resource('copy', CopyController::class);
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

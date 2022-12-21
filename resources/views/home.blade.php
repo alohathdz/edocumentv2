@@ -18,10 +18,10 @@
                     <strong>ข้อมูลพื้นฐาน</strong>
                 </div>
                 <div class="card-body">
-                    <a href="{{ route('department.index') }}" class="btn btn-primary btn-sm mb-1"><i class="bi bi-building"></i> ฝ่ายอำนวยการ</a><br>
-                    <a href="{{ route('user.index') }}" class="btn btn-success btn-sm mb-1"><i class="bi bi-person"></i> เจ้าหน้าที่</a><br>
-                    <a href="{{ route('folder.index') }}" class="btn btn-warning btn-sm mb-1"><i class="bi bi-tags"></i> แฟ้มเอกสาร</a><br>
-                    <a href="{{ route('certificateType.index') }}" class="btn btn-danger btn-sm mb-1"><i class="bi bi-card-checklist"></i> ประเภทการรับรอง</a>
+                    <a href="{{ route('department.index') }}" class="btn btn-primary btn-sm mb-1 col-sm-5"><i class="bi bi-building"></i> ฝ่ายอำนวยการ</a><br>
+                    <a href="{{ route('user.index') }}" class="btn btn-success btn-sm mb-1 col-sm-5"><i class="bi bi-person"></i> เจ้าหน้าที่</a><br>
+                    <a href="{{ route('folder.index') }}" class="btn btn-warning btn-sm mb-1 col-sm-5"><i class="bi bi-tags"></i> แฟ้มเอกสาร</a><br>
+                    <a href="{{ route('certificateType.index') }}" class="btn btn-danger btn-sm mb-1 col-sm-5"><i class="bi bi-card-checklist"></i> ประเภทการรับรอง</a>
                 </div>
             </div>
         </div>
@@ -31,12 +31,12 @@
                     <strong>หนังสือราชการ</strong>
                 </div>
                 <div class="card-body">
-                    <a href="{{ route('receive.index') }}" class="btn btn-primary btn-sm mb-1"><i class="bi bi-file-earmark-text"></i> หนังสือรับ</a><br>
-                    <a href="{{ route('send.index') }}" class="btn btn-success btn-sm mb-1"><i class="bi bi-file-earmark-text"></i> หนังสือส่ง</a><br>
-                    <a href="{{ route('present.index') }}" class="btn btn-danger btn-sm mb-1"><i class="bi bi-file-earmark-text"></i> หนังสือนำเรียน</a><br>
-                    <a href="{{ route('command.index') }}" class="btn btn-warning btn-sm mb-1"><i class="bi bi-file-earmark-text"></i> คำสั่ง</a><br>
-                    <a href="{{ route('certificate.index') }}" class="btn btn-info btn-sm"><i class="bi bi-file-earmark-text"></i> หนังสือรับรอง</a><br>
-                    
+                    <a href="{{ route('receive.index') }}" class="btn btn-primary btn-sm mb-1 col-sm-4"><i class="bi bi-file-earmark-text"></i> หนังสือรับ</a><br>
+                    <a href="{{ route('send.index') }}" class="btn btn-success btn-sm mb-1 col-sm-4"><i class="bi bi-file-earmark-text"></i> หนังสือส่ง</a><br>
+                    <a href="{{ route('present.index') }}" class="btn btn-danger btn-sm mb-1 col-sm-4"><i class="bi bi-file-earmark-text"></i> หนังสือนำเรียน</a><br>
+                    <a href="{{ route('command.index') }}" class="btn btn-warning btn-sm mb-1 col-sm-4"><i class="bi bi-file-earmark-text"></i> คำสั่ง</a><br>
+                    <a href="{{ route('certificate.index') }}" class="btn btn-info btn-sm mb-1 col-sm-4"><i class="bi bi-file-earmark-text"></i> หนังสือรับรอง</a><br>
+                    <a href="{{ route('copy.index') }}" class="btn btn-dark btn-sm col-sm-4"><i class="bi bi-file-earmark-text"></i> สำเนา</a>
                 </div>
             </div>
         </div>

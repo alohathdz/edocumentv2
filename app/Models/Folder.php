@@ -18,4 +18,29 @@ class Folder extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function receives()
+    {
+        return $this->hasMany(Receive::class);
+    }
+
+    public function presents()
+    {
+        return $this->hasMany(Present::class);
+    }
+
+    public function sends()
+    {
+        return $this->hasMany(Send::class);
+    }
+
+    public function commands()
+    {
+        return $this->hasMany(Command::class);
+    }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

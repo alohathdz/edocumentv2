@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Storage;
 
 class CommandController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +51,7 @@ class CommandController extends Controller
             //ตรวจสอบ
             $request->validate([
                 'date' => ['required'],
-                'topic' => ['required', 'string', 'max:255'],
+                'topic' => ['required', 'string', 'max:255']
             ]);
             $number = Command::select('number')->whereYear('created_at', '=', date('Y'))->max('number');
             $number += 1;
@@ -57,6 +62,7 @@ class CommandController extends Controller
             $command->topic = arabicnum($request->topic);
             $command->number = $number;
             $command->user_id = auth()->user()->id;
+            $command->department_id = auth()->user()->department_id;
             $command->save();
 
             return redirect()->route('command.upload', $command->id);
@@ -145,6 +151,7 @@ class CommandController extends Controller
         $request->validate([
             'date' => ['required'],
             'topic' => ['required', 'string', 'max:255'],
+            'department' => ['required']
         ]);
         //เพิ่มข้อมูล
         $command = Command::findOrFail($id);

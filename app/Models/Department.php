@@ -29,4 +29,14 @@ class Department extends Model
     {
         return $this->hasMany(Present::class);
     }
+
+    public function sends()
+    {
+        return $this->hasMany(Send::class);
+    }
+
+    public function commands()
+    {
+        return $this->hasMany(Command::class);
+    }
 }

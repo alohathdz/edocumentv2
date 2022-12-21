@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PresentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,6 +37,7 @@ class PresentController extends Controller
     public function create()
     {
         $departments = Department::all();
+        
         return view('present.create', ['departments' => $departments]);
     }
 
