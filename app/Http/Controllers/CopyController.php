@@ -17,28 +17,42 @@ class CopyController extends Controller
 
     public function index()
     {
-        $presents = DepartmentPresent::select('topic', 'initial', 'no')
+        $dept = auth()->user()->department_id;
+
+        $copys = DB::table(DB::raw("(SELECT no, topic, (SELECT initial FROM departments d WHERE c.department_id = d.id) as dept, cd.created_at
+        FROM commands c, command_department cd
+        WHERE c.id = cd.command_id
+        AND cd.department_id = '$dept'
+        UNION
+        SELECT no, topic, (SELECT initial FROM departments d WHERE p.department_id = d.id) as dept, dp.created_at
+        FROM presents p, department_present dp
+        WHERE p.id = dp.present_id
+        AND dp.department_id = '$dept') a"))
+            ->orderBy('created_at', 'DESC')
+            ->paginate(20);
+    }
+
+    public function presents()
+    {
+        $presents = DepartmentPresent::select('present_id', 'topic', 'initial', 'no', 'department_present.created_at')
             ->where('department_present.department_id', auth()->user()->department_id)
             ->join('presents', 'department_present.present_id', '=', 'presents.id')
-            ->join('departments', 'department_present.department_id', '=', 'departments.id');
+            ->join('departments', 'department_present.department_id', '=', 'departments.id')
+            ->orderBy('department_present.created_at', 'DESC')
+            ->paginate(20);
 
-        $commands = CommandDepartment::select('topic', 'initial', 'no')
+        return view('copy.present', compact('presents'));
+    }
+
+    public function commands()
+    {
+        $commands = CommandDepartment::select('command_id', 'topic', 'initial', 'no', 'command_department.created_at')
             ->where('command_department.department_id', auth()->user()->department_id)
             ->join('commands', 'command_department.command_id', '=', 'commands.id')
             ->join('departments', 'command_department.department_id', '=', 'departments.id')
-            ->union($presents)
+            ->orderBy('command_department.created_at', 'DESC')
             ->paginate(20);
 
-        $copys = DB::table(DB::raw('(select no, topic, cd.created_at from commands c, command_department cd
-        WHERE c.id = cd.command_id AND cd.department_id = 1
-        union
-        select no, topic, dp.created_at from presents p, department_present dp
-        WHERE p.id = dp.present_id AND dp.department_id = 1) a'))
-            ->orderBy('created_at', 'DESC')
-            ->paginate(20);
-
-        #$result = $commands->union($presents);
-
-        return view('copy.index', compact('copys'));
+        return view('copy.command', compact('commands'));
     }
 }

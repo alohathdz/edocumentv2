@@ -86,7 +86,8 @@ Route::middleware(['employee'])->group(function () {
     Route::post('folder/command', [CommandController::class, 'folder'])->name('command.folder');
     Route::post('folder/certificate', [CertificateController::class, 'folder'])->name('certificate.folder');
     #Copy
-    Route::resource('copy', CopyController::class);
+    Route::get('copy/present', [CopyController::class, 'presents'])->name('copy.present');
+    Route::get('copy/command', [CopyController::class, 'commands'])->name('copy.command');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

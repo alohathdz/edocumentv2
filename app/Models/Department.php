@@ -39,4 +39,9 @@ class Department extends Model
     {
         return $this->hasMany(Command::class);
     }
+
+    public function copypresents()
+    {
+        return $this->belongsToMany(Present::class, 'department_present');
+    }
 }

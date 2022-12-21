@@ -30,4 +30,9 @@ class Present extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'department_present');
+    }
 }
