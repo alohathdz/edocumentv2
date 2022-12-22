@@ -25,7 +25,7 @@
         <hr class="my-2">
         <div class="table-responsive mt-1">
             <table class="table table-bordered table-primary table-hover align-middle" id="myTable">
-                <thead class="text-center">
+                <thead>
                     <tr>
                         <th class="text-center">ที่</th>
                         <th class="text-center">วันที่รับ</th>
@@ -53,70 +53,70 @@
                             <i class="bi bi-check-circle-fill text-success"></i>
                             @endif
                         </td>
-                        <td class="text-center">
-                            <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                                <!-- ปุ่มดูคนดาวน์โหลด -->
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#viewModal{{ $receive->id }}">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                                <!-- Modal เช็คคนดาวน์โหลด -->
-                                <div class="modal fade" id="viewModal{{ $receive->id }}" tabindex="-1" aria-labelledby="viewModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                @php
-                                                $views = ('App\Models\ReceiveUser')::select('name',
-                                                'receive_user.created_at')
-                                                ->join('users', 'receive_user.user_id', '=', 'users.id')
-                                                ->where('receive_id', $receive->id)->get();
-                                                $i = 0;
-                                                @endphp
-                                                @if (!$views->first())
-                                                ยังไม่มีผู้ดาวน์โหลด
-                                                @else
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th class="text-center">ลำดับ</th>
-                                                            <th class="text-center">ชื่อผู้ดาวน์โหลด</th>
-                                                            <th class="text-center">เวลาดาวน์โหลด</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($views as $user)
-                                                        <tr class="text-center">
-                                                            <td>{{ ++$i }}</td>
-                                                            <td>{{ $user->name }}</td>
-                                                            <td>{{ timestampthaitext($user->created_at) }}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มปิด -->
-                                                <button type="button" class="btn btn-secondary btn-sm"
-                                                    data-bs-dismiss="modal">ปิด</button>
-                                            </div>
+                        <td class="d-flex gap-1 justify-content-center">
+                            <!-- ปุ่มดูคนดาวน์โหลด -->
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#viewModal{{ $receive->id }}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <!-- Modal เช็คคนดาวน์โหลด -->
+                            <div class="modal fade" id="viewModal{{ $receive->id }}" tabindex="-1"
+                                aria-labelledby="viewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            @php
+                                            $views = ('App\Models\ReceiveUser')::select('name',
+                                            'receive_user.created_at')
+                                            ->join('users', 'receive_user.user_id', '=', 'users.id')
+                                            ->where('receive_id', $receive->id)->get();
+                                            $i = 0;
+                                            @endphp
+                                            @if (!$views->first())
+                                            ยังไม่มีผู้ดาวน์โหลด
+                                            @else
+                                            <table class="table">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th class="text-center">ลำดับ</th>
+                                                        <th class="text-center">ชื่อผู้ดาวน์โหลด</th>
+                                                        <th class="text-center">เวลาดาวน์โหลด</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($views as $user)
+                                                    <tr class="text-center">
+                                                        <td>{{ ++$i }}</td>
+                                                        <td>{{ $user->name }}</td>
+                                                        <td>{{ timestampthaitext($user->created_at) }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- ปุ่มปิด -->
+                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                data-bs-dismiss="modal">ปิด</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                @if (auth()->user()->role == 1 || $receive->user_id == auth()->user()->id)
-                                <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
+                            @if (auth()->user()->role == 1 || $receive->user_id == auth()->user()->id)
+                            <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <!-- ปุ่มลบ -->
+                            <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <!-- ปุ่มลบ -->
                                 <button class="btn btn-danger btn-sm" type="submit"
                                     onclick="return confirm('ยืนยันการลบข้อมูล!')">
                                     <i class="bi bi-trash"></i>
