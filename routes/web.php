@@ -77,6 +77,7 @@ Route::middleware(['saraban'])->group(function () {
 Route::middleware(['employee'])->group(function () {
     #หนังสือรับ
     Route::get('receive/{id}/download', [ReceiveController::class, 'download'])->name('receive.download');
+    Route::get('receive/{id}/destroy', [ReceiveController::class, 'destroy'])->name('receive.destroy');
     #หนังสือส่ง
     Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
     #คำสั่ง

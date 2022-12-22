@@ -53,7 +53,7 @@
                             <i class="bi bi-check-circle-fill text-success"></i>
                             @endif
                         </td>
-                        <td class="d-flex gap-1 justify-content-center">
+                        <td class="text-center">
                             <!-- ปุ่มดูคนดาวน์โหลด -->
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#viewModal{{ $receive->id }}">
@@ -108,21 +108,59 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- ปุ่มจัดเก็บ -->
+                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#folderModal{{ $receive->id }}">
+                                <i class="bi bi-folder"></i>
+                            </button>
+                            <!-- Modal จัดเก็บ -->
+                            <div class="modal fade" id="folderModal{{ $receive->id }}" tabindex="-1" aria-labelledby="folderModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form action="{{ route('receive.folder') }}" method="post">
+                                            @csrf
+                                            <div class="modal-header">
+                                                <h5 class=" modal-title" id="folderModalLabel">แฟ้มเอกสาร</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="hidden" name="receive" value="{{ $receive->id }}">
+                                                <select class="form-select" name="folder" required>
+                                                    <option value="" selected disabled hidden>เลือกแฟ้ม</option>
+                                                    @foreach ($folders as $folder)
+                                                    <option value="{{ $folder->id }}" {{ $receive->folder_id ==
+                                                        $folder->id ? 'selected' : '' }}>{{
+                                                        $folder->name }}
+                                                    </option>
+                                                    @endforeach
+                                                    @if (!empty($receive->folder_id))
+                                                    <option value="">นำออกจากแฟ้ม</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                    data-bs-dismiss="modal">ปิด</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
                             @if (auth()->user()->role == 1 || $receive->user_id == auth()->user()->id)
+                            <!-- ปุ่มแก้ไข -->
                             <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <!-- ปุ่มลบ -->
-                            <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit"
-                                    onclick="return confirm('ยืนยันการลบข้อมูล!')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                                @endif
-                            </form>
+                            <a href="{{ route('receive.destroy', $receive->id) }}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('ยืนยันการลบข้อมูล');">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
