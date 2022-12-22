@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Folder;
 use App\Models\Receive;
 use App\Models\ReceiveUser;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
@@ -24,9 +25,10 @@ class ReceiveController extends Controller
      */
     public function index()
     {
-        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
+        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
-        return view('receive.index', ['receives' => $receives]);
+        return view('receive.index', compact('receives', 'folders'));
     }
 
     /**
@@ -195,7 +197,12 @@ class ReceiveController extends Controller
         }
         //บันทึกลงฐานข้อมูล
         $receive->save();
-        return redirect()->route('receive.show', $receive->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+
+        if ($receive->department_id != auth()->user()->department_id) {
+            return redirect()->route('receive.saraban')->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+        }
+
+        return redirect()->route('receive.index')->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
     /**
@@ -213,11 +220,11 @@ class ReceiveController extends Controller
         $dept = $delete->department_id;
         $delete->delete();
 
-        if ($dept == auth()->user()->department_id) {
-            return redirect()->route('receive.index')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
-        } else {
+        if ($dept != auth()->user()->department_id) {
             return redirect()->route('receive.saraban')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
         }
+
+        return redirect()->route('receive.index')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
     }
 
     public function saraban()
@@ -309,17 +316,15 @@ class ReceiveController extends Controller
 
                 return $pdf->Output('I', basename($file), true);
             } elseif (!$receive->file) {
-                //Null
+                #Null
                 return "ไม่ได้แนบไฟล์";
             }
         } catch (\Exception $e) {
             try {
-                //Pdf < v1.3
+                #Pdf < v1.3
                 return response()->file(Storage::path($receive->file));
             } catch (\Throwable $th) {
-                //File not found.
-                //$receive->update(['file' => null]);
-
+                #File not found.
                 return abort(403, 'File not found.');
             }
         }

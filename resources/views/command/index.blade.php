@@ -34,7 +34,12 @@
                     <tr>
                         <td>{{ $command->number }}</td>
                         <td>{{ datethaitext($command->date) }}</td>
-                        <td class="text-start">{{ Str::limit($command->topic, 100) }}</td>
+                        <td class="text-start">
+                            {{ Str::limit($command->topic, 100) }}
+                            @if (!empty($command->folder_id))
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            @endif
+                        </td>
                         <td>
                             <form action="{{ route('command.destroy', $command->id) }}" method="post">
                                 <a href="{{ route('command.show', $command->id) }}" class="btn btn-primary btn-sm"><i
@@ -59,7 +64,7 @@
 @endsection
 @section('script')
 <!-- Date Time Picker Thai -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <link href="{{ asset('bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>

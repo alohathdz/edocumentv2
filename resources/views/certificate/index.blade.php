@@ -19,15 +19,16 @@
                     ออกที่หนังสือรับรอง</a>
             </div>
         </div>
+        <hr class="my-2">
         <div class="table-responsive mt-1">
-            <table class="table table-bordered table-primary table-hover text-center align-middle">
+            <table class="table table-bordered table-primary table-hover text-center align-middle" id="myTable">
                 <thead>
                     <tr>
-                        <th>เลขทะเบียน</th>
-                        <th>ลงวันที่</th>
-                        <th>ประเภท</th>
-                        <th>ผู้ขอรับรอง</th>
-                        <th>Action</th>
+                        <th class="text-center">เลขทะเบียน</th>
+                        <th class="text-center">ลงวันที่</th>
+                        <th class="text-center">ประเภท</th>
+                        <th class="text-center">ผู้ขอรับรอง</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -36,7 +37,12 @@
                         <td>{{ $certificate->number }}</td>
                         <td>{{ datethaitext($certificate->date) }}</td>
                         <td>{{ $certificate->certificateType->name }}</td>
-                        <td>{{ $certificate->name }}</td>
+                        <td>
+                            {{ $certificate->name }}
+                            @if (!empty($certificate->folder_id))
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            @endif
+                        </td>
                         <td>
                             <form action="{{ route('certificate.destroy', $certificate->id) }}" method="post">
                                 <a href="{{ route('certificate.show', $certificate->id) }}"
@@ -60,20 +66,16 @@
 </div>
 @endsection
 @section('script')
-<!-- Date Time Picker Thai -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<link href="{{ asset('bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
-<script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>
-<script src="{{ asset('bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js') }}"></script>
+<!-- DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
+<script src="{{ asset('js/datatables.js') }}"></script>
 <script>
-    $(function() {
-            $("#date").datepicker({
-                language: 'th-th',
-                format: 'dd/mm/yyyy',
-                autoclose: true
-            });
-        });
+    $(document).ready(function () {
+    $('#myTable').DataTable({
+        'ordering': false
+    });
+});
 </script>
 <!-- Alert -->
 @if (session('success'))

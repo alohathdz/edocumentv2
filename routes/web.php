@@ -97,6 +97,6 @@ Route::middleware(['employee'])->group(function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
-    $test = Receive::paginate(5);
-    return auth()->user()->department->id;
+    $url = $_SERVER['REQUEST_URI'];
+    return $url;
 });

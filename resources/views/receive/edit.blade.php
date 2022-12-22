@@ -11,7 +11,8 @@
         <!-- Card -->
         <div class="card mt-1">
             <div class="card-body">
-                <form action="{{ route('receive.update', $receive->id) }}" method="post" class="row g-2" enctype="multipart/form-data">
+                <form action="{{ route('receive.update', $receive->id) }}" method="post" class="row g-2"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <!-- ที่หนังสือ -->
@@ -92,7 +93,20 @@
                     <!-- ปุ่มบันทึก -->
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary btn-sm" onclick="classList.add('disabled')">บันทึก</button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
+                        <!-- ปุ่มยกเลิก -->
+                        @if (session('success') && $receive->department_id != Auth::user()->department_id)
+                        <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm">
+                            ยกเลิก
+                        </a>
+                        @elseif (session('success') && $receive->department_id == Auth::user()->department_id)
+                        <a href="{{ route('receive.index') }}" class="btn btn-danger btn-sm">
+                            ยกเลิก
+                        </a>
+                        @else
+                        <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">
+                            ยกเลิก
+                        </button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -103,7 +117,7 @@
 @endsection
 @section('script')
 <!-- Date Time Picker Thai -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <link href="{{ asset('bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>

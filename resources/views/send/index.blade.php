@@ -36,8 +36,15 @@
                         <td>{{ $send->number }}</td>
                         <td>{{ datethaitext($send->date) }}</td>
                         <td class="text-start">{{ $send->to }}</td>
-                        <td class="text-start">{{ Str::limit($send->topic, 100) }} @if ($send->urgency != "ไม่มี") <span
-                                style="color:red">({{ $send->urgency }})</span> @endif</td>
+                        <td class="text-start">
+                            {{ Str::limit($send->topic, 100) }}
+                            @if ($send->urgency != "ไม่มี")
+                            <span style="color:red">({{ $send->urgency }})</span>
+                            @endif
+                            @if (!empty($send->folder_id))
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            @endif
+                        </td>
                         <td>
                             <form action="{{ route('send.destroy', $send->id) }}" method="post">
                                 <a href="{{ route('send.show', $send->id) }}" class="btn btn-primary btn-sm"><i
@@ -62,7 +69,7 @@
 @endsection
 @section('script')
 <!-- Date Time Picker Thai -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <link href="{{ asset('bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>

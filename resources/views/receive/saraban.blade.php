@@ -23,15 +23,15 @@
             </div>
         </div>
         <div class="table-responsive mt-1">
-            <table class="table table-bordered table-primary table-hover align-middle">
+            <table class="table table-bordered table-primary table-hover align-middle" id="myTable">
                 <thead class="text-center">
                     <tr>
-                        <th>ที่</th>
-                        <th>วันที่รับ</th>
-                        <th>จาก</th>
-                        <th>เรื่อง</th>
-                        <th>ฝ่าย</th>
-                        <th>Action</th>
+                        <th class="text-center">ที่</th>
+                        <th class="text-center">วันที่รับ</th>
+                        <th class="text-center">จาก</th>
+                        <th class="text-center">เรื่อง</th>
+                        <th class="text-center">ฝ่าย</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -40,21 +40,88 @@
                         <td class="text-center">{{ $receive->number }}</td>
                         <td class="text-center">{{ timestampthaitext($receive->created_at) }}</td>
                         <td>{{ $receive->from }}</td>
-                        <td>{{ Str::limit($receive->topic, 100) }} @if ($receive->urgency != "ไม่มี") <span
-                                style="color:red">({{ $receive->urgency }})</span> @endif</td>
+                        <td>
+                            {{ Str::limit($receive->topic, 100) }}
+                            @if ($receive->urgency != "ไม่มี")
+                            <span style="color:red">({{ $receive->urgency }})</span>
+                            @endif
+                            @if (!empty($receive->file))
+                            <a href="{{ route('receive.download', $receive->id) }}"><i
+                                    class="bi bi-file-earmark-text-fill"></i></a>
+                            @endif
+                            @if (!empty($receive->folder_id))
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            @endif
+                        </td>
                         <td class="text-center">{{ $receive->department->initial }}</td>
                         <td class="text-center">
                             <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                                <!-- ดูข้อมูลหนังสือ -->
-                                <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-primary btn-sm"><i
-                                        class="bi bi-eye"></i></a>
+                                <!-- ปุ่มดูคนดาวน์โหลด -->
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#viewModal{{ $receive->id }}">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <!-- Modal เช็คคนดาวน์โหลด -->
+                                <div class="modal fade" id="viewModal{{ $receive->id }}" tabindex="-1" aria-labelledby="viewModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-start">
+                                                @php
+                                                $views = ('App\Models\ReceiveUser')::select('name',
+                                                'receive_user.created_at')
+                                                ->join('users', 'receive_user.user_id', '=', 'users.id')
+                                                ->where('receive_id', $receive->id)->get();
+                                                $i = 0;
+                                                @endphp
+                                                @if (!$views->first())
+                                                ยังไม่มีผู้ดาวน์โหลด
+                                                @else
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th class="text-center">ลำดับ</th>
+                                                            <th class="text-center">ชื่อผู้ดาวน์โหลด</th>
+                                                            <th class="text-center">เวลาดาวน์โหลด</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($views as $user)
+                                                        <tr class="text-center">
+                                                            <td>{{ ++$i }}</td>
+                                                            <td>{{ $user->name }}</td>
+                                                            <td>{{ timestampthaitext($user->created_at) }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                @endif
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- ปุ่มปิด -->
+                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                    data-bs-dismiss="modal">ปิด</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 @if (auth()->user()->role == 1 || $receive->user_id == auth()->user()->id)
+                                <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
                                 @csrf
                                 @method('DELETE')
                                 <!-- ปุ่มลบ -->
                                 <button class="btn btn-danger btn-sm" type="submit"
-                                    onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
+                                    onclick="return confirm('ยืนยันการลบข้อมูล!')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
                                 @endif
                             </form>
                         </td>
@@ -68,20 +135,16 @@
 </div>
 @endsection
 @section('script')
-<!-- Date Time Picker Thai -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<link href="{{ asset('bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
-<script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>
-<script src="{{ asset('bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js') }}"></script>
+<!-- DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
+<script src="{{ asset('js/datatables.js') }}"></script>
 <script>
-    $(function() {
-            $("#date").datepicker({
-                language: 'th-th',
-                format: 'dd/mm/yyyy',
-                autoclose: true
-            });
-        });
+    $(document).ready(function () {
+    $('#myTable').DataTable({
+        'ordering': false
+    });
+});
 </script>
 <!-- Alert -->
 @if (session('success'))

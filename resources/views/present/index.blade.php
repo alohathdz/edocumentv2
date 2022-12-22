@@ -34,8 +34,14 @@
                     <tr>
                         <td>{{ $present->number }}</td>
                         <td>{{ datethaitext($present->date) }}</td>
-                        <td class="text-start">{{ Str::limit($present->topic, 100) }} @if ($present->urgency != "ไม่มี")
-                            <span style="color:red">({{ $present->urgency }})</span> @endif
+                        <td class="text-start">
+                            {{ Str::limit($present->topic, 100) }}
+                            @if ($present->urgency != "ไม่มี")
+                            <span style="color:red">({{ $present->urgency }})</span>
+                            @endif
+                            @if (!empty($present->folder_id))
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            @endif
                         </td>
                         <td>
                             <form action="{{ route('present.destroy', $present->id) }}" method="post">
@@ -61,7 +67,7 @@
 @endsection
 @section('script')
 <!-- Date Time Picker Thai -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <link href="{{ asset('bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>
