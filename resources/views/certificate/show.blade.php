@@ -95,6 +95,7 @@
                                 <i class="bi bi-folder"></i> จัดเก็บ
                             </button>
                             <!-- ปุ่มแก้ไข -->
+                            @if (auth()->user()->role == 1 || $cert->user_id == auth()->user()->id)
                             <a href="{{ route('certificate.edit', $cert->id) }}" class="btn btn-warning btn-sm">
                                 <i class="bi bi-pencil-square"></i> แก้ไข
                             </a>
@@ -106,6 +107,7 @@
                                 onclick="return confirm('ยืนยันการลบข้อมูล!')">
                                 <i class="bi bi-trash"></i> ลบ
                             </button>
+                            @endif
                             <!-- ปุ่มย้อนกลับ -->
                             @if (session('success'))
                             <a href="{{ route('certificate.index') }}" class="btn btn-secondary btn-sm">

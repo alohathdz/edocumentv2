@@ -9,15 +9,17 @@
             </div>
             <div class="ms-auto">
                 <!-- ปุ่ม Home -->
-                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i> หน้าแรก</a>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
+                    หน้าแรก</a>
                 <!-- ปุ่ม index -->
-                <a href="{{ route('receive.index') }}" class="btn btn-warning btn-sm"><i
-                        class="bi bi-file-text"></i> หนังสือรับ {{ auth()->user()->department->initial }}</a>
+                <a href="{{ route('receive.index') }}" class="btn btn-warning btn-sm"><i class="bi bi-file-text"></i>
+                    หนังสือรับ {{ auth()->user()->department->initial }}</a>
                 <!-- ปุ่มค้นหา -->
                 <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm"><i
                         class="bi bi-search"></i> ค้นหา</a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> รับหนังสือ</a>
+                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i>
+                    รับหนังสือ</a>
             </div>
         </div>
         <div class="table-responsive mt-1">
@@ -45,13 +47,15 @@
                             <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
                                 <!-- ดูข้อมูลหนังสือ -->
                                 <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-primary btn-sm"><i
-                                    class="bi bi-eye"></i></a>
+                                        class="bi bi-eye"></i></a>
 
+                                @if (auth()->user()->role == 1 || $receive->user_id == auth()->user()->id)
                                 @csrf
                                 @method('DELETE')
                                 <!-- ปุ่มลบ -->
                                 <button class="btn btn-danger btn-sm" type="submit"
                                     onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
+                                @endif
                             </form>
                         </td>
                     </tr>

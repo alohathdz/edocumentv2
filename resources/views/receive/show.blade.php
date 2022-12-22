@@ -165,6 +165,7 @@
                                 <i class="bi bi-folder"></i> จัดเก็บ
                             </button>
                             <!-- ปุ่มแก้ไข -->
+                            @if (auth()->user()->role == 1 || $receive->user_id == auth()->user()->id)
                             <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
                                 <i class="bi bi-pencil-square"></i> แก้ไข
                             </a>
@@ -176,20 +177,11 @@
                                 onclick="return confirm('ยืนยันการลบข้อมูล!')">
                                 <i class="bi bi-trash"></i> ลบ
                             </button>
+                            @endif
                             <!-- ปุ่มย้อนกลับ -->
-                            @if (session('success') && $receive->department_id != Auth::user()->department_id)
-                            <a href="{{ route('receive.saraban') }}" class="btn btn-secondary btn-sm">
-                                <i class="bi bi-backspace"></i> ย้อนกลับ
-                            </a>
-                            @elseif (session('success') && $receive->department_id == Auth::user()->department_id)
-                            <a href="{{ route('receive.index') }}" class="btn btn-secondary btn-sm">
-                                <i class="bi bi-backspace"></i> ย้อนกลับ
-                            </a>
-                            @else
                             <button type="button" class="btn btn-secondary btn-sm" onclick="history.back()">
                                 <i class="bi bi-backspace"></i> ย้อนกลับ
                             </button>
-                            @endif
                         </form>
                     </div>
                 </div>

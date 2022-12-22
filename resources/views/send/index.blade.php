@@ -9,12 +9,14 @@
             </div>
             <div class="ms-auto">
                 <!-- ปุ่ม Home -->
-                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i> หน้าแรก</a>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
+                    หน้าแรก</a>
                 <!-- ปุ่มค้นหา -->
-                <a href="{{ route('send.search.home') }}" class="btn btn-secondary btn-sm"><i
-                        class="bi bi-search"></i> ค้นหา</a>
+                <a href="{{ route('send.search.home') }}" class="btn btn-secondary btn-sm"><i class="bi bi-search"></i>
+                    ค้นหา</a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('send.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> ออกที่หนังสือส่ง</a>
+                <a href="{{ route('send.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i>
+                    ออกที่หนังสือส่ง</a>
             </div>
         </div>
         <div class="table-responsive mt-1">
@@ -38,12 +40,15 @@
                                 style="color:red">({{ $send->urgency }})</span> @endif</td>
                         <td>
                             <form action="{{ route('send.destroy', $send->id) }}" method="post">
-                                <a href="{{ route('send.show', $send->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('send.show', $send->id) }}" class="btn btn-primary btn-sm"><i
+                                        class="bi bi-eye"></i></a>
 
+                                @if (auth()->user()->role == 1 || $send->user_id == auth()->user()->id)
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm" type="submit"
                                     onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
+                                @endif
                             </form>
                         </td>
                     </tr>

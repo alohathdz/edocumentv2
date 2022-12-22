@@ -152,6 +152,7 @@
                                 data-bs-target="#folderModal">
                                 <i class="bi bi-folder"></i> จัดเก็บ
                             </button>
+                            @if (auth()->user()->role == 1 || $present->user_id == auth()->user()->id)
                             <!-- ปุ่มแก้ไข -->
                             <a href="{{ route('present.edit', $present->id) }}" class="btn btn-warning btn-sm">
                                 <i class="bi bi-pencil-square"></i> แก้ไข
@@ -164,16 +165,11 @@
                                 onclick="return confirm('ยืนยันการลบข้อมูล!')">
                                 <i class="bi bi-trash"></i> ลบ
                             </button>
+                            @endif
                             <!-- ปุ่มย้อนกลับ -->
-                            @if (session('success'))
-                            <a href="{{ route('present.index') }}" class="btn btn-secondary btn-sm">
-                                <i class="bi bi-backspace"></i> ย้อนกลับ
-                            </a>
-                            @else
                             <button type="button" class="btn btn-secondary btn-sm" onclick="history.back()">
                                 <i class="bi bi-backspace"></i> ย้อนกลับ
                             </button>
-                            @endif
                         </form>
                     </div>
                 </div>

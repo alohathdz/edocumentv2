@@ -35,16 +35,19 @@
                         <td>{{ $present->number }}</td>
                         <td>{{ datethaitext($present->date) }}</td>
                         <td class="text-start">{{ Str::limit($present->topic, 100) }} @if ($present->urgency != "ไม่มี")
-                            <span style="color:red">({{ $present->urgency }})</span> @endif</td>
+                            <span style="color:red">({{ $present->urgency }})</span> @endif
+                        </td>
                         <td>
                             <form action="{{ route('present.destroy', $present->id) }}" method="post">
                                 <a href="{{ route('present.show', $present->id) }}" class="btn btn-primary btn-sm"><i
                                         class="bi bi-eye"></i></a>
 
+                                @if (auth()->user()->role == 1 || $present->user_id == auth()->user()->id)
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm" type="submit"
                                     onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
+                                @endif
                             </form>
                         </td>
                     </tr>

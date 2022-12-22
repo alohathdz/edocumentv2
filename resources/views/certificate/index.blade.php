@@ -42,10 +42,12 @@
                                 <a href="{{ route('certificate.show', $certificate->id) }}"
                                     class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
 
+                                @if (auth()->user()->role == 1 || $certificate->user_id == auth()->user()->id)
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm" type="submit"
                                     onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
+                                @endif
                             </form>
                         </td>
                     </tr>
