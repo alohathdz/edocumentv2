@@ -74,7 +74,7 @@ class PresentController extends Controller
             $present = Present::findOrFail($request->id);
             //ไฟล์แนบ
             if (!empty($request->file)) {
-                $filename = "หนังสือ " . $present->department->initial . " ที่ " . $present->number . "." . (date("y", strtotime($present->date)) + 43) . "." . $request->file('file')->extension();
+                $filename = yearthai() . '_present_' . 'dept' . $present->department_id . '_' . $present->number . '.' . $request->file('file')->extension();
                 $path = Storage::putFileAs(yearthai() . '/present', $request->file, $filename);
                 $present->file = $path;
                 $present->save();
@@ -173,7 +173,7 @@ class PresentController extends Controller
             if ($present->file) {
                 Storage::delete($present->file);
             }
-            $filename = "หนังสือ " . $present->department->initial . " ที่ " . $present->number . "." . (date("y", strtotime($present->date)) + 43) . "." . $request->file('file')->extension();
+            $filename = yearthai() . '_present_' . 'dept' . $present->department_id . '_' . $present->number . '.' . $request->file('file')->extension();
             $path = Storage::putFileAs(yearthai() . '/present', $request->file, $filename);
             $present->file = $path;
         }

@@ -70,7 +70,7 @@ class CommandController extends Controller
             $command = Command::findOrFail($request->id);
             //เช็คไฟล์แนบ
             if (!empty($request->file)) {
-                $filename = "คำสั่ง ม.พัน.28 พล.ม.1 ที่ " . $command->number . "." . (date("Y", strtotime($command->date)) + 543) . "." . $request->file('file')->extension();
+                $filename = yearthai() . '_command_' . $command->number . '.' . $request->file('file')->extension();
                 $path = Storage::putFileAs(yearthai() . '/command', $request->file, $filename);
                 $command->file = $path;
                 $command->save();
@@ -168,7 +168,7 @@ class CommandController extends Controller
             if ($command->file) {
                 Storage::delete($command->file);
             }
-            $filename = "คำสั่ง ม.พัน.28 พล.ม.1 ที่ " . $command->number . "." . (date("Y", strtotime($command->date)) + 543) . "." . $request->file('file')->extension();
+            $filename = yearthai() . '_command_' . $command->number . '.' . $request->file('file')->extension();
             $path = Storage::putFileAs(yearthai() . '/command', $request->file, $filename);
             $command->file = $path;
         }

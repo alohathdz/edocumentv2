@@ -70,7 +70,7 @@ class CertificateController extends Controller
             $cert = Certificate::findOrFail($request->id);
             //เช็คไฟล์แนบ
             if (!empty($request->file)) {
-                $filename = "หนังสือ" . $cert->certificateType->name . " " . $cert->name . "." . $request->file('file')->extension();
+                $filename = yearthai() . '_certificate_' . $cert->number . '.' . $request->file('file')->extension();
                 $path = Storage::putFileAs(yearthai() . '/certificate', $request->file, $filename);
                 $cert->file = $path;
                 $cert->save();
@@ -138,7 +138,7 @@ class CertificateController extends Controller
             if ($cert->file) {
                 Storage::delete($cert->file);
             }
-            $filename = "หนังสือ" . $cert->certificateType->name . " " . $cert->name . "." . $request->file('file')->extension();
+            $filename = yearthai() . '_certificate_' . $cert->number . '.' . $request->file('file')->extension();
             $path = Storage::putFileAs(yearthai() . '/certificate', $request->file, $filename);
             $cert->file = $path;
         }
