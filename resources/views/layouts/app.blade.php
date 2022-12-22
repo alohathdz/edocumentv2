@@ -65,8 +65,8 @@
                                 {{ Auth::user()->name }}
                                 [
                                 @admin ผู้ดูแลระบบ @endadmin
-                                @saraban เจ้าหน้าที่สารบรรณ @endsaraban
-                                @employee เจ้าหน้าที่ฝ่ายอำนวยการ @endemployee
+                                @saraban เจ้าหน้าที่ฝ่ายอำนวยการ @endsaraban
+                                @employee เจ้าหน้าที่กองร้อย @endemployee
                                 @user ผู้ใช้งานรอยืนยัน @enduser
                                 ]
                             </a>

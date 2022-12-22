@@ -96,16 +96,24 @@
     @employee
     <!-- Menu จัดการข้อมูลหนังสือ -->
     <div class="row justify-content-center text-center">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card border-primary mb-2">
                 <div class="card-header">
                     <strong>หนังสือราชการ</strong>
                 </div>
                 <div class="card-body">
-                    <a href="{{ route('send.index') }}" class="btn btn-success btn-sm mb-1"><i class="bi bi-file-earmark-text"></i> หนังสือส่ง</a><br>
-                    <a href="{{ route('present.index') }}" class="btn btn-danger btn-sm mb-1"><i class="bi bi-file-earmark-text"></i> หนังสือนำเรียน</a><br>
-                    <a href="{{ route('command.index') }}" class="btn btn-warning btn-sm mb-1"><i class="bi bi-file-earmark-text"></i> คำสั่ง</a><br>
-                    <a href="{{ route('certificate.index') }}" class="btn btn-info btn-sm"><i class="bi bi-file-earmark-text"></i> หนังสือรับรอง</a><br>
+                    <a href="{{ route('present.index') }}" class="btn btn-danger btn-sm mb-1 col-sm-6"><i class="bi bi-file-earmark-text"></i> หนังสือนำเรียน</a><br>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <strong>สำเนา</strong>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('copy.present') }}" class="btn btn-dark btn-sm mb-1 col-sm-6"><i class="bi bi-file-earmark-text"></i> สำเนาหนังสือ</a><br>
+                    <a href="{{ route('copy.command') }}" class="btn btn-secondary btn-sm mb-1 col-sm-6"><i class="bi bi-file-earmark-text"></i> สำเนาคำสั่ง</a>
                 </div>
             </div>
         </div>

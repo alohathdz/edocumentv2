@@ -32,12 +32,12 @@ class AppServiceProvider extends ServiceProvider
             return auth()->check() && auth()->user()->role == 1;
         });
 
-        // เจ้าหน้าที่สารบรรณ
+        // เจ้าหน้าที่ฝ่ายอำนวยการ
         Blade::if('saraban', function () {
             return auth()->check() && auth()->user()->role == 2;
         });
 
-        // เจ้าหน้าที่ฝ่ายอำนวยการ
+        // เจ้าหน้าที่กองร้อย
         Blade::if('employee', function () {
             return auth()->check() && auth()->user()->role == 3;
         });

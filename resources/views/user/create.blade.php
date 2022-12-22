@@ -83,8 +83,8 @@
                             <select name="role" id="role" class="col-md-4 col-form-label form-select">
                                 <option selected disabled hidden>เลือกบทบาท</option>
                                 <option value="1">ผู้ดูแลระบบ</option>
-                                <option value="2">เจ้าหน้าที่สารบรรณ</option>
-                                <option value="3">เจ้าหน้าที่ฝ่ายอำนวยการ</option>
+                                <option value="2">เจ้าหน้าที่ฝ่ายอำนวยการ</option>
+                                <option value="3">เจ้าหน้าที่กองร้อย</option>
                             </select>
                         </div>
                     </div>

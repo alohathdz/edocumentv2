@@ -48,9 +48,9 @@
                         @elseif ($user->role == 1)
                         <td class="text-danger">ผู้ดูแลระบบ</td>
                         @elseif ($user->role == 2)
-                        <td class="text-primary">เจ้าหน้าที่สารบรรณ</td>
+                        <td class="text-primary">เจ้าหน้าที่ฝ่ายอำนวยการ</td>
                         @elseif ($user->role == 3)
-                        <td class="text-success">เจ้าหน้าที่ฝ่ายอำนวยการ</td>
+                        <td class="text-success">เจ้าหน้าที่กองร้อย</td>
                         @endif
                         <td>
                             <form action="{{ route('user.destroy', $user->id) }}" method="post">

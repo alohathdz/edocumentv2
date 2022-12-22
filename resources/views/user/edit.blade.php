@@ -84,9 +84,9 @@
                             <select name="role" id="role" class="col-md-4 col-form-label form-select">
                                 <option value="0" @if ($user->role == 0)selected @endif>รอยืนยัน</option>
                                 <option value="1" @if ($user->role == 1)selected @endif>ผู้ดูแลระบบ</option>
-                                <option value="2" @if ($user->role == 2)selected @endif>เจ้าหน้าที่สารบรรณ
+                                <option value="2" @if ($user->role == 2)selected @endif>เจ้าหน้าที่ฝ่ายอำนวยการ
                                 </option>
-                                <option value="3" @if ($user->role == 3)selected @endif>เจ้าหน้าที่ฝ่ายอำนวยการ
+                                <option value="3" @if ($user->role == 3)selected @endif>เจ้าหน้าที่กองร้อย
                                 </option>
                             </select>
                         </div>
