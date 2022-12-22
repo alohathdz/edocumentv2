@@ -114,7 +114,13 @@ class PresentController extends Controller
         $present = Present::findOrFail($id);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
         $views = PresentUser::select('name', 'present_user.created_at')->join('users', 'present_user.user_id', '=', 'users.id')->where('present_id', $id)->get();
-        
+ 
+        if (!empty($present->folder_id)) {
+            $employee = Folder::findOrFail($present->folder_id);
+
+            return view('present.show', compact('present', 'folders', 'employee', 'views'));
+        }
+
         return view('present.show', compact('present', 'folders', 'views'));
     }
 

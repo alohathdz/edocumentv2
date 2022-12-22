@@ -99,6 +99,12 @@ class SendController extends Controller
         $send = Send::findOrFail($id);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
+        if (!empty($send->folder_id)) {
+            $employee = Folder::findOrFail($send->folder_id);
+
+            return view('send.show', compact('send', 'folders', 'employee'));
+        }
+
         return view('send.show', compact('send', 'folders'));
     }
 

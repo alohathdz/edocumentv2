@@ -74,6 +74,16 @@
                         <p class="text-primary">{{ $send->department->name }}</p>
                     </div>
                 </div>
+                <!-- เจ้าหน้าที่ -->
+                @if (isset($employee))
+                <div class="row">
+                    <strong class="col-md-3 text-md-end">เจ้าหน้าที่รับผิดชอบ</strong>
+                    <div class="col-md-9">
+                        <p class="text-danger">{{ $employee->user->name }}
+                        </p>
+                    </div>
+                </div>
+                @endif
                 <!-- แนบไฟล์ -->
                 <div class="row">
                     <strong class="col-md-3 text-md-end">ไฟล์</strong>
@@ -145,7 +155,9 @@
                         <option value="{{ $folder->id }}" {{ ($send->folder_id == $folder->id) ? 'selected' : '' }}>{{
                             $folder->name }}</option>
                         @endforeach
+                        @if (!empty($send->folder_id))
                         <option value="">นำออกจากแฟ้ม</option>
+                        @endif
                     </select>
                 </div>
                 <div class="modal-footer">

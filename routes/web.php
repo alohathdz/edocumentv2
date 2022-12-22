@@ -36,7 +36,6 @@ Auth::routes();
 Route::middleware(['admin'])->group(function () {
     Route::resource('department', DepartmentController::class);
     Route::resource('user', UserController::class);
-    Route::resource('certificateType', CertificateTypeController::class);
 });
 Route::get('/user/{id}/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::post('/user/{id}/profile/update', [UserController::class, 'profileUpdate'])->name('user.profile.update');
@@ -46,6 +45,7 @@ Route::middleware(['saraban'])->group(function () {
     Route::resource('receive', ReceiveController::class);
     Route::get('saraban', [ReceiveController::class, 'saraban'])->name('receive.saraban');
     Route::get('receive/{id}/view', [ReceiveController::class, 'view'])->name('receive.view');
+    Route::resource('certificateType', CertificateTypeController::class);
 });
 
 //เจ้าหน้าที่ฝ่ายอำนวยการขึ้นไป

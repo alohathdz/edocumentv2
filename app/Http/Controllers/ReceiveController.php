@@ -16,7 +16,7 @@ class ReceiveController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -127,14 +127,9 @@ class ReceiveController extends Controller
             $employee = Folder::findOrFail($receive->folder_id);
 
             return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'employee' => $employee]);
-        } else {
-            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views]);
         }
 
-        /*if (empty($receive->folder_id) || Folder::where('id', $receive->folder_id)->where('user_id', auth()->user()->id)->first()) {
-            $check = true;
-            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'i' => $i, 'check' => $check]);
-        }*/
+        return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views]);
     }
 
     /**

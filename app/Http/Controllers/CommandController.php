@@ -111,6 +111,12 @@ class CommandController extends Controller
         $folders = Folder::where('user_id', auth()->user()->id)->get();
         $views = CommandUser::select('name', 'command_user.created_at')->join('users', 'command_user.user_id', '=', 'users.id')->where('command_id', $id)->get();
 
+        if (!empty($command->folder_id)) {
+            $employee = Folder::findOrFail($command->folder_id);
+
+            return view('command.show', compact('command', 'folders', 'employee', 'views'));
+        }
+
         return view('command.show', compact('command', 'folders', 'views'));
     }
 

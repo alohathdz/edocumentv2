@@ -91,6 +91,12 @@ class CertificateController extends Controller
         $cert = Certificate::findOrFail($id);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
+        if (!empty($cert->folder_id)) {
+            $employee = Folder::findOrFail($cert->folder_id);
+
+            return view('certificate.show', compact('cert', 'folders', 'employee'));
+        }
+
         return view('certificate.show', compact('cert', 'folders'));
     }
 
