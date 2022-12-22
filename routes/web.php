@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CertificateTypeController;
 use App\Http\Controllers\CommandController;
@@ -32,7 +31,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//ผู้ดูแลระบบ
+#ผู้ดูแลระบบ
 Route::middleware(['admin'])->group(function () {
     Route::resource('department', DepartmentController::class);
     Route::resource('user', UserController::class);
@@ -44,7 +43,6 @@ Route::post('/user/{id}/profile/update', [UserController::class, 'profileUpdate'
 Route::middleware(['saraban'])->group(function () {
     #หนังสือรับ
     Route::resource('receive', ReceiveController::class);
-    Route::get('receive/{id}/download', [ReceiveController::class, 'download'])->name('receive.download');
     Route::get('search/receive', [ReceiveController::class, 'homeSearch'])->name('receive.search.home');
     Route::post('search/receive', [ReceiveController::class, 'search'])->name('receive.search');
     Route::get('saraban', [ReceiveController::class, 'saraban'])->name('receive.saraban');
@@ -52,19 +50,16 @@ Route::middleware(['saraban'])->group(function () {
     #หนังสือส่ง
     Route::resource('send', SendController::class);
     Route::get('send/{id}/upload', [SendController::class, 'upload'])->name('send.upload');
-    Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
     Route::get('search/send', [SendController::class, 'homeSearch'])->name('send.search.home');
     Route::post('search/send', [SendController::class, 'search'])->name('send.search');
     #คำสั่ง
     Route::resource('command', CommandController::class);
     Route::get('command/{id}/upload', [CommandController::class, 'upload'])->name('command.upload');
-    Route::get('command/{id}/download', [CommandController::class, 'download'])->name('command.download');
     Route::get('search/command', [CommandController::class, 'homeSearch'])->name('command.search.home');
     Route::post('search/command', [CommandController::class, 'search'])->name('command.search');
     #หนังสือรับรอง
     Route::resource('certificate', CertificateController::class);
     Route::get('certificate/{id}/upload', [CertificateController::class, 'upload'])->name('certificate.upload');
-    Route::get('certificate/{id}/download', [CertificateController::class, 'download'])->name('certificate.download');
     Route::get('search/certificate', [CertificateController::class, 'homeSearch'])->name('certificate.search.home');
     Route::post('search/certificate', [CertificateController::class, 'search'])->name('certificate.search');
     #Folder
@@ -78,9 +73,17 @@ Route::middleware(['saraban'])->group(function () {
     Route::resource('certificateType', CertificateTypeController::class);
 });
 
-//เจ้าหน้าที่กองร้อย
+#เจ้าหน้าที่กองร้อย
 Route::middleware(['employee'])->group(function () {
-    //หนังสือนำเรียน
+    #หนังสือรับ
+    Route::get('receive/{id}/download', [ReceiveController::class, 'download'])->name('receive.download');
+    #หนังสือส่ง
+    Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
+    #คำสั่ง
+    Route::get('command/{id}/download', [CommandController::class, 'download'])->name('command.download');
+    #หนังสือรับรอง
+    Route::get('certificate/{id}/download', [CertificateController::class, 'download'])->name('certificate.download');
+    #หนังสือนำเรียน
     Route::resource('present', PresentController::class);
     Route::get('present/{id}/upload', [PresentController::class, 'upload'])->name('present.upload');
     Route::get('present/{id}/download', [PresentController::class, 'download'])->name('present.download');

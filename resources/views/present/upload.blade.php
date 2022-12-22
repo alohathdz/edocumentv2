@@ -50,6 +50,7 @@
                         </div>
                     </div>
                     <!-- สำเนา -->
+                    @saraban
                     <hr class="my-3">
                     <div class="row">
                         <label for="file" class="col-md-3 col-form-label text-md-end"><strong>สำเนาให้</strong></label>
@@ -64,6 +65,7 @@
                             @endforeach
                         </div>
                     </div>
+                    @endsaraban
                     <!-- ปุ่มบันทึก -->
                     <div class="row mt-2">
                         <div class="col-md-12 text-center">

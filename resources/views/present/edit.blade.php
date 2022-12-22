@@ -57,6 +57,7 @@
                         <input type="file" class="form-control" id="file" name="file" accept="application/pdf">
                     </div>
                     <!-- สำเนา -->
+                    @saraban
                     <div class="col-md-12">
                         <label for="file" class="col-form-label"><strong>สำเนาให้</strong></label>
                         @foreach ($DeptList as $key => $val)
@@ -68,6 +69,7 @@
                         </div>
                         @endforeach
                     </div>
+                    @endsaraban
                     <!-- ปุ่มบันทึก -->
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary btn-sm" onclick="classList.add('disabled')">บันทึก</button>
