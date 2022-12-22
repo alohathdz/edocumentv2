@@ -40,7 +40,7 @@
                         </div>
                         <!-- ปุ่มบันทึก -->
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                            <button type="submit" class="btn btn-primary btn-sm" onclick="classList.add('disabled')">บันทึก</button>
                             <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
                         </div>
                     </div>

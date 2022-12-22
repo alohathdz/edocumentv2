@@ -52,7 +52,7 @@
                     <!-- ปุ่มบันทึก -->
                     <div class="row mt-2">
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                            <button type="submit" class="btn btn-primary btn-sm" onclick="classList.add('disabled')">บันทึก</button>
                         </div>
                     </div>
                 </div>
