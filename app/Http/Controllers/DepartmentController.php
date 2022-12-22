@@ -45,7 +45,6 @@ class DepartmentController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'initial' => 'required|string|max:20',
-            'line_token' => 'string|max:43',
         ]);
 
         Department::create([

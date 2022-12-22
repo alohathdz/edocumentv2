@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\CommandDepartment;
 use App\Models\DepartmentPresent;
-use App\Models\PresentUser;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CopyController extends Controller

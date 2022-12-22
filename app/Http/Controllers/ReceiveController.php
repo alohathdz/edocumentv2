@@ -36,7 +36,7 @@ class ReceiveController extends Controller
      */
     public function create()
     {
-        $depts = Department::all();
+        $depts = Department::where('name', 'NOT LIKE', 'กองร้อย%')->get();
 
         return view('receive.create', ['depts' => $depts]);
     }
