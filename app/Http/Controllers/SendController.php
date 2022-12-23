@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Folder;
 use App\Models\Send;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SendController extends Controller
@@ -13,7 +14,7 @@ class SendController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -116,9 +117,12 @@ class SendController extends Controller
      */
     public function edit($id)
     {
-        $send = Send::findOrFail($id);
-
-        return view('send.edit', compact('send'));
+        if (Send::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $send = Send::findOrFail($id);
+            return view('send.edit', compact('send'));
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -166,20 +170,27 @@ class SendController extends Controller
      */
     public function destroy($id)
     {
-        $send = Send::findOrFail($id);
-        if (!empty($send->file)) {
-            Storage::delete($send->file);
-        }
-        $send->delete();
+        if (Send::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $send = Send::findOrFail($id);
+            if (!empty($send->file)) {
+                Storage::delete($send->file);
+            }
+            $send->delete();
 
-        return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อย');
+            return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อย');
+        } else {
+            abort(403);
+        }
     }
 
     public function upload($id)
     {
-        $send = Send::findOrFail($id);
-
-        return view('send.upload', ['send' => $send]);
+        if (Send::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $send = Send::findOrFail($id);
+            return view('send.upload', compact('send'));
+        } else {
+            abort(403);
+        }
     }
 
     public function homeSearch()
@@ -191,11 +202,11 @@ class SendController extends Controller
     {
         if (isset($request->no) || isset($request->date) || isset($request->to) || isset($request->topic)) {
             $sends = Send::where('no', 'LIKE', '%' . $request->no . '%')
-            ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
-            ->where('to', 'LIKE', '%' . $request->from . '%')
-            ->where('topic', 'LIKE', '%' . $request->topic . '%')
-            ->orderBy('id', 'desc')
-            ->paginate(20);
+                ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
+                ->where('to', 'LIKE', '%' . $request->from . '%')
+                ->where('topic', 'LIKE', '%' . $request->topic . '%')
+                ->orderBy('id', 'desc')
+                ->paginate(20);
 
             if ($sends->count() == 0) {
                 return redirect()->route('send.search.home')->with('fail', 'ไม่พบข้อมูล');

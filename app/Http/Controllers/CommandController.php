@@ -8,6 +8,7 @@ use App\Models\CommandUser;
 use App\Models\Department;
 use App\Models\Folder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CommandController extends Controller
@@ -16,7 +17,7 @@ class CommandController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -129,20 +130,24 @@ class CommandController extends Controller
      */
     public function edit($id)
     {
-        $command = Command::findOrFail($id);
-        $DeptList = Department::all();
-        $DeptListData = array();
-        foreach ($DeptList as $key => $val) {
-            $DeptListData[$key] = $val;
-            $DeptDocCheck = CommandDepartment::where('command_id', $id)->where('department_id', $val['id'])->first();
-            if (!empty($DeptDocCheck)) {
-                $DeptListData[$key]->checked = 'checked';
-            } else {
-                $DeptListData[$key]->checked = '';
+        if (Command::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $command = Command::findOrFail($id);
+            $DeptList = Department::all();
+            $DeptListData = array();
+            foreach ($DeptList as $key => $val) {
+                $DeptListData[$key] = $val;
+                $DeptDocCheck = CommandDepartment::where('command_id', $id)->where('department_id', $val['id'])->first();
+                if (!empty($DeptDocCheck)) {
+                    $DeptListData[$key]->checked = 'checked';
+                } else {
+                    $DeptListData[$key]->checked = '';
+                }
             }
-        }
 
-        return view('command.edit', ['command' => $command, 'DeptList' => $DeptList]);
+            return view('command.edit', compact('command', 'DeptList'));
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -210,21 +215,29 @@ class CommandController extends Controller
      */
     public function destroy($id)
     {
-        $command = Command::findOrFail($id);
-        if ($command->file) {
-            Storage::delete($command->file);
-        }
-        $command->delete();
+        if (Command::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $command = Command::findOrFail($id);
+            if ($command->file) {
+                Storage::delete($command->file);
+            }
+            $command->delete();
 
-        return redirect()->route('command.index')->with('success', 'ลบข้อมูลเรียบร้อย');
+            return redirect()->route('command.index')->with('success', 'ลบข้อมูลเรียบร้อย');
+        } else {
+            abort(403);
+        }
     }
 
     public function upload($id)
     {
-        $command = Command::findOrFail($id);
-        $departments = Department::all();
+        if (Command::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $command = Command::findOrFail($id);
+            $departments = Department::all();
 
-        return view('command.upload', ['command' => $command, 'departments' => $departments]);
+            return view('command.upload', ['command' => $command, 'departments' => $departments]);
+        } else {
+            abort(403);
+        }
     }
 
     public function homeSearch()

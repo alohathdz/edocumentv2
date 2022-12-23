@@ -6,6 +6,7 @@ use App\Models\Certificate;
 use App\Models\CertificateType;
 use App\Models\Folder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CertificateController extends Controller
@@ -109,10 +110,14 @@ class CertificateController extends Controller
      */
     public function edit($id)
     {
-        $cert = Certificate::findOrFail($id);
-        $ctypes = CertificateType::all();
-
-        return view('certificate.edit', ['cert' => $cert, 'ctypes' => $ctypes]);
+        if (Certificate::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $cert = Certificate::findOrFail($id);
+            $ctypes = CertificateType::all();
+    
+            return view('certificate.edit', compact('cert', 'ctypes'));
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -157,20 +162,28 @@ class CertificateController extends Controller
      */
     public function destroy($id)
     {
-        $cert = Certificate::findOrFail($id);
-        if ($cert->file) {
-            Storage::delete($cert->file);
+        if (Certificate::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $cert = Certificate::findOrFail($id);
+            if ($cert->file) {
+                Storage::delete($cert->file);
+            }
+            $cert->delete();
+    
+            return redirect()->route('certificate.index')->with('success', 'ลบข้อมูลเรียบร้อย');
+        } else {
+            abort(403);
         }
-        $cert->delete();
-
-        return redirect()->route('certificate.index')->with('success', 'ลบข้อมูลเรียบร้อย');
     }
 
     public function upload($id)
     {
-        $cert = Certificate::findOrFail($id);
+        if (Certificate::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $cert = Certificate::findOrFail($id);
 
-        return view('certificate.upload', ['cert' => $cert]);
+            return view('certificate.upload', compact('cert'));
+        } else {
+            abort(403);
+        }
     }
 
     public function homeSearch()

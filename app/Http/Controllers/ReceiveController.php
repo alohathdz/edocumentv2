@@ -7,6 +7,7 @@ use App\Models\Folder;
 use App\Models\Receive;
 use App\Models\ReceiveUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
 
@@ -141,10 +142,14 @@ class ReceiveController extends Controller
      */
     public function edit($id)
     {
-        $receive = Receive::findOrFail($id);
         $depts = Department::all();
 
-        return view('receive.edit', compact('receive', 'depts'));
+        if (Receive::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $receive = Receive::findOrFail($id);
+            return view('receive.edit', compact('receive', 'depts'));
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -212,15 +217,19 @@ class ReceiveController extends Controller
      */
     public function destroy($id)
     {
-        $receive = Receive::findOrFail($id);
+        if (Receive::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $receive = Receive::findOrFail($id);
 
-        if (!empty($receive->file)) {
-            Storage::delete($receive->file);
+            if (!empty($receive->file)) {
+                Storage::delete($receive->file);
+            }
+
+            $receive->delete();
+
+            return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
+        } else {
+            abort(403);
         }
-
-        $receive->delete();
-
-        return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
     }
 
     public function saraban()
@@ -240,31 +249,6 @@ class ReceiveController extends Controller
             ->get();
 
         return view('receive.view', compact('receive', 'views'));
-    }
-
-    public function homeSearch()
-    {
-        return view('receive.search');
-    }
-
-    public function search(Request $request)
-    {
-        if (isset($request->no) || isset($request->date) || isset($request->from) || isset($request->topic)) {
-            $receives = Receive::where('no', 'LIKE', '%' . $request->no . '%')
-                ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
-                ->where('from', 'LIKE', '%' . $request->from . '%')
-                ->where('topic', 'LIKE', '%' . $request->topic . '%')
-                ->orderBy('id', 'desc')
-                ->get();
-
-            if ($receives->count() == 0) {
-                return redirect()->route('receive.search.home')->with('fail', 'ไม่พบข้อมูล');
-            }
-
-            return view('receive.index', ['receives' => $receives]);
-        } else {
-            return redirect()->route('receive.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
-        }
     }
 
     public function download($id)
@@ -331,5 +315,31 @@ class ReceiveController extends Controller
         Receive::findOrFail($request->receive)->update(['folder_id' => $request->folder]);
 
         return redirect()->back()->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
+    }
+
+    ########## ยังไม่ได้ใช้ ###########
+    public function homeSearch()
+    {
+        return view('receive.search');
+    }
+
+    public function search(Request $request)
+    {
+        if (isset($request->no) || isset($request->date) || isset($request->from) || isset($request->topic)) {
+            $receives = Receive::where('no', 'LIKE', '%' . $request->no . '%')
+                ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
+                ->where('from', 'LIKE', '%' . $request->from . '%')
+                ->where('topic', 'LIKE', '%' . $request->topic . '%')
+                ->orderBy('id', 'desc')
+                ->get();
+
+            if ($receives->count() == 0) {
+                return redirect()->route('receive.search.home')->with('fail', 'ไม่พบข้อมูล');
+            }
+
+            return view('receive.index', ['receives' => $receives]);
+        } else {
+            return redirect()->route('receive.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
+        }
     }
 }

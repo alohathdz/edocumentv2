@@ -12,6 +12,7 @@ use App\Http\Controllers\ReceiveController;
 use App\Http\Controllers\SendController;
 use App\Http\Controllers\UserController;
 use App\Models\Receive;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -102,6 +103,5 @@ Route::middleware(['employee'])->group(function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
-    $url = $_SERVER['REQUEST_URI'];
-    return $url;
+    return Auth::id();
 });

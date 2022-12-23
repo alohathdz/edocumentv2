@@ -8,6 +8,7 @@ use App\Models\Folder;
 use App\Models\Present;
 use App\Models\PresentUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PresentController extends Controller
@@ -16,7 +17,7 @@ class PresentController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +39,7 @@ class PresentController extends Controller
     public function create()
     {
         $departments = Department::all();
-        
+
         return view('present.create', ['departments' => $departments]);
     }
 
@@ -115,7 +116,7 @@ class PresentController extends Controller
         $present = Present::findOrFail($id);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
         $views = PresentUser::select('name', 'present_user.created_at')->join('users', 'present_user.user_id', '=', 'users.id')->where('present_id', $id)->get();
- 
+
         if (!empty($present->folder_id)) {
             $employee = Folder::findOrFail($present->folder_id);
 
@@ -133,20 +134,24 @@ class PresentController extends Controller
      */
     public function edit($id)
     {
-        $present = Present::findOrFail($id);
-        $DeptList = Department::all();
-        $DeptListData = array();
-        foreach ($DeptList as $key => $val) {
-            $DeptListData[$key] = $val;
-            $DeptDocCheck = DepartmentPresent::where('present_id', $id)->where('department_id', $val['id'])->first();
-            if (!empty($DeptDocCheck)) {
-                $DeptListData[$key]->checked = 'checked';
-            } else {
-                $DeptListData[$key]->checked = '';
+        if (Present::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $present = Present::findOrFail($id);
+            $DeptList = Department::all();
+            $DeptListData = array();
+            foreach ($DeptList as $key => $val) {
+                $DeptListData[$key] = $val;
+                $DeptDocCheck = DepartmentPresent::where('present_id', $id)->where('department_id', $val['id'])->first();
+                if (!empty($DeptDocCheck)) {
+                    $DeptListData[$key]->checked = 'checked';
+                } else {
+                    $DeptListData[$key]->checked = '';
+                }
             }
-        }
 
-        return view('present.edit', ['present' => $present, 'DeptList' => $DeptList]);
+            return view('present.edit', compact('present', 'DeptList'));
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -204,7 +209,7 @@ class PresentController extends Controller
         } else {
             DepartmentPresent::where("present_id",  $id)->delete();
         }
-        
+
         return redirect()->route('present.index')->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
@@ -216,21 +221,29 @@ class PresentController extends Controller
      */
     public function destroy($id)
     {
-        $present = Present::findOrFail($id);
-        if ($present->file) {
-            Storage::delete($present->file);
-        }
-        $present->delete();
+        if (Present::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $present = Present::findOrFail($id);
+            if ($present->file) {
+                Storage::delete($present->file);
+            }
+            $present->delete();
 
-        return redirect()->route('present.index')->with('success', 'ลบข้อมูลเรียบร้อย');
+            return redirect()->route('present.index')->with('success', 'ลบข้อมูลเรียบร้อย');
+        } else {
+            abort(403);
+        }
     }
 
     public function upload($id)
     {
-        $present = Present::findOrFail($id);
-        $departments = Department::all();
-
-        return view('present.upload', ['present' => $present, 'departments' => $departments]);
+        if (Present::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
+            $present = Present::findOrFail($id);
+            $departments = Department::all();
+    
+            return view('present.upload', compact('present', 'departments'));
+        } else {
+            abort(403);
+        }
     }
 
     public function homeSearch()
