@@ -13,7 +13,7 @@
                     หน้าแรก</a>
                 <!-- ปุ่มเพิ่ม -->
                 <a href="{{ route('send.create') }}" class="btn btn-danger btn-sm"><i class="bi bi-plus-lg"></i>
-                    ออกที่หนังสือส่ง</a>
+                    เพิ่ม</a>
             </div>
         </div>
         <hr class="my-2">

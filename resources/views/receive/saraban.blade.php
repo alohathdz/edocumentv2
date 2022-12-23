@@ -12,11 +12,11 @@
                 <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
                     หน้าแรก</a>
                 <!-- ปุ่ม index -->
-                <a href="{{ route('receive.index') }}" class="btn btn-warning btn-sm"><i class="bi bi-file-text"></i>
-                    หนังสือรับ {{ auth()->user()->department->initial }}</a>
+                <a href="{{ route('receive.index') }}" class="btn btn-dark btn-sm"><i class="bi bi-file-text"></i>
+                    {{ auth()->user()->department->initial }}</a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-dark btn-sm"><i class="bi bi-plus-lg"></i>
-                    รับหนังสือ</a>
+                <a href="{{ route('receive.create') }}" class="btn btn-danger btn-sm"><i class="bi bi-plus-lg"></i>
+                    เพิ่ม</a>
             </div>
         </div>
         <div class="table-responsive mt-1">

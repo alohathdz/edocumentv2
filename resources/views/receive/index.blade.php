@@ -14,14 +14,14 @@
                     หน้าแรก
                 </a>
                 <!-- ปุ่ม saraban -->
-                <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm">
+                <a href="{{ route('receive.saraban') }}" class="btn btn-secondary btn-sm">
                     <i class="bi bi-file-text"></i>
-                    หนังสือรับฝ่ายอื่น ๆ
+                    ทะเบียนรับ
                 </a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-dark btn-sm">
+                <a href="{{ route('receive.create') }}" class="btn btn-danger btn-sm">
                     <i class="bi bi-plus-lg"></i>
-                    รับหนังสือ
+                    เพิ่ม
                 </a>
             </div>
         </div>
