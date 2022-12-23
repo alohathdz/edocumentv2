@@ -280,10 +280,10 @@ class CommandController extends Controller
             try {
                 return response()->file(Storage::path($command->file));
             } catch (\Throwable $e) {
-                return "ไม่พบไฟล์ หรือไฟล์อาจถูกลบ";
+                return abort(403, 'File not found.');
             }
         } elseif (!$command->file) {
-            return "ไม่ได้แนบไฟล์";
+            return abort(403, 'File not attached.');
         }
     }
 

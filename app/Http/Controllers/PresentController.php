@@ -292,10 +292,10 @@ class PresentController extends Controller
                 }*/
                 return response()->file(Storage::path($present->file));
             } catch (\Throwable $e) {
-                return "ไม่พบไฟล์ หรือไฟล์อาจถูกลบ";
+                return abort(403, 'File not found.');
             }
         } elseif (!$present->file) {
-            return "ไม่ได้แนบไฟล์";
+            return abort(403, 'File not attached.');
         }
     }
 
