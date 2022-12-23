@@ -78,7 +78,7 @@
                 <div class="row">
                     <strong class="col-md-3 text-md-end">เจ้าหน้าที่รับผิดชอบ</strong>
                     <div class="col-md-9">
-                        <p class="text-danger">{{ isset($employee) ? $employee->user->name : "ยังไม่มีผู้รับผิดชอบ" }}
+                        <p class="text-danger">{{ isset($employee) ? $employee->user->name : 'ยังไม่มีผู้รับผิดชอบ' }}
                         </p>
                     </div>
                 </div>
@@ -214,8 +214,9 @@
                     <select class="form-select" name="folder" required>
                         <option value="" selected disabled hidden>เลือกแฟ้ม</option>
                         @foreach ($folders as $folder)
-                        <option value="{{ $folder->id }}" {{ ($receive->folder_id == $folder->id) ? 'selected' : ''
-                            }}>{{ $folder->name }}</option>
+                        <option value="{{ $folder->id }}" {{ $receive->folder_id == $folder->id ? 'selected' : '' }}>{{
+                            $folder->name }}
+                        </option>
                         @endforeach
                         @if (!empty($receive->folder_id))
                         <option value="">นำออกจากแฟ้ม</option>
@@ -252,9 +253,9 @@
 @if (session('success'))
 <script>
     Swal.fire({
-    icon: "success",
-    title: "{{ Session::get('success') }}",
-});
+                icon: "success",
+                title: "{{ Session::get('success') }}",
+            });
 </script>
 @endif
 @endsection

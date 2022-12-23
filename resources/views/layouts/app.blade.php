@@ -96,7 +96,7 @@
         </main>
         <footer class="footer mt-auto py-1 bg-light">
             <div class="container text-center">
-                <span class="text-mute">ระบบสารบรรณอิเล็กทรอนิกส์ กรณีศึกษา กองพันทหารม้าที่ 28 กองพลทหารม้าที่ 1</span>
+                <span class="text-mute">2022 &copy; Woradon Bunkhet</span>
             </div>
         </footer>
     </div>

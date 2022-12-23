@@ -220,11 +220,12 @@ class ReceiveController extends Controller
         $dept = $delete->department_id;
         $delete->delete();
 
-        if ($dept != auth()->user()->department_id) {
+        /*if ($dept != auth()->user()->department_id) {
             return redirect()->route('receive.saraban')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
-        }
+        }*/
 
-        return redirect()->route('receive.index')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
+        #return redirect()->route('receive.index')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
+        return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
     }
 
     public function saraban()
@@ -334,6 +335,6 @@ class ReceiveController extends Controller
     {
         Receive::findOrFail($request->receive)->update(['folder_id' => $request->folder]);
 
-        return redirect()->route('receive.show', $request->receive)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
+        return redirect()->back()->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }
