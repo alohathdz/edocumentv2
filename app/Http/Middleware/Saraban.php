@@ -19,7 +19,7 @@ class Saraban
         if (in_array(auth()->user()->role, array(1, 2))) {
             return $next($request);
         } else {
-            return redirect()->route('home')->with('role', "คุณไม่มีสิทธิ์เข้าถึง Menu นี้ !!");
+            return abort(403, 'permission denied.');
         }
     }
 }
