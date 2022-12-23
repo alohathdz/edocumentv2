@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
 use App\Models\Folder;
 use App\Models\Send;
 use Illuminate\Http\Request;
@@ -22,9 +21,10 @@ class SendController extends Controller
      */
     public function index()
     {
-        $sends = Send::orderBy('number', 'desc')->paginate(20);
+        $sends = Send::where('department_id', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
-        return view('send.index', ['sends' => $sends]);
+        return view('send.index', compact('sends', 'folders'));
     }
 
     /**
@@ -172,7 +172,7 @@ class SendController extends Controller
         }
         $send->delete();
 
-        return redirect()->route('send.index')->with('success', 'ลบข้อมูลเรียบร้อย');
+        return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อย');
     }
 
     public function upload($id)
@@ -226,6 +226,6 @@ class SendController extends Controller
     {
         Send::findOrFail($request->send)->update(['folder_id' => $request->folder]);
 
-        return redirect()->route('send.show', $request->send)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
+        return redirect()->back()->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }

@@ -24,9 +24,10 @@ class PresentController extends Controller
      */
     public function index()
     {
-        $presents = Present::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
+        $presents = Present::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
-        return view('present.index', ['presents' => $presents]);
+        return view('present.index', compact('presents', 'folders'));
     }
 
     /**
@@ -204,7 +205,7 @@ class PresentController extends Controller
             DepartmentPresent::where("present_id",  $id)->delete();
         }
         
-        return redirect()->route('present.show', $present->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+        return redirect()->route('present.index')->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
     /**
@@ -289,6 +290,6 @@ class PresentController extends Controller
     {
         Present::findOrFail($request->present)->update(['folder_id' => $request->folder]);
 
-        return redirect()->route('present.show', $request->present)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
+        return redirect()->back()->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }

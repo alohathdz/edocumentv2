@@ -6,7 +6,6 @@ use App\Models\Department;
 use App\Models\Folder;
 use App\Models\Receive;
 use App\Models\ReceiveUser;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
@@ -40,7 +39,7 @@ class ReceiveController extends Controller
     {
         $depts = Department::where('name', 'NOT LIKE', 'กองร้อย%')->get();
 
-        return view('receive.create', ['depts' => $depts]);
+        return view('receive.create', compact('depts'));
     }
 
     /**
@@ -51,7 +50,7 @@ class ReceiveController extends Controller
      */
     public function store(Request $request)
     {
-        // ตรวจสอบข้อมูล
+        # ตรวจสอบข้อมูล
         $request->validate([
             'no' => ['required', 'string', 'max:50'],
             'date' => ['required'],
@@ -60,12 +59,12 @@ class ReceiveController extends Controller
             'urgency' => ['required'],
             'department' => ['required']
         ]);
-        //ดึงเลขทะเบียนล่าสุด
+        #ดึงเลขทะเบียนล่าสุด
         $number = Receive::select('number')
             ->whereYear('created_at', '=', date('Y'))
             ->max('number');
         $number += 1;
-        //เพิ่มข้อมูล
+        #เพิ่มข้อมูล
         $receive = new Receive();
         $receive->no = arabicnum($request->no);
         $receive->date = dateeng($request->date);
@@ -75,15 +74,15 @@ class ReceiveController extends Controller
         $receive->number = $number;
         $receive->department_id = $request->department;
         $receive->user_id = auth()->user()->id;
-        //เช็คไฟล์แนบ
+        #เช็คไฟล์แนบ
         if (!empty($request->file)) {
             $filename = yearthai() . '_receive_' . $number . '.' . $request->file('file')->extension();
             $path = Storage::putFileAs(yearthai() . '/receive', $request->file, $filename);
             $receive->file = $path;
         }
-        //บันทึกลงฐานข้อมูล
+        #บันทึกลงฐานข้อมูล
         $receive->save();
-        //Line Notify
+        #Line Notify
         try {
             if ($receive->department->line_token && $receive->file) {
                 line("\nหนังสือรับ\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/$receive->id", $receive->department->line_token);
@@ -128,10 +127,10 @@ class ReceiveController extends Controller
         if (!empty($receive->folder_id)) {
             $employee = Folder::findOrFail($receive->folder_id);
 
-            return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views, 'employee' => $employee]);
+            return view('receive.show', compact('receive', 'folders', 'views', 'employee'));
         }
 
-        return view('receive.show', ['receive' => $receive, 'folders' => $folders, 'views' => $views]);
+        return view('receive.show', compact('receive', 'folders', 'views'));
     }
 
     /**
@@ -145,7 +144,7 @@ class ReceiveController extends Controller
         $receive = Receive::findOrFail($id);
         $depts = Department::all();
 
-        return view('receive.edit', ['receive' => $receive, 'depts' => $depts]);
+        return view('receive.edit', compact('receive', 'depts'));
     }
 
     /**
@@ -157,7 +156,7 @@ class ReceiveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // ตรวจสอบข้อมูล
+        #ตรวจสอบข้อมูล
         $request->validate([
             'no' => ['required', 'string', 'max:50'],
             'date' => ['required'],
@@ -174,7 +173,7 @@ class ReceiveController extends Controller
         $receive->topic = arabicnum($request->topic);
         $receive->urgency = $request->urgency;
         $receive->department_id = $request->department;
-        //เช็คไฟล์แนบ
+        #เช็คไฟล์แนบ
         if (!empty($request->file)) {
             if ($receive->file) {
                 Storage::delete($receive->file);
@@ -195,9 +194,9 @@ class ReceiveController extends Controller
                 line("ไม่สามารถส่งแจ้งเตือนไปยัง " . $receive->department->name . " ได้", env("LINE_TOKEN"));
             }
         }
-        //บันทึกลงฐานข้อมูล
+        #บันทึกลงฐานข้อมูล
         $receive->save();
-
+        #เช็คหนังสือที่ไม่ใช่แผนกตัวเอง
         if ($receive->department_id != auth()->user()->department_id) {
             return redirect()->route('receive.saraban')->with('success', 'แก้ไขข้อมูลเรียบร้อย');
         }
@@ -213,18 +212,14 @@ class ReceiveController extends Controller
      */
     public function destroy($id)
     {
-        $delete = Receive::findOrFail($id);
-        if (!empty($delete->file)) {
-            Storage::delete($delete->file);
+        $receive = Receive::findOrFail($id);
+
+        if (!empty($receive->file)) {
+            Storage::delete($receive->file);
         }
-        $dept = $delete->department_id;
-        $delete->delete();
 
-        /*if ($dept != auth()->user()->department_id) {
-            return redirect()->route('receive.saraban')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
-        }*/
+        $receive->delete();
 
-        #return redirect()->route('receive.index')->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
         return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
     }
 
@@ -232,7 +227,7 @@ class ReceiveController extends Controller
     {
         $receives = Receive::where('user_id', '=', auth()->user()->id)->where('department_id', '!=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
 
-        return view('receive.saraban', ['receives' => $receives]);
+        return view('receive.saraban', compact('receives'));
     }
 
     public function view($id)
@@ -244,7 +239,7 @@ class ReceiveController extends Controller
             ->join('users', 'users.id', '=', 'receive_user.user_id')
             ->get();
 
-        return view('receive.view', ['receive' => $receive, 'views' => $views]);
+        return view('receive.view', compact('receive', 'views'));
     }
 
     public function homeSearch()
@@ -274,10 +269,10 @@ class ReceiveController extends Controller
 
     public function download($id)
     {
-        //ดึงข้อมูล
+        #ดึงข้อมูล
         $receive = Receive::findOrFail($id);
         if ($receive->file) {
-            //ตรวจสอบคนดูไฟล์แนบ
+            #ตรวจสอบคนดูไฟล์แนบ
             $checkview = ReceiveUser::where('receive_id', '=', $receive->id)->where('user_id', '=', auth()->user()->id);
             if (!$checkview->first()) {
                 ReceiveUser::create([
@@ -286,16 +281,16 @@ class ReceiveController extends Controller
                 ]);
             }
         }
-        //เปิดไฟล์แนบ
+        #เปิดไฟล์แนบ
         try {
             if ($receive->file) {
-                //กำหนดข้อความ stamp
+                #กำหนดข้อความ stamp
                 $file = Storage::path($receive->file);
                 $text1 = "ม.พัน.28 พล.ม.1";
                 $text2 = "เลขที่รับ " . $receive->number;
                 $text3 = "วันที่ " . datethaitext($receive->created_at);
                 $text4 = "เวลา " . date('H:i', strtotime($receive->created_at));
-                //สร้าง object pdf และตั้งค่า หน้าแรก
+                #สร้าง object pdf และตั้งค่า หน้าแรก
                 $pdf = new Fpdi();
                 $pagecount = $pdf->setSourceFile($file);
                 $pdf->addPage();
@@ -308,7 +303,7 @@ class ReceiveController extends Controller
                 $pdf->SetDrawColor(0, 0, 255);
                 $pdf->SetXY(160, 5);
                 $pdf->MultiCell(45, 5, iconv("UTF-8", "cp874", $text1 . "\n" . $text2 . "\n" . $text3 . "\n" . $text4), 1, "C", true);
-                //วน loop เรียก pdf ทุกหน้า
+                #วน loop เรียก pdf ทุกหน้า
                 for ($i = 2; $i <= $pagecount; $i++) {
                     $tpl = $pdf->importPage($i);
                     $pdf->addPage();

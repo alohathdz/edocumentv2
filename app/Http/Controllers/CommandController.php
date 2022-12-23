@@ -24,9 +24,10 @@ class CommandController extends Controller
      */
     public function index()
     {
-        $commands = Command::orderBy('number', 'desc')->paginate(20);
+        $commands = Command::orderBy('number', 'desc')->get();
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
-        return view('command.index', ['commands' => $commands]);
+        return view('command.index', compact('commands', 'folders'));
     }
 
     /**
@@ -157,7 +158,6 @@ class CommandController extends Controller
         $request->validate([
             'date' => ['required'],
             'topic' => ['required', 'string', 'max:255'],
-            'department' => ['required']
         ]);
         //เพิ่มข้อมูล
         $command = Command::findOrFail($id);
@@ -199,7 +199,7 @@ class CommandController extends Controller
             CommandDepartment::where("command_id",  $id)->delete();
         }
 
-        return redirect()->route('command.show', $command->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+        return redirect()->route('command.index')->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
     /**
@@ -278,6 +278,6 @@ class CommandController extends Controller
     {
         Command::findOrFail($request->command)->update(['folder_id' => $request->folder]);
 
-        return redirect()->route('command.show', $request->command)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
+        return redirect()->back()->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }

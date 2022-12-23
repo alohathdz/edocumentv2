@@ -94,19 +94,9 @@
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary btn-sm" onclick="classList.add('disabled')">บันทึก</button>
                         <!-- ปุ่มยกเลิก -->
-                        @if (session('success') && $receive->department_id != Auth::user()->department_id)
-                        <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm">
-                            ยกเลิก
-                        </a>
-                        @elseif (session('success') && $receive->department_id == Auth::user()->department_id)
-                        <a href="{{ route('receive.index') }}" class="btn btn-danger btn-sm">
-                            ยกเลิก
-                        </a>
-                        @else
                         <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">
                             ยกเลิก
                         </button>
-                        @endif
                     </div>
                 </form>
             </div>

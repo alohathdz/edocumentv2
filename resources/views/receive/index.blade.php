@@ -18,12 +18,8 @@
                     <i class="bi bi-file-text"></i>
                     หนังสือรับฝ่ายอื่น ๆ
                 </a>
-                <!-- ปุ่มค้นหา -->
-                <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm">
-                    <i class="bi bi-search"></i> ค้นหา
-                </a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm">
+                <a href="{{ route('receive.create') }}" class="btn btn-dark btn-sm">
                     <i class="bi bi-plus-lg"></i>
                     รับหนังสือ
                 </a>

@@ -80,16 +80,20 @@ Route::middleware(['employee'])->group(function () {
     Route::get('receive/{id}/destroy', [ReceiveController::class, 'destroy'])->name('receive.destroy');
     #หนังสือส่ง
     Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
+    Route::get('send/{id}/destroy', [SendController::class, 'destroy'])->name('send.destroy');
     #คำสั่ง
     Route::get('command/{id}/download', [CommandController::class, 'download'])->name('command.download');
+    Route::get('command/{id}/destroy', [CommandController::class, 'destroy'])->name('command.destroy');
     #หนังสือรับรอง
     Route::get('certificate/{id}/download', [CertificateController::class, 'download'])->name('certificate.download');
+    Route::get('certificate/{id}/destroy', [CertificateController::class, 'destroy'])->name('certificate.destroy');
     #หนังสือนำเรียน
     Route::resource('present', PresentController::class);
     Route::get('present/{id}/upload', [PresentController::class, 'upload'])->name('present.upload');
     Route::get('present/{id}/download', [PresentController::class, 'download'])->name('present.download');
     Route::get('search/present', [PresentController::class, 'homeSearch'])->name('present.search.home');
     Route::post('search/present', [PresentController::class, 'search'])->name('present.search');
+    Route::get('present/{id}/destroy', [PresentController::class, 'destroy'])->name('present.destroy');
     #Copy
     Route::get('copy/present', [CopyController::class, 'presents'])->name('copy.present');
     Route::get('copy/command', [CopyController::class, 'commands'])->name('copy.command');

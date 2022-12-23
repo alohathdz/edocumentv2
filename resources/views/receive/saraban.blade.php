@@ -14,11 +14,8 @@
                 <!-- ปุ่ม index -->
                 <a href="{{ route('receive.index') }}" class="btn btn-warning btn-sm"><i class="bi bi-file-text"></i>
                     หนังสือรับ {{ auth()->user()->department->initial }}</a>
-                <!-- ปุ่มค้นหา -->
-                <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm"><i
-                        class="bi bi-search"></i> ค้นหา</a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i>
+                <a href="{{ route('receive.create') }}" class="btn btn-dark btn-sm"><i class="bi bi-plus-lg"></i>
                     รับหนังสือ</a>
             </div>
         </div>

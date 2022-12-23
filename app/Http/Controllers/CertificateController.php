@@ -22,9 +22,10 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        $cerfificates = Certificate::orderBy('number', 'desc')->paginate(20);
+        $certificates = Certificate::orderBy('number', 'desc')->get();
+        $folders = Folder::where('user_id', auth()->user()->id)->get();
 
-        return view('certificate.index', ['certificates' => $cerfificates]);
+        return view('certificate.index', compact('certificates', 'folders'));
     }
 
     /**
@@ -145,7 +146,7 @@ class CertificateController extends Controller
         //บันทึกลงฐานข้อมูล
         $cert->save();
 
-        return redirect()->route('certificate.index', $cert->id)->with('success', 'แก้ไขข้อมูลเรียบร้อย');
+        return redirect()->route('certificate.index')->with('success', 'แก้ไขข้อมูลเรียบร้อย');
     }
 
     /**
@@ -218,6 +219,6 @@ class CertificateController extends Controller
     {
         Certificate::findOrFail($request->certificate)->update(['folder_id' => $request->folder]);
 
-        return redirect()->route('certificate.show', $request->certificate)->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
+        return redirect()->back()->with('success', 'จัดเก็บเอกสารเข้าแฟ้มเรียบร้อย');
     }
 }
