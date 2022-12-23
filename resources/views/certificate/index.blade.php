@@ -36,8 +36,9 @@
                             {{ $certificate->certificateType->name }}
                             {{ $certificate->name }}
                             @if (!empty($certificate->file))
-                            <a href="{{ route('certificate.download', $certificate->id) }}"><i
-                                    class="bi bi-file-earmark-text-fill"></i></a>
+                            <a href="{{ route('certificate.download', $certificate->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
                             @endif
                             @if (!empty($certificate->folder_id))
                             <i class="bi bi-check-circle-fill text-success"></i>

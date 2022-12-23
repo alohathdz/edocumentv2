@@ -18,14 +18,15 @@
                 </a>
             </div>
         </div>
+        <hr class="my-2">
         <div class="table-responsive mt-1">
-            <table class="table table-primary table-bordered table-hover text-center align-middle">
+            <table id="myTable" class="table table-primary table-bordered table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <th>จาก</th>
-                        <th>สำเนาเมื่อ</th>
-                        <th>เรื่อง</th>
-                        <th>Action</th>
+                        <th class="text-center">จาก</th>
+                        <th class="text-center">สำเนาเมื่อ</th>
+                        <th class="text-center">เรื่อง</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -35,16 +36,84 @@
                         <td>{{ timestampthaitext($present->created_at) }}</td>
                         <td>{{ $present->topic }}</td>
                         <td>
-                            <a href="{{ route('present.show', $present->present_id) }}" class="btn btn-primary btn-sm">
-                                <i class="bi bi-eye"></i>
+                            <!-- ปุ่มดาวน์โหลด -->
+                            <a href="{{ route('present.download', $present->present_id) }}"
+                                class="btn btn-primary btn-sm" target="_blank">
+                                <i class="bi bi-download"></i>
                             </a>
+                            <!-- ปุ่มดูคนดาวน์โหลด -->
+                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#viewModal{{ $present->present_id }}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <!-- Modal เช็คคนดาวน์โหลด -->
+                            <div class="modal fade" id="viewModal{{ $present->present_id }}" tabindex="-1"
+                                aria-labelledby="viewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            @php
+                                            $views = ('App\Models\PresentUser')::select('name',
+                                            'present_user.created_at')
+                                            ->join('users', 'present_user.user_id', '=', 'users.id')
+                                            ->where('present_id', $present->present_id)->get();
+                                            $i = 0;
+                                            @endphp
+                                            @if (!$views->first())
+                                            ยังไม่มีผู้ดาวน์โหลด
+                                            @else
+                                            <table class="table">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th class="text-center">ลำดับ</th>
+                                                        <th class="text-center">ชื่อผู้ดาวน์โหลด</th>
+                                                        <th class="text-center">เวลาดาวน์โหลด</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($views as $user)
+                                                    <tr class="text-center">
+                                                        <td>{{ ++$i }}</td>
+                                                        <td>{{ $user->name }}</td>
+                                                        <td>{{ timestampthaitext($user->created_at) }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- ปุ่มปิด -->
+                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                data-bs-dismiss="modal">ปิด</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-            {{ $presents->links() }}
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<!-- DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
+<script src="{{ asset('js/datatables.js') }}"></script>
+<script>
+    $(document).ready(function () {
+    $('#myTable').DataTable({
+        'ordering': false
+    });
+});
+</script>
 @endsection

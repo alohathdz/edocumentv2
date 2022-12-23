@@ -35,8 +35,9 @@
                         <td class="text-start">
                             {{ Str::limit($command->topic, 100) }}
                             @if (!empty($command->file))
-                            <a href="{{ route('command.download', $command->id) }}"><i
-                                    class="bi bi-file-earmark-text-fill"></i></a>
+                            <a href="{{ route('command.download', $command->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
                             @endif
                             @if (!empty($command->folder_id))
                             <i class="bi bi-check-circle-fill text-success"></i>

@@ -38,8 +38,9 @@
                             <span style="color:red">({{ $present->urgency }})</span>
                             @endif
                             @if (!empty($present->file))
-                            <a href="{{ route('present.download', $present->id) }}"><i
-                                    class="bi bi-file-earmark-text-fill"></i></a>
+                            <a href="{{ route('present.download', $present->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
                             @endif
                             @if (!empty($present->folder_id))
                             <i class="bi bi-check-circle-fill text-success"></i>

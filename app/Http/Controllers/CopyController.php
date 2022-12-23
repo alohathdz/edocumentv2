@@ -37,7 +37,7 @@ class CopyController extends Controller
             ->join('presents', 'department_present.present_id', '=', 'presents.id')
             ->join('departments', 'department_present.department_id', '=', 'departments.id')
             ->orderBy('department_present.created_at', 'DESC')
-            ->paginate(20);
+            ->get();
 
         return view('copy.present', compact('presents'));
     }
@@ -49,7 +49,7 @@ class CopyController extends Controller
             ->join('commands', 'command_department.command_id', '=', 'commands.id')
             ->join('departments', 'command_department.department_id', '=', 'departments.id')
             ->orderBy('command_department.created_at', 'DESC')
-            ->paginate(20);
+            ->get();
 
         return view('copy.command', compact('commands'));
     }
