@@ -225,7 +225,7 @@ class ReceiveController extends Controller
 
     public function saraban()
     {
-        $receives = Receive::where('user_id', '=', auth()->user()->id)->where('department_id', '!=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
+        $receives = Receive::where('user_id', '=', auth()->user()->id)->where('department_id', '!=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
 
         return view('receive.saraban', compact('receives'));
     }
@@ -255,7 +255,7 @@ class ReceiveController extends Controller
                 ->where('from', 'LIKE', '%' . $request->from . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
-                ->paginate(20);
+                ->get();
 
             if ($receives->count() == 0) {
                 return redirect()->route('receive.search.home')->with('fail', 'ไม่พบข้อมูล');
