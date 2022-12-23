@@ -9,17 +9,24 @@
             </div>
             <div class="ms-auto">
                 <!-- ปุ่ม Home -->
-                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
-                    หน้าแรก</a>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-house-door"></i>
+                    หน้าแรก
+                </a>
                 <!-- ปุ่ม saraban -->
-                <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm"><i class="bi bi-file-text"></i>
-                    หนังสือรับฝ่ายอื่น ๆ</a>
+                <a href="{{ route('receive.saraban') }}" class="btn btn-danger btn-sm">
+                    <i class="bi bi-file-text"></i>
+                    หนังสือรับฝ่ายอื่น ๆ
+                </a>
                 <!-- ปุ่มค้นหา -->
-                <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm"><i
-                        class="bi bi-search"></i> ค้นหา</a>
+                <a href="{{ route('receive.search.home') }}" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-search"></i> ค้นหา
+                </a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i>
-                    รับหนังสือ</a>
+                <a href="{{ route('receive.create') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-lg"></i>
+                    รับหนังสือ
+                </a>
             </div>
         </div>
         <hr class="my-2">
