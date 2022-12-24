@@ -94,7 +94,7 @@
         <main class="py-4">
             @yield('content')
         </main>
-        <footer class="footer mt-auto py-1 bg-light">
+        <footer class="footer mt-auto bg-light">
             <div class="container text-center">
                 <span class="text-mute">2022 &copy; Woradon Bunkhet</span>
             </div>

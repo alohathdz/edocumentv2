@@ -34,7 +34,7 @@
                         <th class="text-center">วันที่รับ</th>
                         <th class="text-center">จาก</th>
                         <th class="text-center">เรื่อง</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center" style="width: 12%">Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
