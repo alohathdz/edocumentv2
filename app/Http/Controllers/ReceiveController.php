@@ -25,7 +25,7 @@ class ReceiveController extends Controller
      */
     public function index()
     {
-        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('receive.index', compact('receives', 'folders'));
@@ -331,13 +331,15 @@ class ReceiveController extends Controller
                 ->where('from', 'LIKE', '%' . $request->from . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(20);
 
             if ($receives->count() == 0) {
                 return redirect()->route('receive.search.home')->with('fail', 'ไม่พบข้อมูล');
             }
 
-            return view('receive.index', ['receives' => $receives]);
+            $folders = Folder::where('user_id', Auth::id())->get();
+
+            return view('receive.index', compact('receives', 'folders'));
         } else {
             return redirect()->route('receive.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
         }

@@ -25,9 +25,8 @@
                 </a>
             </div>
         </div>
-        <hr class="my-2">
         <div class="table-responsive mt-1">
-            <table class="table table-bordered table-primary table-hover align-middle" id="myTable">
+            <table class="table table-bordered table-primary table-hover align-middle">
                 <thead>
                     <tr>
                         <th class="text-center">ที่</th>
@@ -170,22 +169,12 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $receives->links() }}
         </div>
     </div>
 </div>
 @endsection
 @section('script')
-<!-- DataTables -->
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
-<script src="{{ asset('js/datatables.js') }}"></script>
-<script>
-    $(document).ready(function () {
-    $('#myTable').DataTable({
-        'ordering': false
-    });
-});
-</script>
 <!-- Alert -->
 @if (session('success'))
 <script>
