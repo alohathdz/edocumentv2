@@ -215,7 +215,9 @@ class SendController extends Controller
                 return redirect()->route('send.search.home')->with('fail', 'ไม่พบข้อมูล');
             }
 
-            return view('send.index', ['sends' => $sends]);
+            $folders = Folder::where('user_id', Auth::id())->get();
+
+            return view('send.search', compact('sends', 'folders'));
         } else {
             return redirect()->route('send.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
         }

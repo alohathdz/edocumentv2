@@ -258,7 +258,9 @@ class CommandController extends Controller
                 return redirect()->route('command.search.home')->with('fail', 'ไม่พบข้อมูล');
             }
 
-            return view('command.index', ['commands' => $commands]);
+            $folders = Folder::where('user_id', Auth::id())->get();
+
+            return view('command.search', compact('commands', 'folders'));
         } else {
             return redirect()->route('command.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
         }

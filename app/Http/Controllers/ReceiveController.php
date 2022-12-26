@@ -342,7 +342,7 @@ class ReceiveController extends Controller
 
             $folders = Folder::where('user_id', Auth::id())->get();
 
-            return view('receive.index', compact('receives', 'folders'));
+            return view('receive.search', compact('receives', 'folders'));
         } else {
             return redirect()->route('receive.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
         }

@@ -207,7 +207,10 @@ class CertificateController extends Controller
                 return redirect()->route('certificate.search.home')->with('fail', 'ไม่พบข้อมูล');
             }
 
-            return view('certificate.index', ['certificates' => $certificates]);
+            $certificateTypes = CertificateType::all();
+            $folders = Folder::where('user_id', Auth::id())->get();
+
+            return view('certificate.search', compact('certificates', 'folders', 'certificateTypes'));
         } else {
             return redirect()->route('certificate.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
         }

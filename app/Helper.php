@@ -74,11 +74,12 @@ function line($message, $LINE_TOKEN)
     $LINE_API = "https://notify-api.line.me/api/notify";
     $queryData = array('message' => $message);
     $queryData = http_build_query($queryData, '', '&');
+    $token = "CNeFkOY33OimzI8M0b1SibVeead6aNr9YtPOkpznUYP";
     $headerOptions = array(
         'http' => array(
             'method' => 'POST',
             'header' => "Content-Type: application/x-www-form-urlencoded\r\n"
-                . "Authorization: Bearer " . $LINE_TOKEN . "\r\n"
+                . "Authorization: Bearer " . $token . "\r\n"
                 . "Content-Length: " . strlen($queryData) . "\r\n",
             'content' => $queryData
         )

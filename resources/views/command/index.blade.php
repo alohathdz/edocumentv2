@@ -21,7 +21,7 @@
                 <!-- ปุ่มค้นหา -->
                 <a href="{{ route('command.search.home') }}" class="btn btn-info btn-sm">
                     <i class="bi bi-search"></i>
-                    เพิ่ม
+                    ค้นหา
                 </a>
             </div>
         </div>

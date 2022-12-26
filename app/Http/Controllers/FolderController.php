@@ -24,7 +24,9 @@ class FolderController extends Controller
      */
     public function index()
     {
-        $folders = Folder::where('user_id', auth()->user()->id)->get();
+        $folders = Folder::where('user_id', auth()->user()->id)
+        ->orderBy('name')
+        ->get();
 
         return view('folder.index', compact('folders'));
     }

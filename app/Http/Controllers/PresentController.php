@@ -266,7 +266,9 @@ class PresentController extends Controller
                 return redirect()->route('present.search.home')->with('fail', 'ไม่พบข้อมูล');
             }
 
-            return view('present.index', ['presents' => $presents]);
+            $folders = Folder::where('user_id', Auth::id())->get();
+
+            return view('present.search', compact('presents', 'folders'));
         } else {
             return redirect()->route('present.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
         }
