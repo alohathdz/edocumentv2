@@ -9,22 +9,30 @@
             </div>
             <div class="ms-auto">
                 <!-- ปุ่ม Home -->
-                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
-                    หน้าแรก</a>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-house-door"></i>
+                    หน้าแรก
+                </a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('command.create') }}" class="btn btn-danger btn-sm"><i class="bi bi-plus-lg"></i>
-                    เพิ่ม</a>
+                <a href="{{ route('command.create') }}" class="btn btn-danger btn-sm">
+                    <i class="bi bi-plus-lg"></i>
+                    เพิ่ม
+                </a>
+                <!-- ปุ่มค้นหา -->
+                <a href="{{ route('command.search.home') }}" class="btn btn-info btn-sm">
+                    <i class="bi bi-search"></i>
+                    เพิ่ม
+                </a>
             </div>
         </div>
-        <hr class="my-2">
         <div class="table-responsive mt-1">
-            <table id="myTable" class="table table-bordered table-primary table-hover text-center align-middle">
+            <table class="table table-bordered table-primary table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <th class="text-center">ที่</th>
-                        <th class="text-center">ลงวันที่</th>
-                        <th class="text-center">เรื่อง</th>
-                        <th class="text-center">Action</th>
+                        <th>ที่</th>
+                        <th>ลงวันที่</th>
+                        <th>เรื่อง</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -101,22 +109,12 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $commands->links() }}
         </div>
     </div>
 </div>
 @endsection
 @section('script')
-<!-- DataTables -->
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
-<script src="{{ asset('js/datatables.js') }}"></script>
-<script>
-    $(document).ready(function () {
-    $('#myTable').DataTable({
-        'ordering': false
-    });
-});
-</script>
 <!-- Alert -->
 @if (session('success'))
 <script>

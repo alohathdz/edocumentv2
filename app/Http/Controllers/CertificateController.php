@@ -23,7 +23,7 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        $certificates = Certificate::orderBy('number', 'desc')->get();
+        $certificates = Certificate::orderBy('number', 'desc')->paginate(20);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('certificate.index', compact('certificates', 'folders'));

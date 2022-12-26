@@ -25,7 +25,9 @@ class PresentController extends Controller
      */
     public function index()
     {
-        $presents = Present::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $presents = Present::where('department_id', '=', auth()->user()->department_id)
+        ->orderBy('number', 'desc')
+        ->paginate(20);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('present.index', compact('presents', 'folders'));
@@ -258,7 +260,7 @@ class PresentController extends Controller
                 ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(20);
 
             if ($presents->count() == 0) {
                 return redirect()->route('present.search.home')->with('fail', 'ไม่พบข้อมูล');

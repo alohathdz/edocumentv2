@@ -9,35 +9,46 @@
             </div>
             <div class="ms-auto">
                 <!-- ปุ่ม Home -->
-                <a href="{{ route('home') }}" class="btn btn-primary btn-sm"><i class="bi bi-house-door"></i>
-                    หน้าแรก</a>
+                <a href="{{ route('home') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-house-door"></i>
+                    หน้าแรก
+                </a>
                 <!-- ปุ่ม index -->
-                <a href="{{ route('receive.index') }}" class="btn btn-dark btn-sm"><i class="bi bi-file-text"></i>
-                    {{ auth()->user()->department->initial }}</a>
+                <a href="{{ route('receive.index') }}" class="btn btn-dark btn-sm">
+                    <i class="bi bi-file-text"></i>
+                    {{ auth()->user()->department->initial }}
+                </a>
                 <!-- ปุ่มเพิ่ม -->
-                <a href="{{ route('receive.create') }}" class="btn btn-danger btn-sm"><i class="bi bi-plus-lg"></i>
-                    เพิ่ม</a>
+                <a href="{{ route('receive.create') }}" class="btn btn-danger btn-sm">
+                    <i class="bi bi-plus-lg"></i>
+                    เพิ่ม
+                </a>
+                <!-- ปุ่มค้นหา -->
+                <a href="{{ route('receive.search.home') }}" class="btn btn-info btn-sm">
+                    <i class="bi bi-search"></i>
+                    เพิ่ม
+                </a>
             </div>
         </div>
         <div class="table-responsive mt-1">
-            <table class="table table-bordered table-primary table-hover align-middle" id="myTable">
-                <thead class="text-center">
+            <table class="table table-bordered table-primary table-hover align-middle text-center">
+                <thead>
                     <tr>
-                        <th class="text-center">ที่</th>
-                        <th class="text-center">วันที่รับ</th>
-                        <th class="text-center">จาก</th>
-                        <th class="text-center">เรื่อง</th>
-                        <th class="text-center">ฝ่าย</th>
-                        <th class="text-center">Action</th>
+                        <th>ที่</th>
+                        <th>วันที่รับ</th>
+                        <th>จาก</th>
+                        <th>เรื่อง</th>
+                        <th>ฝ่าย</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     @foreach ($receives as $receive)
                     <tr>
-                        <td class="text-center">{{ $receive->number }}</td>
-                        <td class="text-center">{{ timestampthaitext($receive->created_at) }}</td>
-                        <td>{{ $receive->from }}</td>
-                        <td>
+                        <td>{{ $receive->number }}</td>
+                        <td>{{ timestampthaitext($receive->created_at) }}</td>
+                        <td class="text-start">{{ $receive->from }}</td>
+                        <td class="text-start">
                             {{ Str::limit($receive->topic, 100) }}
                             @if ($receive->urgency != "ไม่มี")
                             <span style="color:red">({{ $receive->urgency }})</span>
@@ -50,8 +61,8 @@
                             <i class="bi bi-check-circle-fill text-success"></i>
                             @endif
                         </td>
-                        <td class="text-center">{{ $receive->department->initial }}</td>
-                        <td class="text-center">
+                        <td>{{ $receive->department->initial }}</td>
+                        <td>
                             <!-- ปุ่มดูคนดาวน์โหลด -->
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#viewModal{{ $receive->id }}">
@@ -122,22 +133,12 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $receives->links() }}
         </div>
     </div>
 </div>
 @endsection
 @section('script')
-<!-- DataTables -->
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
-<script src="{{ asset('js/datatables.js') }}"></script>
-<script>
-    $(document).ready(function () {
-    $('#myTable').DataTable({
-        'ordering': false
-    });
-});
-</script>
 <!-- Alert -->
 @if (session('success'))
 <script>

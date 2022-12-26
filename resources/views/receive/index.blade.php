@@ -23,26 +23,31 @@
                     <i class="bi bi-plus-lg"></i>
                     เพิ่ม
                 </a>
+                <!-- ปุ่มค้นหา -->
+                <a href="{{ route('receive.search.home') }}" class="btn btn-info btn-sm">
+                    <i class="bi bi-search"></i>
+                    เพิ่ม
+                </a>
             </div>
         </div>
         <div class="table-responsive mt-1">
-            <table class="table table-bordered table-primary table-hover align-middle">
+            <table class="table table-bordered table-primary table-hover align-middle text-center">
                 <thead>
                     <tr>
-                        <th class="text-center">ที่</th>
-                        <th class="text-center">วันที่รับ</th>
-                        <th class="text-center">จาก</th>
-                        <th class="text-center">เรื่อง</th>
-                        <th class="text-center" style="width: 12%">Action</th>
+                        <th>ที่</th>
+                        <th>วันที่รับ</th>
+                        <th>จาก</th>
+                        <th>เรื่อง</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     @foreach ($receives as $receive)
                     <tr>
-                        <td class="text-center">{{ $receive->number }}</td>
-                        <td class="text-center">{{ timestampthaitext($receive->created_at) }}</td>
-                        <td>{{ $receive->from }}</td>
-                        <td>
+                        <td>{{ $receive->number }}</td>
+                        <td>{{ timestampthaitext($receive->created_at) }}</td>
+                        <td class="text-start">{{ $receive->from }}</td>
+                        <td class="text-start">
                             {{ Str::limit($receive->topic, 100) }}
                             @if ($receive->urgency != "ไม่มี")
                             <span style="color:red">({{ $receive->urgency }})</span>
@@ -56,7 +61,7 @@
                             <i class="bi bi-check-circle-fill text-success"></i>
                             @endif
                         </td>
-                        <td class="text-center">
+                        <td>
                             <!-- ปุ่มดูคนดาวน์โหลด -->
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#viewModal{{ $receive->id }}">
@@ -117,8 +122,8 @@
                                 <i class="bi bi-folder"></i>
                             </button>
                             <!-- Modal จัดเก็บ -->
-                            <div class="modal fade" id="folderModal{{ $receive->id }}" tabindex="-1" aria-labelledby="folderModalLabel"
-                                aria-hidden="true">
+                            <div class="modal fade" id="folderModal{{ $receive->id }}" tabindex="-1"
+                                aria-labelledby="folderModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <form action="{{ route('receive.folder') }}" method="post">

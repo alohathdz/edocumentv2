@@ -22,7 +22,10 @@ class SendController extends Controller
      */
     public function index()
     {
-        $sends = Send::where('department_id', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $sends = Send::where('department_id', auth()->user()->department_id)
+        ->orderBy('number', 'desc')
+        ->paginate(20);
+        
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('send.index', compact('sends', 'folders'));

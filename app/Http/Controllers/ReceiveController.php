@@ -234,7 +234,10 @@ class ReceiveController extends Controller
 
     public function saraban()
     {
-        $receives = Receive::where('user_id', '=', auth()->user()->id)->where('department_id', '!=', auth()->user()->department_id)->orderBy('number', 'desc')->get();
+        $receives = Receive::where('user_id', '=', auth()->user()->id)
+        ->where('department_id', '!=', auth()->user()->department_id)
+        ->orderBy('number', 'desc')
+        ->paginate(20);
 
         return view('receive.saraban', compact('receives'));
     }
