@@ -18,15 +18,14 @@
                 </a>
             </div>
         </div>
-        <hr class="my-2">
         <div class="table-responsive mt-1">
             <table id="myTable" class="table table-primary table-bordered table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <th class="text-center">จาก</th>
-                        <th class="text-center">สำเนาเมื่อ</th>
-                        <th class="text-center">เรื่อง</th>
-                        <th class="text-center">Action</th>
+                        <th>จาก</th>
+                        <th>สำเนาเมื่อ</th>
+                        <th>เรื่อง</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -34,7 +33,7 @@
                     <tr>
                         <td>{{ $command->initial }}</td>
                         <td>{{ timestampthaitext($command->created_at) }}</td>
-                        <td>{{ $command->topic }}</td>
+                        <td class="text-start">{{ $command->topic }}</td>
                         <td>
                             <!-- ปุ่มดาวน์โหลด -->
                             <a href="{{ route('command.download', $command->command_id) }}"
@@ -69,15 +68,15 @@
                                             @else
                                             <table class="table">
                                                 <thead>
-                                                    <tr class="text-center">
-                                                        <th class="text-center">ลำดับ</th>
-                                                        <th class="text-center">ชื่อผู้ดาวน์โหลด</th>
-                                                        <th class="text-center">เวลาดาวน์โหลด</th>
+                                                    <tr>
+                                                        <th>ลำดับ</th>
+                                                        <th>ชื่อผู้ดาวน์โหลด</th>
+                                                        <th>เวลาดาวน์โหลด</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($views as $user)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ ++$i }}</td>
                                                         <td>{{ $user->name }}</td>
                                                         <td>{{ timestampthaitext($user->created_at) }}</td>
@@ -100,20 +99,8 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $commands->links() }}
         </div>
     </div>
 </div>
-@endsection
-@section('script')
-<!-- DataTables -->
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
-<script src="{{ asset('js/datatables.js') }}"></script>
-<script>
-    $(document).ready(function () {
-    $('#myTable').DataTable({
-        'ordering': false
-    });
-});
-</script>
 @endsection

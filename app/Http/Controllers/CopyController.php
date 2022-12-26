@@ -30,6 +30,7 @@ class CopyController extends Controller
             ->paginate(20);
     }
 
+    #สำเนาหนังสือนำเรียน
     public function presents()
     {
         $presents = DepartmentPresent::select('present_id', 'topic', 'initial', 'no', 'department_present.created_at')
@@ -37,11 +38,12 @@ class CopyController extends Controller
             ->join('presents', 'department_present.present_id', '=', 'presents.id')
             ->join('departments', 'department_present.department_id', '=', 'departments.id')
             ->orderBy('department_present.created_at', 'DESC')
-            ->get();
+            ->paginate(20);
 
         return view('copy.present', compact('presents'));
     }
 
+    #สำเนาคำสั่ง
     public function commands()
     {
         $commands = CommandDepartment::select('command_id', 'topic', 'initial', 'no', 'command_department.created_at')
@@ -49,7 +51,7 @@ class CopyController extends Controller
             ->join('commands', 'command_department.command_id', '=', 'commands.id')
             ->join('departments', 'command_department.department_id', '=', 'departments.id')
             ->orderBy('command_department.created_at', 'DESC')
-            ->get();
+            ->paginate(20);
 
         return view('copy.command', compact('commands'));
     }
