@@ -103,5 +103,5 @@ Route::middleware(['employee'])->group(function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
-    return Auth::id();
+    return view('sidebar');
 });
