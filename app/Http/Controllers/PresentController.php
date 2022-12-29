@@ -26,8 +26,8 @@ class PresentController extends Controller
     public function index()
     {
         $presents = Present::where('department_id', '=', auth()->user()->department_id)
-        ->orderBy('number', 'desc')
-        ->paginate(20);
+            ->orderBy('number', 'desc')
+            ->paginate(20);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('present.index', compact('presents', 'folders'));
@@ -241,7 +241,7 @@ class PresentController extends Controller
         if (Present::where('id', $id)->where('user_id', Auth::id())->first() || Auth::user()->role == 1) {
             $present = Present::findOrFail($id);
             $departments = Department::all();
-    
+
             return view('present.upload', compact('present', 'departments'));
         } else {
             abort(403);
@@ -288,13 +288,13 @@ class PresentController extends Controller
                 ]);
             }
             try {
-                /*if (isMobile()) {
+                if (isMobile()) {
                     $uri = "/pcru_edoc/storage/app/$present->file";
                     return redirect()->to('https://cavalry28.com' . $uri);
                 } else {
                     return response()->file(Storage::path($present->file));
-                }*/
-                return response()->file(Storage::path($present->file));
+                }
+                #return response()->file(Storage::path($present->file));
             } catch (\Throwable $e) {
                 return abort(403, 'File not found.');
             }
