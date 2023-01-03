@@ -25,7 +25,7 @@ class CommandController extends Controller
      */
     public function index()
     {
-        $commands = Command::orderBy('number', 'desc')->paginate(20);
+        $commands = Command::orderBy('id', 'desc')->paginate(20);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('command.index', compact('commands', 'folders'));
