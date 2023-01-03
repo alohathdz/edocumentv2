@@ -21,6 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Icon -->
+    <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/icon type">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 
@@ -29,7 +30,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
 
-                <a class="navbar-brand" href="{{ route('home') }}">ระบบสารบรรณอิเล็กทรอนิกส์</a>
+                <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('images/logo.png') }}" height="30" width="30"> ระบบสารบรรณอิเล็กทรอนิกส์</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
