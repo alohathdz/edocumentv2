@@ -25,7 +25,7 @@ class ReceiveController extends Controller
      */
     public function index()
     {
-        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('number', 'desc')->paginate(20);
+        $receives = Receive::where('department_id', '=', auth()->user()->department_id)->orderBy('id', 'desc')->paginate(20);
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
         return view('receive.index', compact('receives', 'folders'));
@@ -236,7 +236,7 @@ class ReceiveController extends Controller
     {
         $receives = Receive::where('user_id', '=', auth()->user()->id)
         ->where('department_id', '!=', auth()->user()->department_id)
-        ->orderBy('number', 'desc')
+        ->orderBy('id', 'desc')
         ->paginate(20);
 
         return view('receive.saraban', compact('receives'));
