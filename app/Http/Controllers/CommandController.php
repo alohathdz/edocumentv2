@@ -88,7 +88,7 @@ class CommandController extends Controller
                         $department = Department::select("name", "line_token")->where("id", "=", $val)->first();
                         if ($department->line_token != null) {
                             try {
-                                line("\nสำเนาคำสั่ง\nที่ : " . $command->no . "\nเรื่อง : " . $command->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/command/$command->id", $department->line_token);
+                                line("\n📜 สำเนาคำสั่ง 📜\nที่ : " . $command->no . "\nเรื่อง : " . $command->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/command/$command->id", $department->line_token);
                             } catch (\ErrorException $e) {
                                 line("ไม่สามารถส่งแจ้งเตือนไปยัง $department->name ได้", env("LINE_TOKEN"));
                             }
@@ -193,7 +193,7 @@ class CommandController extends Controller
                 if ($department->line_token != null) {
                     if ($command->file != null) {
                         try {
-                            line("\nสำเนาคำสั่ง\nที่ : " . $command->no . "\nเรื่อง : " . $command->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/command/$command->id", $department->line_token);
+                            line("\n📜 สำเนาคำสั่ง 📜\nที่ : " . $command->no . "\nเรื่อง : " . $command->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/command/$command->id", $department->line_token);
                         } catch (\ErrorException $e) {
                             line("ไม่สามารถส่งแจ้งเตือนไปยัง $department->name ได้", env("LINE_TOKEN"));
                         }

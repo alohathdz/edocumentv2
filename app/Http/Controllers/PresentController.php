@@ -94,7 +94,7 @@ class PresentController extends Controller
                         $department = Department::select("name", "line_token")->where("id", "=", $val)->first();
                         if ($department->line_token != null) {
                             try {
-                                line("\nสำเนาหนังสือ\nที่ : " . $present->no . "\nเรื่อง : " . $present->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/present/$present->id", $department->line_token);
+                                line("\n📋 สำเนาหนังสือ 📋\nที่ : " . $present->no . "\nเรื่อง : " . $present->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/present/$present->id", $department->line_token);
                             } catch (\ErrorException $e) {
                                 line("ไม่สามารถส่งแจ้งเตือนไปยัง $department->name ได้", env("LINE_TOKEN"));
                             }
@@ -201,7 +201,7 @@ class PresentController extends Controller
                 if ($department->line_token != null) {
                     if ($present->file != null) {
                         try {
-                            line("\nสำเนาหนังสือ\nที่ : " . $present->no . "\nเรื่อง : " . $present->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/present/$present->id", $department->line_token);
+                            line("\n📋 สำเนาหนังสือ 📋\nที่ : " . $present->no . "\nเรื่อง : " . $present->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/present/$present->id", $department->line_token);
                         } catch (\ErrorException $e) {
                             line("ไม่สามารถส่งแจ้งเตือนไปยัง $department->name ได้", env("LINE_TOKEN"));
                         }

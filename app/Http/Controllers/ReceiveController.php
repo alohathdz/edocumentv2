@@ -86,9 +86,9 @@ class ReceiveController extends Controller
         #Line Notify
         try {
             if ($receive->department->line_token && $receive->file) {
-                line("\nหนังสือรับ\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/$receive->id", $receive->department->line_token);
+                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/$receive->id", $receive->department->line_token);
             } elseif ($receive->department->line_token && !$receive->file) {
-                line("\nหนังสือรับ\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
+                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
             }
         } catch (\ErrorException $th) {
             if (env("LINE_TOKEN") != null) {
@@ -190,9 +190,9 @@ class ReceiveController extends Controller
         #Line Notify
         try {
             if ($receive->department->line_token && $receive->file) {
-                line("\nหนังสือรับ\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/" . $receive->id, $receive->department->line_token);
+                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/" . $receive->id, $receive->department->line_token);
             } elseif ($receive->department->line_token && !$receive->file) {
-                line("\nหนังสือรับ\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
+                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
             }
         } catch (\ErrorException $th) {
             if (env("LINE_TOKEN") != null) {
