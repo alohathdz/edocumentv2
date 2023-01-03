@@ -28,17 +28,27 @@
                     <tr>
                         <td>หนังสือรับ</td>
                         <td>{{ $receive->no }}</td>
-                        <td>{{ $receive->topic }}</td>
+                        <td class="text-start">
+                            {{ Str::limit($receive->topic, 100) }}
+                            @if ($receive->urgency != "ไม่มี")
+                            <span style="color:red">({{ $receive->urgency }})</span>
+                            @endif
+                            @if (!empty($receive->file))
+                            <a href="{{ route('receive.download', $receive->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
+                            @endif
+                        </td>
                         <td>
-                            <form action="{{ route('receive.destroy', $receive->id) }}" method="post">
-                                <a href="{{ route('receive.show', $receive->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
-                            </form>
+                            <!-- ปุ่มแก้ไข -->
+                            <a href="{{ route('receive.edit', $receive->id) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <!-- ปุ่มลบ -->
+                            <a href="{{ route('receive.destroy', $receive->id) }}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('ยืนยันการลบข้อมูล');">
+                                <i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
@@ -46,17 +56,27 @@
                     <tr>
                         <td>หนังสือส่ง</td>
                         <td>{{ $send->no }}</td>
-                        <td>{{ $send->topic }}</td>
+                        <td class="text-start">
+                            {{ Str::limit($send->topic, 100) }}
+                            @if ($send->urgency != "ไม่มี")
+                            <span style="color:red">({{ $send->urgency }})</span>
+                            @endif
+                            @if (!empty($send->file))
+                            <a href="{{ route('send.download', $send->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
+                            @endif
+                        </td>
                         <td>
-                            <form action="{{ route('send.destroy', $send->id) }}" method="post">
-                                <a href="{{ route('send.show', $send->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('send.edit', $send->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
-                            </form>
+                            <!-- ปุ่มแก้ไข -->
+                            <a href="{{ route('send.edit', $send->id) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <!-- ปุ่มลบ -->
+                            <a href="{{ route('send.destroy', $send->id) }}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('ยืนยันการลบข้อมูล');">
+                                <i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
@@ -64,17 +84,27 @@
                     <tr>
                         <td>หนังสือนำเรียน</td>
                         <td>{{ $present->no }}</td>
-                        <td>{{ $present->topic }}</td>
+                        <td class="text-start">
+                            {{ Str::limit($present->topic, 100) }}
+                            @if ($present->urgency != "ไม่มี")
+                            <span style="color:red">({{ $present->urgency }})</span>
+                            @endif
+                            @if (!empty($present->file))
+                            <a href="{{ route('present.download', $present->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
+                            @endif
+                        </td>
                         <td>
-                            <form action="{{ route('present.destroy', $present->id) }}" method="post">
-                                <a href="{{ route('present.show', $present->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('present.edit', $present->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
-                            </form>
+                            <!-- ปุ่มแก้ไข -->
+                            <a href="{{ route('present.edit', $present->id) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <!-- ปุ่มลบ -->
+                            <a href="{{ route('present.destroy', $present->id) }}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('ยืนยันการลบข้อมูล');">
+                                <i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
@@ -82,35 +112,49 @@
                     <tr>
                         <td>คำสั่ง</td>
                         <td>{{ $command->no }}</td>
-                        <td>{{ $command->topic }}</td>
+                        <td class="text-start">
+                            {{ Str::limit($command->topic, 100) }}
+                            @if (!empty($command->file))
+                            <a href="{{ route('command.download', $command->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
+                            @endif
+                        </td>
                         <td>
-                            <form action="{{ route('command.destroy', $command->id) }}" method="post">
-                                <a href="{{ route('command.show', $command->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('command.edit', $command->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
-                            </form>
+                            <!-- ปุ่มแก้ไข -->
+                            <a href="{{ route('command.edit', $command->id) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <!-- ปุ่มลบ -->
+                            <a href="{{ route('command.destroy', $command->id) }}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('ยืนยันการลบข้อมูล');">
+                                <i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
                     @foreach ($certificates as $certificate)
                     <tr>
                         <td>หนังสือรับรอง</td>
-                        <td>{{ $certificate->certificateType->name }}</td>
-                        <td>{{ $certificate->name }}</td>
+                        <td class="text-start">
+                            {{ $certificate->certificateType->name }}
+                            {{ $certificate->name }}
+                            @if (!empty($certificate->file))
+                            <a href="{{ route('certificate.download', $certificate->id) }}" target="_blank">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </a>
+                            @endif
+                        </td>
                         <td>
-                            <form action="{{ route('certificate.destroy', $certificate->id) }}" method="post">
-                                <a href="{{ route('certificate.show', $certificate->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('certificate.edit', $certificate->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('ยืนยันการลบข้อมูล!')"><i class="bi bi-trash"></i></button>
-                            </form>
+                            <!-- ปุ่มแก้ไข -->
+                            <a href="{{ route('certificate.edit', $certificate->id) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <!-- ปุ่มลบ -->
+                            <a href="{{ route('certificate.destroy', $certificate->id) }}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('ยืนยันการลบข้อมูล');">
+                                <i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach

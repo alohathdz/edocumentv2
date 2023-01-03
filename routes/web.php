@@ -11,7 +11,6 @@ use App\Http\Controllers\PresentController;
 use App\Http\Controllers\ReceiveController;
 use App\Http\Controllers\SendController;
 use App\Http\Controllers\UserController;
-use App\Models\Receive;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -109,3 +108,4 @@ Route::get('/test', function () {
 Route::get('/', function () {
     return abort(403, "ปิดปรับปรุงระบบ");
 });
+*/

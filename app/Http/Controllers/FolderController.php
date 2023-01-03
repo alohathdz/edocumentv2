@@ -68,11 +68,11 @@ class FolderController extends Controller
     public function show($id)
     {
         $folder = Folder::findOrFail($id);
-        $receives = Receive::where('folder_id', $id)->get();
-        $sends = Send::where('folder_id', $id)->get();
-        $presents = Present::where('folder_id', $id)->get();
-        $commands = Command::where('folder_id', $id)->get();
-        $certificates = Certificate::where('folder_id', $id)->get();
+        $receives = Receive::where('folder_id', $id)->orderBy('id', 'desc')->get();
+        $sends = Send::where('folder_id', $id)->orderBy('id', 'desc')->get();
+        $presents = Present::where('folder_id', $id)->orderBy('id', 'desc')->get();
+        $commands = Command::where('folder_id', $id)->orderBy('id', 'desc')->get();
+        $certificates = Certificate::where('folder_id', $id)->orderBy('id', 'desc')->get();
 
         return view('folder.show', compact('folder', 'receives', 'sends', 'presents', 'commands', 'certificates'));
     }
