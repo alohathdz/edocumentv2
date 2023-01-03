@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*
 Route::get('/', function () {
     return redirect()->route('home');
 });
@@ -103,9 +104,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/test', function () {
     return view('sidebar');
 });
-
-/*
-Route::get('/', function () {
-    return abort(403, "ปิดปรับปรุงระบบ");
-});
 */
+
+Route::get('/', function () {
+    return view('close');
+});
