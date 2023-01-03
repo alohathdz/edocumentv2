@@ -289,7 +289,7 @@ class PresentController extends Controller
             }
             try {
                 if (isMobile()) {
-                    $uri = "/pcru_edoc/storage/app/$present->file";
+                    $uri = "/edocumentv2/storage/app/$present->file";
                     return redirect()->to('https://cavalry28.com' . $uri);
                 } else {
                     return response()->file(Storage::path($present->file));

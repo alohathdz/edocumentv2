@@ -86,7 +86,7 @@ class ReceiveController extends Controller
         #Line Notify
         try {
             if ($receive->department->line_token && $receive->file) {
-                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/$receive->id", $receive->department->line_token);
+                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/$receive->id/download", $receive->department->line_token);
             } elseif ($receive->department->line_token && !$receive->file) {
                 line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
             }
@@ -190,7 +190,7 @@ class ReceiveController extends Controller
         #Line Notify
         try {
             if ($receive->department->line_token && $receive->file) {
-                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/" . $receive->id, $receive->department->line_token);
+                line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : " . $_SERVER['SERVER_NAME'] . "/receive/$receive->id/download", $receive->department->line_token);
             } elseif ($receive->department->line_token && !$receive->file) {
                 line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
             }
@@ -273,6 +273,11 @@ class ReceiveController extends Controller
         #เปิดไฟล์แนบ
         try {
             if ($receive->file) {
+                #ตรวจ Device Mobile
+                if (isMobile()) {
+                    $uri = "/edocumentv2/storage/app/$receive->file";
+                    return redirect()->to('https://cavalry28.com' . $uri);
+                }
                 #กำหนดข้อความ stamp
                 $file = Storage::path($receive->file);
                 $text1 = "ม.พัน.28 พล.ม.1";
