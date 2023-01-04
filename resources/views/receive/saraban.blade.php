@@ -14,10 +14,12 @@
                     หน้าแรก
                 </a>
                 <!-- ปุ่ม index -->
+                @saraban
                 <a href="{{ route('receive.index') }}" class="btn btn-dark btn-sm">
                     <i class="bi bi-file-text"></i>
                     {{ auth()->user()->department->initial }}
                 </a>
+                @endsaraban
                 <!-- ปุ่มเพิ่ม -->
                 <a href="{{ route('receive.create') }}" class="btn btn-danger btn-sm">
                     <i class="bi bi-plus-lg"></i>

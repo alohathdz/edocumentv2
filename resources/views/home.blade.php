@@ -102,7 +102,7 @@
                     <strong>หนังสือราชการ</strong>
                 </div>
                 <div class="card-body">
-                    <a href="{{ route('receive.index') }}" class="btn btn-primary btn-sm mb-1 col-sm-6"><i class="bi bi-file-earmark-text"></i> หนังสือรับ</a><br>
+                    <a href="{{ route('receive.saraban') }}" class="btn btn-primary btn-sm mb-1 col-sm-6"><i class="bi bi-file-earmark-text"></i> หนังสือรับ</a><br>
                     <a href="{{ route('present.index') }}" class="btn btn-danger btn-sm mb-1 col-sm-6"><i class="bi bi-file-earmark-text"></i> หนังสือนำเรียน</a><br>
                 </div>
             </div>

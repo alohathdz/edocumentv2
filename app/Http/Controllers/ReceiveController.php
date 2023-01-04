@@ -51,7 +51,7 @@ class ReceiveController extends Controller
      */
     public function store(Request $request)
     {
-        # ตรวจสอบข้อมูล
+        #ตรวจสอบข้อมูล
         $request->validate([
             'no' => ['required', 'string', 'max:50'],
             'date' => ['required'],
@@ -234,12 +234,12 @@ class ReceiveController extends Controller
 
     public function saraban()
     {
-        /*$receives = Receive::where('user_id', '=', auth()->user()->id)
+        $receives = Receive::where('user_id', '=', auth()->user()->id)
         ->where('department_id', '!=', auth()->user()->department_id)
         ->orderBy('id', 'desc')
-        ->paginate(20);*/
+        ->paginate(20);
 
-        $receives = Receive::orderBy('id', 'desc')->paginate(20);
+        #$receives = Receive::orderBy('id', 'desc')->paginate(20);
 
         return view('receive.saraban', compact('receives'));
     }
