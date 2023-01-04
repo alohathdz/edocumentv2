@@ -40,12 +40,6 @@ Route::post('/user/{id}/profile/update', [UserController::class, 'profileUpdate'
 
 #เจ้าหน้าที่ฝ่ายอำนวยการ
 Route::middleware(['saraban'])->group(function () {
-    #หนังสือรับ
-    Route::resource('receive', ReceiveController::class);
-    Route::get('search/receive', [ReceiveController::class, 'homeSearch'])->name('receive.search.home');
-    Route::post('search/receive', [ReceiveController::class, 'search'])->name('receive.search');
-    Route::get('saraban', [ReceiveController::class, 'saraban'])->name('receive.saraban');
-    Route::get('receive/{id}/view', [ReceiveController::class, 'view'])->name('receive.view');
     #หนังสือส่ง
     Route::resource('send', SendController::class);
     Route::get('send/{id}/upload', [SendController::class, 'upload'])->name('send.upload');
@@ -75,6 +69,11 @@ Route::middleware(['saraban'])->group(function () {
 #เจ้าหน้าที่กองร้อย
 Route::middleware(['employee'])->group(function () {
     #หนังสือรับ
+    Route::resource('receive', ReceiveController::class);
+    Route::get('search/receive', [ReceiveController::class, 'homeSearch'])->name('receive.search.home');
+    Route::post('search/receive', [ReceiveController::class, 'search'])->name('receive.search');
+    Route::get('saraban', [ReceiveController::class, 'saraban'])->name('receive.saraban');
+    Route::get('receive/{id}/view', [ReceiveController::class, 'view'])->name('receive.view');
     Route::get('receive/{id}/download', [ReceiveController::class, 'download'])->name('receive.download');
     Route::get('receive/{id}/destroy', [ReceiveController::class, 'destroy'])->name('receive.destroy');
     #หนังสือส่ง
