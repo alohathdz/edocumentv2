@@ -276,7 +276,7 @@ class ReceiveController extends Controller
                 #ตรวจ Device Mobile
                 if (isMobile()) {
                     $uri = "/edocumentv2/storage/app/$receive->file";
-                    return redirect()->to('https://cavalry28.com' . $uri);
+                    return redirect()->to('https://cavalry28.tk' . $uri);
                 }
                 #กำหนดข้อความ stamp
                 $file = Storage::path($receive->file);

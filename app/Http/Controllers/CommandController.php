@@ -282,7 +282,7 @@ class CommandController extends Controller
             try {
                 if (isMobile()) {
                     $uri = "/edocumentv2/storage/app/$command->file";
-                    return redirect()->to('https://cavalry28.com' . $uri);
+                    return redirect()->to('https://cavalry28.tk' . $uri);
                 } else {
                     return response()->file(Storage::path($command->file));
                 }
