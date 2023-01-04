@@ -115,7 +115,7 @@ class UserController extends Controller
             ]);
 
             User::findOrFail($id)->update([
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
             ]);
         }
 
