@@ -191,7 +191,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $receives->links() }}
     </div>
     @endif
 </div>

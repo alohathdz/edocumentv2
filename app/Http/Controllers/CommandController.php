@@ -252,7 +252,7 @@ class CommandController extends Controller
                 ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
-                ->paginate(20);
+                ->get();
 
             if ($commands->count() == 0) {
                 return redirect()->route('command.search.home')->with('fail', 'ไม่พบข้อมูล');

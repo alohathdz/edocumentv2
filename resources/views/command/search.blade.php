@@ -125,7 +125,6 @@
             @endforeach
         </tbody>
     </table>
-    {{ $commands->links() }}
 </div>
 @endif
 @endsection

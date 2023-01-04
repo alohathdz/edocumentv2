@@ -136,7 +136,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $sends->links() }}
     </div>
 </div>
 @endif

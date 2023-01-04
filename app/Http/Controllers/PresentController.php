@@ -260,7 +260,7 @@ class PresentController extends Controller
                 ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
-                ->paginate(20);
+                ->get();
 
             if ($presents->count() == 0) {
                 return redirect()->route('present.search.home')->with('fail', 'ไม่พบข้อมูล');

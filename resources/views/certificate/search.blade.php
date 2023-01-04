@@ -136,7 +136,6 @@
             @endforeach
         </tbody>
     </table>
-    {{ $certificates->links() }}
 </div>
 @endif
 @endsection

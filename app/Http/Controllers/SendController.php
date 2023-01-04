@@ -24,7 +24,7 @@ class SendController extends Controller
     {
         $sends = Send::where('department_id', auth()->user()->department_id)
         ->orderBy('id', 'desc')
-        ->paginate(20);
+        ->get();
         
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 

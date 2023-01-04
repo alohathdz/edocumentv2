@@ -128,7 +128,6 @@
             @endforeach
         </tbody>
     </table>
-    {{ $presents->links() }}
 </div>
 @endif
 @endsection
