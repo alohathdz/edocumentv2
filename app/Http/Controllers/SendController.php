@@ -206,7 +206,7 @@ class SendController extends Controller
         if (isset($request->no) || isset($request->date) || isset($request->to) || isset($request->topic)) {
             $sends = Send::where('no', 'LIKE', '%' . $request->no . '%')
                 ->where('date', 'LIKE', '%' . dateeng($request->date) . '%')
-                ->where('to', 'LIKE', '%' . $request->from . '%')
+                ->where('to', 'LIKE', '%' . $request->to . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
                 ->get();
