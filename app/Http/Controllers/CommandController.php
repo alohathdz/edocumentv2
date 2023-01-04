@@ -280,12 +280,11 @@ class CommandController extends Controller
                 ]);
             }
             try {
-                if (isMobile()) {
+                /*if (isMobile()) {
                     $uri = "/edocumentv2/storage/app/$command->file";
                     return redirect()->to('https://cavalry28.tk' . $uri);
-                } else {
-                    return response()->file(Storage::path($command->file));
-                }
+                }*/
+                return response()->file(Storage::path($command->file));
             } catch (\Throwable $e) {
                 return abort(403, 'File not found.');
             }
