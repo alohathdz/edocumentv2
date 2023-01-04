@@ -14,6 +14,12 @@
                     หน้าแรก
                 </a>
                 <!-- ปุ่ม index -->
+                @admin
+                <a href="{{ route('receive.index') }}" class="btn btn-dark btn-sm">
+                    <i class="bi bi-file-text"></i>
+                    {{ auth()->user()->department->initial }}
+                </a>
+                @endadmin
                 @saraban
                 <a href="{{ route('receive.index') }}" class="btn btn-dark btn-sm">
                     <i class="bi bi-file-text"></i>
@@ -26,6 +32,12 @@
                     เพิ่ม
                 </a>
                 <!-- ปุ่มค้นหา -->
+                @admin
+                <a href="{{ route('receive.search.home') }}" class="btn btn-info btn-sm">
+                    <i class="bi bi-search"></i>
+                    ค้นหา
+                </a>
+                @endadmin
                 @saraban
                 <a href="{{ route('receive.search.home') }}" class="btn btn-info btn-sm">
                     <i class="bi bi-search"></i>
