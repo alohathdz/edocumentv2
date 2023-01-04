@@ -24,7 +24,7 @@ class SendController extends Controller
     {
         $sends = Send::where('department_id', auth()->user()->department_id)
         ->orderBy('id', 'desc')
-        ->get();
+        ->paginate(20);
         
         $folders = Folder::where('user_id', auth()->user()->id)->get();
 
@@ -209,7 +209,7 @@ class SendController extends Controller
                 ->where('to', 'LIKE', '%' . $request->from . '%')
                 ->where('topic', 'LIKE', '%' . $request->topic . '%')
                 ->orderBy('id', 'desc')
-                ->paginate(20);
+                ->get();
 
             if ($sends->count() == 0) {
                 return redirect()->route('send.search.home')->with('fail', 'ไม่พบข้อมูล');

@@ -19,10 +19,12 @@
                     เพิ่ม
                 </a>
                 <!-- ปุ่มค้นหา -->
+                @saraban
                 <a href="{{ route('present.search.home') }}" class="btn btn-info btn-sm">
                     <i class="bi bi-search"></i>
                     ค้นหา
                 </a>
+                @endsaraban
             </div>
         </div>
         <div class="table-responsive mt-1">
