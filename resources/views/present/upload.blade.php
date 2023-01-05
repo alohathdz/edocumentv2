@@ -50,6 +50,22 @@
                         </div>
                     </div>
                     <!-- สำเนา -->
+                    @admin
+                    <hr class="my-3">
+                    <div class="row">
+                        <label for="file" class="col-md-3 col-form-label text-md-end"><strong>สำเนาให้</strong></label>
+                        <div class="col-md-7">
+                            @foreach ($departments as $dept)
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" value="{{ $dept->id }}" name="copy[]"
+                                    id="deptCheck{{ $dept->id }}">
+                                <label for="deptCheck{{ $dept->id }}" class="form-check-label">{{ $dept->name
+                                    }}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endadmin
                     @saraban
                     <hr class="my-3">
                     <div class="row">
