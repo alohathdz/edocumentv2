@@ -45,6 +45,7 @@
                         <input type="file" class="form-control" id="file" name="file" accept="application/pdf">
                     </div>
                     <!-- สำเนา -->
+                    @admin
                     <div class="col-md-12">
                         <label for="file" class="col-form-label"><strong>สำเนาให้</strong></label>
                         @foreach ($DeptList as $key => $val)
@@ -56,6 +57,20 @@
                         </div>
                         @endforeach
                     </div>
+                    @endadmin
+                    @saraban
+                    <div class="col-md-12">
+                        <label for="file" class="col-form-label"><strong>สำเนาให้</strong></label>
+                        @foreach ($DeptList as $key => $val)
+                        <div class="form-check">
+                            <input class="form-check-input" @php echo (!empty($val['checked'])) ? 'checked' : null
+                                @endphp type="checkbox" value="{{ $val['id'] }}" name="copy[]" id="deptCheck{{$key}}">
+                            <label class="form-check-label" for="deptCheck{{$key}}">{{ $val['name']
+                                }}</label>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endsaraban
                     <!-- ปุ่มบันทึก -->
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary btn-sm" onclick="classList.add('disabled')">บันทึก</button>
