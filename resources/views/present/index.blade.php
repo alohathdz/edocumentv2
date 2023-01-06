@@ -57,6 +57,60 @@
                             @endif
                         </td>
                         <td>
+                            <!-- ปุ่มดูคนดาวน์โหลด -->
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#viewModal{{ $present->id }}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <!-- Modal เช็คคนดาวน์โหลด -->
+                            <div class="modal fade" id="viewModal{{ $present->id }}" tabindex="-1"
+                                aria-labelledby="viewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            @php
+                                            $views = ('App\Models\PresentUser')::select('name',
+                                            'present_user.created_at')
+                                            ->join('users', 'present_user.user_id', '=', 'users.id')
+                                            ->where('present_id', $present->id)->get();
+                                            $i = 0;
+                                            @endphp
+                                            @if (!$views->first())
+                                            ยังไม่มีผู้ดาวน์โหลด
+                                            @else
+                                            <table class="table">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th class="text-center">ลำดับ</th>
+                                                        <th class="text-center">ชื่อผู้ดาวน์โหลด</th>
+                                                        <th class="text-center">เวลาดาวน์โหลด</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($views as $user)
+                                                    <tr class="text-center">
+                                                        <td>{{ ++$i }}</td>
+                                                        <td>{{ $user->name }}</td>
+                                                        <td>{{ timestampthaitext($user->created_at) }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- ปุ่มปิด -->
+                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                data-bs-dismiss="modal">ปิด</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- ปุ่มจัดเก็บ -->
                             <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#folderModal{{ $present->id }}">
