@@ -103,9 +103,3 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/test', function () {
     return view('sidebar');
 });
-
-/*
-Route::get('/', function () {
-    return redirect()->to('https://edoc.cavalry28.tk');
-});
-*/

@@ -288,10 +288,11 @@ class PresentController extends Controller
                 ]);
             }
             try {
-                /*if (isMobile()) {
+                if (isMobile()) {
                     $uri = "/edocumentv2/storage/app/$present->file";
-                    return redirect()->to('https://cavalry28.tk' . $uri);
-                }*/
+                    return redirect()->to('https://www.cavalry28.com' . $uri);
+                }
+
                 return response()->file(Storage::path($present->file));
             } catch (\Throwable $e) {
                 return abort(403, 'File not found.');
