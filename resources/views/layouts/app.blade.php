@@ -74,9 +74,9 @@
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('user.profile', Auth::user()->id) }}">ข้อมูลส่วนตัว</a>
-                                @saraban
+                                @adminsaraban
                                 <a class="dropdown-item" href="{{ route('folder.index') }}">แฟ้ม</a>
-                                @endsaraban
+                                @endadminsaraban
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">ออกจากระบบ</a>
 

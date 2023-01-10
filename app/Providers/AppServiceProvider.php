@@ -46,5 +46,10 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('user', function () {
             return auth()->check() && auth()->user()->role == 0;
         });
+
+        #ผู้ดูแล + สารบรรณ
+        Blade::if('adminsaraban', function () {
+            return auth()->check() && in_array(auth()->user()->role, array(1, 2));
+        });
     }
 }
