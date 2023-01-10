@@ -31,7 +31,7 @@
                 <tbody class="table-group-divider">
                     @foreach ($commands as $command)
                     <tr>
-                        <td>{{ $command->initial }}</td>
+                        <td>{{ $command->dept }}</td>
                         <td>{{ timestampthaitext($command->created_at) }}</td>
                         <td class="text-start">{{ $command->topic }}</td>
                         <td>

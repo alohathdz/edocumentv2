@@ -31,7 +31,7 @@
                 <tbody class="table-group-divider">
                     @foreach ($presents as $present)
                     <tr>
-                        <td>{{ $present->initial }}</td>
+                        <td>{{ $present->dept }}</td>
                         <td>{{ timestampthaitext($present->created_at) }}</td>
                         <td class="text-start">{{ $present->topic }}</td>
                         <td>

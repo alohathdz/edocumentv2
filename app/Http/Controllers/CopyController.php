@@ -33,10 +33,10 @@ class CopyController extends Controller
     #สำเนาหนังสือนำเรียน
     public function presents()
     {
-        $presents = DepartmentPresent::select('present_id', 'topic', 'initial', 'no', 'department_present.created_at')
-            ->where('department_present.department_id', auth()->user()->department_id)
+        $presents = DepartmentPresent::select('present_id', 'topic', 'no', 'department_present.created_at', DB::raw('(SELECT initial FROM departments WHERE id = presents.department_id) as dept'))
             ->join('presents', 'department_present.present_id', '=', 'presents.id')
             ->join('departments', 'department_present.department_id', '=', 'departments.id')
+            ->where('department_present.department_id', auth()->user()->department_id)
             ->orderBy('department_present.created_at', 'DESC')
             ->paginate(20);
 
@@ -46,10 +46,10 @@ class CopyController extends Controller
     #สำเนาคำสั่ง
     public function commands()
     {
-        $commands = CommandDepartment::select('command_id', 'topic', 'initial', 'no', 'command_department.created_at')
-            ->where('command_department.department_id', auth()->user()->department_id)
+        $commands = CommandDepartment::select('command_id', 'topic', 'no', 'command_department.created_at', DB::raw('(SELECT initial FROM departments WHERE id = commands.department_id) as dept'))
             ->join('commands', 'command_department.command_id', '=', 'commands.id')
             ->join('departments', 'command_department.department_id', '=', 'departments.id')
+            ->where('command_department.department_id', auth()->user()->department_id)
             ->orderBy('command_department.created_at', 'DESC')
             ->paginate(20);
 
