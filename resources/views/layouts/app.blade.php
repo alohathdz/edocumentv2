@@ -97,7 +97,7 @@
         </main>
         <footer class="footer mt-auto bg-light">
             <div class="container text-center">
-                <span class="text-mute">2022 &copy; Woradon Bunkhet</span>
+                <span class="text-mute">2023 &copy; Woradon Bunkhet</span>
             </div>
         </footer>
     </div>
