@@ -7,11 +7,13 @@ use App\Models\Department;
 use App\Models\Folder;
 use App\Models\Receive;
 use App\Models\ReceiveUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class ReceiveController extends Controller
 {
@@ -362,5 +364,13 @@ class ReceiveController extends Controller
     public function exportExcel(Request $request)
     {
         return (new ReceivesExport)->dateExport(dateeng($request->dateFrom), dateeng($request->dateTo))->download('receive.xlsx');
+    }
+
+    public function exportPDF()
+    {
+        $receives = Receive::where('from', 'ร้อย.ม.2')->get();
+        $pdf = PDF::loadView('receive.export', ['receives' => $receives]);
+
+        return $pdf->stream();
     }
 }

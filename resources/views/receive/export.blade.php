@@ -4,16 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: normal;
+            font-weight: normal;
+            src: url("{{ asset('fonts/THSarabunNew.ttf') }}") format('truetype');
+        }
+        body {
+            font-family: "THSarabunNew";
+        }
+        table {
+            border-collapse: collapse;
+        }
+    </style>
     <title>Receive - Export</title>
 </head>
 <body>
     <table>
         <thead>
             <tr>
-                <th>ลำดับ</th>
-                <th>ลงวันที่</th>
-                <th>จาก</th>
-                <th>เรื่อง</th>
+                <td>#</td>
+                <td>ลง</td>
+                <td>จาก</td>
+                <td>เรื่อง</td>
             </tr>
         </thead>
         <tbody>

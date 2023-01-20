@@ -46,7 +46,6 @@ Route::middleware(['saraban'])->group(function () {
     Route::get('send/{id}/upload', [SendController::class, 'upload'])->name('send.upload');
     Route::get('search/send', [SendController::class, 'homeSearch'])->name('send.search.home');
     Route::post('search/send', [SendController::class, 'search'])->name('send.search');
-    Route::post('export/receive', [ReceiveController::class, 'exportExcel'])->name('receive.export');
     #คำสั่ง
     Route::resource('command', CommandController::class);
     Route::get('command/{id}/upload', [CommandController::class, 'upload'])->name('command.upload');
@@ -78,6 +77,8 @@ Route::middleware(['employee'])->group(function () {
     Route::get('receive/{id}/view', [ReceiveController::class, 'view'])->name('receive.view');
     Route::get('receive/{id}/download', [ReceiveController::class, 'download'])->name('receive.download');
     Route::get('receive/{id}/destroy', [ReceiveController::class, 'destroy'])->name('receive.destroy');
+    Route::post('receive/excel/export', [ReceiveController::class, 'exportExcel'])->name('receive.export.excel');
+    Route::get('receive/pdf/export', [ReceiveController::class, 'exportPDF'])->name('receive.export.pdf');
     #หนังสือส่ง
     Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
     Route::get('send/{id}/destroy', [SendController::class, 'destroy'])->name('send.destroy');
