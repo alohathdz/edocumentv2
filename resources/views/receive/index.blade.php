@@ -74,7 +74,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
-                                            <h6 class="modal-title text-danger ms-1">(ผู้รับ {{ $receive->user->name }})</h6>
+                                            <h6 class="modal-title text-danger ms-1">(ผู้รับ {{ !empty($receive->user) ? $receive->user->name:'' }})</h6>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
