@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReceivesExport;
 use App\Models\Department;
 use App\Models\Folder;
 use App\Models\Receive;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReceiveController extends Controller
 {
@@ -355,5 +357,10 @@ class ReceiveController extends Controller
         } else {
             return redirect()->route('receive.search.home')->with('fail', 'กรุณาใส่ข้อมูล');
         }
+    }
+
+    public function exportExcel(Request $request)
+    {
+        return (new ReceivesExport)->dateExport(dateeng($request->dateFrom), dateeng($request->dateTo))->download('receive.xlsx');
     }
 }

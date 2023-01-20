@@ -46,6 +46,7 @@ Route::middleware(['saraban'])->group(function () {
     Route::get('send/{id}/upload', [SendController::class, 'upload'])->name('send.upload');
     Route::get('search/send', [SendController::class, 'homeSearch'])->name('send.search.home');
     Route::post('search/send', [SendController::class, 'search'])->name('send.search');
+    Route::post('export/receive', [ReceiveController::class, 'exportExcel'])->name('receive.export');
     #คำสั่ง
     Route::resource('command', CommandController::class);
     Route::get('command/{id}/upload', [CommandController::class, 'upload'])->name('command.upload');

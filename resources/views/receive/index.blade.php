@@ -28,6 +28,45 @@
                     <i class="bi bi-search"></i>
                     ค้นหา
                 </a>
+                <!-- Export -->
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#exportModal">
+                    <i class="bi bi-file-earmark-excel"></i> Export
+                </button>
+                <!-- Modal Export -->
+                <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <form action="{{ route('receive.export') }}" method="post">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class=" modal-title" id="exportModalLabel">Export</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-2">
+                                        <strong>เลือกห้วง</strong>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="dateFrom" name="dateFrom"
+                                                placeholder="จาก" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="dateTo" name="dateTo"
+                                                placeholder="ถึง" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Export</button>
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">ปิด</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="table-responsive mt-1">
@@ -74,7 +113,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="modaldonwload">รายชื่อผู้ดาวน์โหลด</h5>
-                                            <h6 class="modal-title text-danger ms-1">(ผู้รับ {{ !empty($receive->user) ? $receive->user->name:'' }})</h6>
+                                            <h6 class="modal-title text-danger ms-1">(ผู้รับ {{ !empty($receive->user) ?
+                                                $receive->user->name:'' }})</h6>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -198,4 +238,27 @@
     })
 </script>
 @endif
+<!-- Date Time Picker Thai -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<link href="{{ asset('bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
+<script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>
+<script src="{{ asset('bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js') }}"></script>
+<script>
+    $(function() {
+            $("#dateFrom").datepicker({
+                language: 'th-th',
+                format: 'dd/mm/yyyy',
+                autoclose: true
+            });
+        });
+
+    $(function() {
+            $("#dateTo").datepicker({
+                language: 'th-th',
+                format: 'dd/mm/yyyy',
+                autoclose: true
+            });
+        });
+</script>
 @endsection
