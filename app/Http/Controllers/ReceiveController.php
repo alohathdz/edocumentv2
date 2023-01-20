@@ -361,16 +361,17 @@ class ReceiveController extends Controller
         }
     }
 
-    public function exportExcel(Request $request)
+    public function export(Request $request)
     {
-        return (new ReceivesExport)->dateExport(dateeng($request->dateFrom), dateeng($request->dateTo))->download('receive.xlsx');
-    }
-
-    public function exportPDF()
-    {
-        $receives = Receive::where('from', 'ร้อย.ม.2')->get();
-        $pdf = PDF::loadView('receive.export', ['receives' => $receives]);
-
-        return $pdf->stream();
+        if ($request->type == "pdf") {
+            $receives = Receive::select('date', 'from', 'topic')
+            ->whereBetween('created_at', [dateeng($request->dateFrom), dateeng($request->dateTo)])
+            ->get();
+            $pdf = PDF::loadView('receive.export', compact('receives'))->setPaper('a4', 'landscape');
+    
+            return $pdf->stream();
+        } elseif ($request->type == "excel") {
+            return (new ReceivesExport)->dateExport(dateeng($request->dateFrom), dateeng($request->dateTo))->download('receive.xlsx');
+        }
     }
 }

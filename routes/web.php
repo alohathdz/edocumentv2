@@ -77,8 +77,7 @@ Route::middleware(['employee'])->group(function () {
     Route::get('receive/{id}/view', [ReceiveController::class, 'view'])->name('receive.view');
     Route::get('receive/{id}/download', [ReceiveController::class, 'download'])->name('receive.download');
     Route::get('receive/{id}/destroy', [ReceiveController::class, 'destroy'])->name('receive.destroy');
-    Route::post('receive/excel/export', [ReceiveController::class, 'exportExcel'])->name('receive.export.excel');
-    Route::get('receive/pdf/export', [ReceiveController::class, 'exportPDF'])->name('receive.export.pdf');
+    Route::post('receive/export', [ReceiveController::class, 'export'])->name('receive.export');
     #หนังสือส่ง
     Route::get('send/{id}/download', [SendController::class, 'download'])->name('send.download');
     Route::get('send/{id}/destroy', [SendController::class, 'destroy'])->name('send.destroy');

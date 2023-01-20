@@ -32,6 +32,9 @@ class ReceivesExport implements FromQuery, WithHeadings, ShouldAutoSize
 
     public function query()
     {
-        return Receive::query()->select('date', 'from', 'topic')->whereDate('created_at', '>=', $this->dateFrom)->whereDate('created_at', '<=', $this->dateTo);
+        return Receive::query()
+        ->select('date', 'from', 'topic')
+        ->whereDate('created_at', '>=', $this->dateFrom)
+        ->whereDate('created_at', '<=', $this->dateTo);
     }
 }

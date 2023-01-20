@@ -38,7 +38,7 @@
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <form action="{{ route('receive.export.excel') }}" method="post">
+                            <form action="{{ route('receive.export') }}" method="post" target="_blank">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class=" modal-title" id="exportModalLabel">Export</h5>
@@ -47,7 +47,14 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row g-2">
-                                        <strong>เลือกห้วง</strong>
+                                        <strong>รูปแบบ</strong>
+                                        <div class="col-md-12">
+                                            <select class="form-select" name="type">
+                                                <option value="pdf">PDF</option>
+                                                <option value="excel">Excel</option>
+                                            </select>
+                                        </div>
+                                        <strong>ระยะห้วง</strong>
                                         <div class="col-md-6">
                                             <input type="text" class="form-control" id="dateFrom" name="dateFrom"
                                                 placeholder="จาก" readonly>
