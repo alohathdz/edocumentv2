@@ -7,13 +7,11 @@ use App\Models\Department;
 use App\Models\Folder;
 use App\Models\Receive;
 use App\Models\ReceiveUser;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
-use Maatwebsite\Excel\Facades\Excel;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReceiveController extends Controller
 {
