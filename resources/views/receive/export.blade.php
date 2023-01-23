@@ -37,7 +37,7 @@
 </head>
 
 <body>
-    <table>
+    <table style="font-size: 16pt">
         <thead>
             <tr>
                 <th>#</th>
