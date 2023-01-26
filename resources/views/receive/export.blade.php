@@ -25,19 +25,30 @@
         }
 
         table {
-            border-collapse: collapse;
             width: 100%;
+            font-size: 14pt;
         }
 
         th {
             text-align: left;
         }
+
+        p {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
     </style>
     <title>หนังสือรับ</title>
 </head>
 
 <body>
-    <table style="font-size: 16pt">
+    <p>รายการหนังสือรับ</p>
+    <p>ระยะห้วง {{ $dateFrom }} - {{ $dateTo }}</p>
+    <p>ออกรายงานโดย {{ Auth::user()->name }}</p>
+    <table>
         <thead>
             <tr>
                 <th>#</th>
@@ -52,10 +63,10 @@
             @endphp
             @foreach ($receives as $receive)
             <tr>
-                <td>{{ $i++ }}</td>
+                <td style="font-weight: bold">{{ $i++ }}</td>
                 <td>{{ datethaitext($receive->date) }}</td>
-                <td>{{ $receive->from }}</td>
-                <td>{{ $receive->topic }}</td>
+                <td>{{ Str::limit($receive->from, 20) }}</td>
+                <td>{{ Str::limit($receive->topic, 80) }}</td>
             </tr>
             @endforeach
         </tbody>

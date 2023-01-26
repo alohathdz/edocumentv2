@@ -362,11 +362,16 @@ class ReceiveController extends Controller
     public function export(Request $request)
     {
         if ($request->type == "pdf") {
+            $dateFrom = $request->dateFrom;
+            $dateTo = $request->dateTo;
+
             $receives = Receive::select('date', 'from', 'topic')
             ->whereBetween('created_at', [dateeng($request->dateFrom), dateeng($request->dateTo)])
             ->get();
-            $pdf = PDF::loadView('receive.export', compact('receives'))->setPaper('a4', 'landscape');
-    
+
+            $pdf = PDF::loadView('receive.export', compact('receives', 'dateFrom', 'dateTo'))->setPaper('a4', 'portrait');
+
+            #return view('receive.export', compact('receives', 'dateFrom', 'dateTo'));
             return $pdf->stream();
         } elseif ($request->type == "excel") {
             return (new ReceivesExport)->dateExport(dateeng($request->dateFrom), dateeng($request->dateTo))->download('receive.xlsx');
