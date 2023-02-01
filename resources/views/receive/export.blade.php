@@ -66,7 +66,7 @@
                 <td style="font-weight: bold">{{ $i++ }}</td>
                 <td>{{ datethaitext($receive->date) }}</td>
                 <td>{{ Str::limit($receive->from, 20) }}</td>
-                <td>{{ Str::limit($receive->topic, 80) }}</td>
+                <td>{{ Str::limit($receive->topic, 70) }}</td>
             </tr>
             @endforeach
         </tbody>
