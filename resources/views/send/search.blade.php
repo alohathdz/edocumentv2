@@ -26,7 +26,7 @@
                         </div>
                         <!-- จาก -->
                         <div class="col-md-4">
-                            <label for="to" class="col-form-label"><strong>จาก</strong></label>
+                            <label for="to" class="col-form-label"><strong>ถึง</strong></label>
                             <input type="text" class="form-control" id="to" name="to">
                         </div>
                         <!-- เรื่อง -->
@@ -53,7 +53,7 @@
                 <tr>
                     <th>ที่</th>
                     <th>ลงวันที่</th>
-                    <th>จาก</th>
+                    <th>ถึง</th>
                     <th>เรื่อง</th>
                     <th>Action</th>
                 </tr>
