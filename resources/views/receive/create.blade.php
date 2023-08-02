@@ -18,7 +18,7 @@
                         <div class="col-md-4">
                             <label for="no" class="col-form-label"><strong>ที่</strong></label>
                             <input type="text" class="form-control @error('no') is-invalid @enderror" id="no" name="no"
-                                value="{{ old('no') }}" required autocomplete="no" autofocus>
+                                value="{{ old('no') }}" autocomplete="no" autofocus>
 
                             @error('no')
                             <span class="invalid-feedback" role="alert">
@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <label for="date" class="col-form-label"><strong>ลง</strong></label>
                             <input type="text" class="form-control @error('date') is-invalid @enderror" id="date"
-                                name="date" value="{{ old('date') }}" required readonly>
+                                name="date" value="{{ old('date') }}" readonly>
 
                             @error('date')
                             <span class="invalid-feedback" role="alert">
@@ -42,7 +42,7 @@
                         <div class="col-md-4">
                             <label for="from" class="col-form-label"><strong>จาก</strong></label>
                             <input type="text" class="form-control @error('from') is-invalid @enderror" id="from"
-                                name="from" value="{{ old('from') }}" required autocomplete="from" autofocus>
+                                name="from" value="{{ old('from') }}" autocomplete="from" autofocus>
 
                             @error('from')
                             <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
                         <div class="col-md-12">
                             <label for="topic" class="col-form-label"><strong>เรื่อง</strong></label>
                             <input type="text" class="form-control @error('topic') is-invalid @enderror" id="topic"
-                                name="topic" value="{{ old('topic') }}" required autocomplete="topic" autofocus>
+                                name="topic" value="{{ old('topic') }}" autocomplete="topic" autofocus>
 
                             @error('topic')
                             <span class="invalid-feedback" role="alert">
@@ -65,24 +65,37 @@
                         <!-- ความเร่งด่วน -->
                         <div class="col-md-6">
                             <label for="urgency" class="col-form-label"><strong>ความเร่งด่วน</strong></label>
-                            <select name="urgency" id="urgency" class="col-md-4 col-form-label form-select" required>
+                            <select name="urgency" id="urgency"
+                                class="form-select @error('urgency') is-invalid @enderror">
                                 <option selected disabled hidden>เลือกความเร่งด่วน</option>
                                 <option value="ไม่มี">ไม่มี</option>
                                 <option value="ด่วน">ด่วน</option>
                                 <option value="ด่วนมาก">ด่วนมาก</option>
                                 <option value="ด่วนที่สุด">ด่วนที่สุด</option>
                             </select>
+
+                            @error('urgency')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                         <!-- ฝ่ายอำนวยการ -->
                         <div class="col-md-6">
                             <label for="department" class="col-form-label"><strong>การปฏิบัติ</strong></label>
-                            <select name="department" id="department" class="col-md-4 col-form-label form-select"
-                                required>
+                            <select name="department" id="department"
+                                class="form-select @error('department') is-invalid @enderror">
                                 <option selected disabled hidden>เลือกฝ่ายอำนวยการ</option>
                                 @foreach ($depts as $dept)
                                 <option value="{{ $dept->id }}">{{ $dept->name }}</option>
                                 @endforeach
                             </select>
+
+                            @error('department')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                         <!-- แนบไฟล์ -->
                         <div class="col-md-12">
@@ -91,7 +104,8 @@
                         </div>
                         <!-- ปุ่มบันทึก -->
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-sm" onclick="classList.add('disabled')">บันทึก</button>
+                            <button type="submit" class="btn btn-primary btn-sm"
+                                onclick="classList.add('disabled')">บันทึก</button>
                             <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
                         </div>
                     </div>

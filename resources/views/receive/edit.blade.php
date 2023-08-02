@@ -66,7 +66,7 @@
                     <!-- ความเร่งด่วน -->
                     <div class="col-md-6">
                         <label for="urgency" class="col-form-label"><strong>ความเร่งด่วน</strong></label>
-                        <select name="urgency" id="urgency" class="col-md-4 col-form-label form-select" required>
+                        <select name="urgency" id="urgency" class="form-select @error('urgency') is-invalid @enderror">
                             <option value="ไม่มี" @if ($receive->urgency == "ไม่มี") selected @endif>ไม่มี</option>
                             <option value="ด่วน" @if ($receive->urgency == "ด่วน") selected @endif>ด่วน</option>
                             <option value="ด่วนมาก" @if ($receive->urgency == "ด่วนมาก") selected @endif>ด่วนมาก
@@ -74,16 +74,28 @@
                             <option value="ด่วนที่สุด" @if ($receive->urgency == "ด่วนที่สุด") selected
                                 @endif>ด่วนที่สุด</option>
                         </select>
+
+                        @error('urgency')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                     <!-- ฝ่ายอำนวยการ -->
                     <div class="col-md-6">
                         <label for="department" class="col-form-label"><strong>การปฏิบัติ</strong></label>
-                        <select name="department" id="department" class="col-md-4 col-form-label form-select" required>
+                        <select name="department" id="department" class="form-select @error('department') is-invalid @enderror">
                             @foreach ($depts as $dept)
                             <option value="{{ $dept->id }}" @if ($receive->department_id == $dept->id) selected
                                 @endif>{{ $dept->name }}</option>
                             @endforeach
                         </select>
+
+                        @error('department')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                     <!-- แนบไฟล์ -->
                     <div class="col-md-12">
