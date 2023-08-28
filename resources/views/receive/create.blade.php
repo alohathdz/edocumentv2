@@ -41,8 +41,18 @@
                         <!-- จาก -->
                         <div class="col-md-4">
                             <label for="from" class="col-form-label"><strong>จาก</strong></label>
+                            @admin
                             <input type="text" class="form-control @error('from') is-invalid @enderror" id="from"
                                 name="from" value="{{ old('from') }}" autocomplete="from" autofocus>
+                            @endadmin
+                            @saraban
+                            <input type="text" class="form-control @error('from') is-invalid @enderror" id="from"
+                                name="from" value="{{ old('from') }}" autocomplete="from" autofocus>
+                            @endsaraban
+                            @employee
+                            <input type="text" class="form-control" id="from" name="from"
+                                value="{{ auth()->user()->department()->first()->initial }}" readonly>
+                            @endemployee
 
                             @error('from')
                             <span class="invalid-feedback" role="alert">
