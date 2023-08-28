@@ -58,7 +58,7 @@
                             <span style="color:red">({{ $receive->urgency }})</span>
                             @endif
                             @if (!empty($receive->file))
-                            <a href="{{ route('receive.download', $receive->id) }}"><i
+                            <a href="{{ route('receive.download', $receive->id) }}" target="_blank"><i
                                     class="bi bi-file-earmark-text-fill"></i></a>
                             @endif
                             @if (!empty($receive->folder_id))
