@@ -8,6 +8,7 @@ use App\Models\Folder;
 use App\Models\Present;
 use App\Models\Receive;
 use App\Models\Send;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FolderController extends Controller
@@ -85,7 +86,8 @@ class FolderController extends Controller
      */
     public function edit(Folder $folder)
     {
-        return view('folder.edit', compact('folder'));
+        $users = User::select('id', 'name')->where('department_id', auth()->user()->department_id)->get();
+        return view('folder.edit', compact('folder', 'users'));
     }
 
     /**
@@ -98,7 +100,8 @@ class FolderController extends Controller
     public function update(Request $request, Folder $folder)
     {
         $request->validate([
-            'name' => 'required|string|max:50'
+            'name' => 'required|string|max:50',
+            'user_id' => 'required'
         ]);
 
         $folder->update($request->all());

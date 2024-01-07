@@ -197,8 +197,11 @@ class ReceiveController extends Controller
                 line("\n📕 หนังสือรับ 📕\nที่ : " . $receive->no . "\nเรื่อง : " . $receive->topic . "\nไฟล์ : ไม่มีไฟล์แนบ", $receive->department->line_token);
             }
         } catch (\ErrorException $th) {
-            if (env("LINE_TOKEN") != null) {
-                line("ไม่สามารถส่งแจ้งเตือนไปยัง " . $receive->department->name . " ได้", env("LINE_TOKEN"));
+            try {
+                if (env("LINE_TOKEN") != null) {
+                    line("ไม่สามารถส่งแจ้งเตือนไปยัง " . $receive->department->name . " ได้", env("LINE_TOKEN"));
+                }
+            } catch (\ErrorException $th) {
             }
         }
         #บันทึกลงฐานข้อมูล
@@ -366,8 +369,8 @@ class ReceiveController extends Controller
             $dateTo = $request->dateTo;
 
             $receives = Receive::select('date', 'from', 'topic')
-            ->whereBetween('created_at', [dateeng($request->dateFrom), dateeng($request->dateTo)])
-            ->get();
+                ->whereBetween('created_at', [dateeng($request->dateFrom), dateeng($request->dateTo)])
+                ->get();
 
             $pdf = PDF::loadView('receive.export', compact('receives', 'dateFrom', 'dateTo'))->setPaper('a4', 'portrait');
 

@@ -28,6 +28,17 @@
                             @enderror
                         </div>
                     </div>
+                    <!-- เลือกเจ้าของแฟ้ม -->
+                    <div class="row mb-3">
+                        <label for="user_id" class="col-md-4 col-form-label text-md-end">เจ้าของแฟ้ม</label>
+                        <div class="col-md-5">
+                            <select name="user_id" id="user_id" class="form-select">
+                                @foreach ($users as $row)
+                                <option value="{{ $row->id }}" @if ($row->id == $folder->user_id)selected @endif>{{ $row->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <!-- ปุ่มบันทึก -->
                     <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
                     <button type="button" class="btn btn-danger btn-sm" onclick="history.back()">ยกเลิก</button>
