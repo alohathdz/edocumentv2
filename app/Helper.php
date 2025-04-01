@@ -71,7 +71,8 @@ function yearthai()
 //Line Notify
 function line($message, $LINE_TOKEN)
 {
-    $LINE_API = "https://notify-api.line.me/api/notify";
+    return true;
+    /*$LINE_API = "https://notify-api.line.me/api/notify";
     $queryData = array('message' => $message);
     $queryData = http_build_query($queryData, '', '&');
     $token = "CNeFkOY33OimzI8M0b1SibVeead6aNr9YtPOkpznUYP";
@@ -87,7 +88,7 @@ function line($message, $LINE_TOKEN)
     $context = stream_context_create($headerOptions);
     $result = file_get_contents($LINE_API, FALSE, $context);
     $res = json_decode($result);
-    return $res;
+    return $res;*/
 }
 #เช็ค Device Mobile
 function isMobile()
