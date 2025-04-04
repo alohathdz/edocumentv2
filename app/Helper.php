@@ -69,10 +69,9 @@ function yearthai()
     return date("Y") + 543;
 }
 //Line Notify
-function line($message, $LINE_TOKEN)
+/*function line($message, $LINE_TOKEN)
 {
-    return true;
-    /*$LINE_API = "https://notify-api.line.me/api/notify";
+    $LINE_API = "https://notify-api.line.me/api/notify";
     $queryData = array('message' => $message);
     $queryData = http_build_query($queryData, '', '&');
     $token = "CNeFkOY33OimzI8M0b1SibVeead6aNr9YtPOkpznUYP";
@@ -88,8 +87,35 @@ function line($message, $LINE_TOKEN)
     $context = stream_context_create($headerOptions);
     $result = file_get_contents($LINE_API, FALSE, $context);
     $res = json_decode($result);
-    return $res;*/
+    return $res;
+}*/
+
+function line($message, $chat_id)
+{
+    // ใส่ Telegram Bot Token ของคุณที่นี่
+    $BOT_TOKEN = '7058152761:AAFc_d50I3E9GXA7246bWLSCvEzhl93SemA';
+
+    $url = "https://api.telegram.org/bot$BOT_TOKEN/sendMessage";
+
+    $postData = array(
+        'chat_id' => $chat_id,
+        'text' => $message
+    );
+
+    $options = array(
+        'http' => array(
+            'method' => 'POST',
+            'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+            'content' => http_build_query($postData)
+        )
+    );
+
+    $context = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    $res = json_decode($result);
+    return $res;
 }
+
 #เช็ค Device Mobile
 function isMobile()
 {
